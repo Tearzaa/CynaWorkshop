@@ -1,0 +1,3582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cyna Model Works | Premium Model Kit Building</title>
+
+    <meta
+        name="description"
+        content="Cyna Model Works - Premium Gunpla, humanoid, vehicle and custom model kit building, painting, weathering and workshops."
+    >
+
+    <style>
+        /* =========================================================
+           CYNA MODEL WORKS
+           SINGLE FILE WEBSITE
+           HTML + CSS + JAVASCRIPT
+           ========================================================= */
+
+        :root {
+            --bg: #121212;
+            --bg-secondary: #181818;
+            --bg-card: #1d1d1d;
+            --orange: #ff6600;
+            --orange-light: #ff8533;
+            --white: #ffffff;
+            --text: #e8e8e8;
+            --muted: #999999;
+            --border: rgba(255, 102, 0, 0.35);
+            --shadow: rgba(255, 102, 0, 0.18);
+            --nav-height: 76px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           GLOBAL
+           ========================================================= */
+
+        .container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 50px;
+        }
+
+        .section-label {
+            display: inline-block;
+            color: var(--orange);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.05;
+            color: var(--white);
+            margin-bottom: 18px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .orange {
+            color: var(--orange);
+        }
+
+        /* =========================================================
+           NAVBAR
+           ========================================================= */
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            z-index: 9000;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 102, 0, 0.18);
+        }
+
+        .nav-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            border: 1px solid var(--orange);
+            background: #0b0b0b;
+            padding: 5px;
+            box-shadow: 0 0 15px var(--shadow);
+        }
+
+        .brand-text {
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .brand-text span {
+            color: var(--orange);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #cccccc;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        .editor-switch {
+            border: 1px solid var(--orange);
+            color: var(--orange);
+            background: transparent;
+            padding: 9px 15px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            transition: 0.25s ease;
+        }
+
+        .editor-switch:hover {
+            background: var(--orange);
+            color: #111;
+            box-shadow: 0 0 20px var(--shadow);
+        }
+
+        /* =========================================================
+           EDITOR NAV
+           ========================================================= */
+
+        body.editor-mode .editor-switch {
+            background: var(--orange);
+            color: #111;
+        }
+
+        body.editor-mode .editor-only {
+            display: block;
+        }
+
+        .editor-only {
+            display: none;
+        }
+
+        /* =========================================================
+           PUBLISH BAR
+           ========================================================= */
+
+        #publishBar {
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 100%;
+            z-index: 8999;
+            background: linear-gradient(
+                90deg,
+                #ff6600,
+                #ff8533,
+                #ff6600
+            );
+            color: #111;
+            padding: 12px 20px;
+            box-shadow: 0 5px 30px rgba(255, 102, 0, 0.3);
+            display: none;
+        }
+
+        #publishBar.active {
+            display: block;
+        }
+
+        .publish-inner {
+            width: min(1180px, 92%);
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .publish-text {
+            font-weight: 900;
+        }
+
+        .publish-button {
+            border: 2px solid #111;
+            background: #111;
+            color: var(--orange);
+            padding: 9px 18px;
+            font-weight: 900;
+            border-radius: 4px;
+            transition: 0.25s ease;
+        }
+
+        .publish-button:hover {
+            background: white;
+            color: #111;
+            border-color: white;
+        }
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .hero {
+            min-height: 100vh;
+            padding-top: calc(var(--nav-height) + 50px);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 80% 30%,
+                    rgba(255, 102, 0, 0.12),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--bg),
+                    #0d0d0d
+                );
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.08) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.08) 1px,
+                    transparent 1px
+                );
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-kicker {
+            color: var(--orange);
+            font-weight: 900;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            color: var(--white);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            line-height: 0.9;
+            font-weight: 1000;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+        }
+
+        .hero-title span {
+            color: var(--orange);
+            text-shadow: 0 0 30px rgba(255, 102, 0, 0.25);
+        }
+
+        .hero-description {
+            max-width: 650px;
+            color: #bdbdbd;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 22px;
+            border-radius: 4px;
+            border: 1px solid var(--orange);
+            font-weight: 900;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: #111;
+        }
+
+        .btn-primary:hover {
+            background: var(--orange-light);
+            box-shadow: 0 0 25px var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            color: var(--orange);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--orange);
+            color: #111;
+            box-shadow: 0 0 25px var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .hero-panel {
+            min-height: 420px;
+            position: relative;
+            border: 1px solid var(--border);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,102,0,0.08),
+                    rgba(255,255,255,0.02)
+                );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow:
+                inset 0 0 50px rgba(255,102,0,0.03),
+                0 0 50px rgba(0,0,0,0.4);
+        }
+
+        .hero-panel::before {
+            content: "CUSTOM";
+            position: absolute;
+            font-size: 7rem;
+            font-weight: 1000;
+            color: rgba(255,255,255,0.025);
+            transform: rotate(-90deg);
+        }
+
+        .hero-mecha {
+            width: 80%;
+            max-height: 430px;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            filter:
+                drop-shadow(0 0 25px rgba(255,102,0,0.18));
+        }
+
+        /* =========================================================
+           EDITOR CONTROLS
+           ========================================================= */
+
+        .editor-panel {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px dashed var(--orange);
+            background: rgba(255,102,0,0.05);
+        }
+
+        .editor-panel h3 {
+            color: var(--orange);
+            margin-bottom: 15px;
+        }
+
+        .editor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .editor-control {
+            background: #111;
+            padding: 15px;
+            border: 1px solid #333;
+        }
+
+        .editor-control label {
+            display: block;
+            color: #aaa;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .editor-control input,
+        .editor-control select {
+            width: 100%;
+            background: #181818;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px;
+        }
+
+        .editor-control input[type="color"] {
+            height: 45px;
+            padding: 3px;
+        }
+
+        .editor-exit {
+            margin-top: 15px;
+            background: transparent;
+            color: #ff5555;
+            border: 1px solid #ff5555;
+            padding: 8px 15px;
+        }
+
+        [contenteditable="true"] {
+            outline: 1px dashed rgba(255,102,0,0.5);
+            outline-offset: 3px;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 1px solid var(--orange);
+            background: rgba(255,102,0,0.04);
+        }
+
+        /* =========================================================
+           PORTFOLIO
+           ========================================================= */
+
+        .portfolio {
+            background: var(--bg-secondary);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: 1px solid #444;
+            background: transparent;
+            color: #aaa;
+            border-radius: 3px;
+            font-weight: 800;
+            transition: 0.25s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--orange);
+            color: #111;
+            border-color: var(--orange);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .portfolio-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid #303030;
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: scale(1.025);
+            border-color: var(--orange);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.35);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #0b0b0b;
+        }
+
+        .portfolio-info {
+            padding: 20px;
+        }
+
+        .portfolio-category {
+            color: var(--orange);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .portfolio-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
+        .portfolio-description {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .swap-picture {
+            display: none;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--orange);
+            color: #111;
+            padding: 8px 10px;
+            border: 0;
+            font-size: 0.75rem;
+            font-weight: 900;
+            z-index: 5;
+        }
+
+        body.editor-mode .swap-picture {
+            display: block;
+        }
+
+        .swap-picture input {
+            display: none;
+        }
+
+        .add-project {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            border: 1px dashed var(--orange);
+            background: rgba(255,102,0,0.04);
+        }
+
+        body.editor-mode .add-project {
+            display: block;
+        }
+
+        .add-project h3 {
+            color: var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .add-project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 12px;
+        }
+
+        .add-project input,
+        .add-project select {
+            background: #111;
+            border: 1px solid #444;
+            color: white;
+            padding: 12px;
+            width: 100%;
+        }
+
+        .add-project input[type="file"] {
+            padding: 9px;
+        }
+
+        .add-project button {
+            background: var(--orange);
+            border: 0;
+            padding: 12px 20px;
+            font-weight: 900;
+        }
+
+        /* =========================================================
+           SERVICES
+           ========================================================= */
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid #303030;
+            padding: 30px 25px;
+            position: relative;
+            transition: 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .service-number {
+            font-size: 0.75rem;
+            color: var(--orange);
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .service-title {
+            color: white;
+            font-size: 1.35rem;
+            margin: 10px 0;
+        }
+
+        .service-price {
+            color: var(--orange);
+            font-size: 1.25rem;
+            font-weight: 1000;
+            margin-bottom: 15px;
+        }
+
+        .service-description {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            color: #bbb;
+            font-size: 0.85rem;
+            padding: 7px 0;
+            border-bottom: 1px solid #292929;
+        }
+
+        .service-list li::before {
+            content: "▸";
+            color: var(--orange);
+            margin-right: 8px;
+        }
+
+        .workshop-callout {
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--orange);
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,102,0,0.1),
+                    transparent
+                );
+        }
+
+        .workshop-callout h3 {
+            color: var(--orange);
+            margin-bottom: 8px;
+        }
+
+        .workshop-callout p {
+            color: #bbb;
+        }
+
+        /* =========================================================
+           ABOUT
+           ========================================================= */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-box {
+            min-height: 300px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,102,0,0.12),
+                    transparent 60%
+                );
+        }
+
+        .about-symbol {
+            font-size: 8rem;
+            color: var(--orange);
+            font-weight: 1000;
+            text-shadow: 0 0 40px rgba(255,102,0,0.25);
+        }
+
+        .about-text h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        /* =========================================================
+           CONTACT
+           ========================================================= */
+
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-info > p {
+            color: #999;
+            margin-bottom: 25px;
+        }
+
+        .contact-links {
+            display: grid;
+            gap: 12px;
+        }
+
+        .contact-link {
+            border: 1px solid #333;
+            background: #151515;
+            padding: 15px;
+            transition: 0.25s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--orange);
+            transform: translateX(5px);
+        }
+
+        .contact-link small {
+            display: block;
+            color: var(--orange);
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-link strong {
+            color: white;
+        }
+
+        .contact-form {
+            background: #151515;
+            border: 1px solid #333;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ccc;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            background: #0e0e0e;
+            color: white;
+            border: 1px solid #3a3a3a;
+            padding: 13px;
+            border-radius: 3px;
+            transition: 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 12px rgba(255,102,0,0.12);
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            width: 100%;
+            border: 0;
+            background: var(--orange);
+            color: #111;
+            padding: 15px;
+            font-weight: 1000;
+            transition: 0.25s ease;
+        }
+
+        .submit-button:hover {
+            background: var(--orange-light);
+            box-shadow: 0 0 25px var(--shadow);
+        }
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        footer {
+            padding: 50px 0 25px;
+            background: #090909;
+            border-top: 1px solid #292929;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .footer-brand {
+            color: white;
+            font-weight: 1000;
+            font-size: 1.3rem;
+        }
+
+        .footer-brand span {
+            color: var(--orange);
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            color: #aaa;
+            transition: 0.2s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--orange);
+        }
+
+        .copyright {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            color: #555;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        /* =========================================================
+           PASSWORD MODAL
+           ========================================================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.82);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .password-modal {
+            width: min(420px, 100%);
+            background: #151515;
+            border: 1px solid var(--orange);
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(255,102,0,0.15);
+        }
+
+        .password-modal h2 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .password-modal p {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .password-modal input {
+            width: 100%;
+            padding: 13px;
+            background: #0b0b0b;
+            color: white;
+            border: 1px solid #444;
+            margin-bottom: 12px;
+        }
+
+        .password-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .password-actions button {
+            flex: 1;
+            padding: 12px;
+            font-weight: 900;
+        }
+
+        .login-button {
+            background: var(--orange);
+            border: 1px solid var(--orange);
+            color: #111;
+        }
+
+        .cancel-button {
+            background: transparent;
+            border: 1px solid #444;
+            color: #aaa;
+        }
+
+        /* =========================================================
+           REVEAL ANIMATION
+           ========================================================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .hero-grid,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-panel {
+                min-height: 320px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .editor-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .add-project-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            :root {
+                --nav-height: 68px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .brand-text {
+                font-size: 0.85rem;
+            }
+
+            .section {
+                padding: 70px 0;
+            }
+
+            .hero {
+                padding-top: 110px;
+            }
+
+            .hero-title {
+                font-size: 3.3rem;
+            }
+
+            .portfolio-grid,
+            .services-grid,
+            .editor-grid,
+            .add-project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-image {
+                height: 250px;
+            }
+
+            .publish-inner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVIGATION
+         ========================================================= -->
+
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <a href="#home" class="brand">
+
+                <img
+                    id="brandLogo"
+                    class="brand-logo"
+                    src="https://placehold.co/100x100/111111/ff6600?text=CMW"
+                    alt="Cyna Model Works Logo"
+                >
+
+                <div class="brand-text" data-editable="true">
+                    CYNA <span>MODEL WORKS</span>
+                </div>
+
+            </a>
+
+            <nav class="nav-links">
+                <a href="#portfolio">Portfolio</a>
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <button
+                id="editorSwitch"
+                class="editor-switch"
+                type="button"
+            >
+                Editor Side
+            </button>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================================
+         PUBLISH BAR
+         ========================================================= -->
+
+    <div id="publishBar">
+
+        <div class="publish-inner">
+
+            <div class="publish-text">
+                ⚠ UNSAVED DRAFT CHANGES
+            </div>
+
+            <button
+                id="publishButton"
+                class="publish-button"
+                type="button"
+            >
+                PUBLISH CHANGES
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         HERO
+         ========================================================= -->
+
+    <main>
+
+        <section id="home" class="hero">
+
+            <div class="container hero-grid">
+
+                <div class="hero-content reveal">
+
+                    <div
+                        class="hero-kicker"
+                        data-editable="true"
+                    >
+                        PREMIUM MODEL KIT BUILDING
+                    </div>
+
+                    <h1
+                        class="hero-title"
+                        data-editable="true"
+                    >
+                        BUILD YOUR
+                        <span>LEGEND.</span>
+                    </h1>
+
+                    <p
+                        class="hero-description"
+                        data-editable="true"
+                    >
+                        From raw plastic to display-ready masterpiece.
+                        Cyna Model Works specialises in precision assembly,
+                        painting, weathering, customisation and model kit
+                        workshops for builders who want their kits to stand
+                        apart.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#portfolio"
+                            class="btn btn-primary"
+                        >
+                            VIEW PORTFOLIO
+                        </a>
+
+                        <a
+                            href="#contact"
+                            class="btn btn-outline"
+                        >
+                            REQUEST A QUOTE
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-panel reveal">
+
+                    <img
+                        id="heroImage"
+                        class="hero-mecha"
+                        src="https://placehold.co/700x500/111111/ff6600?text=YOUR+MECHA"
+                        alt="Model kit showcase"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             EDITOR CONTROLS
+             ===================================================== -->
+
+        <section class="container editor-only">
+
+            <div class="editor-panel">
+
+                <h3>⚙ MASTER EDITOR CONTROL PANEL</h3>
+
+                <div class="editor-grid">
+
+                    <div class="editor-control">
+
+                        <label for="logoUpload">
+                            Change Website Logo
+                        </label>
+
+                        <input
+                            id="logoUpload"
+                            type="file"
+                            accept="image/*"
+                        >
+
+                    </div>
+
+
+                    <div class="editor-control">
+
+                        <label for="backgroundColor">
+                            Change Background Color
+                        </label>
+
+                        <input
+                            id="backgroundColor"
+                            type="color"
+                            value="#121212"
+                        >
+
+                    </div>
+
+
+                    <div class="editor-control">
+
+                        <label for="accentColor">
+                            Change Accent Color
+                        </label>
+
+                        <input
+                            id="accentColor"
+                            type="color"
+                            value="#ff6600"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="exitEditor"
+                    class="editor-exit"
+                    type="button"
+                >
+                    EXIT EDITOR MODE
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PORTFOLIO
+             ===================================================== -->
+
+        <section
+            id="portfolio"
+            class="section portfolio"
+        >
+
+            <div class="container">
+
+                <div class="section-header reveal">
+
+                    <span
+                        class="section-label"
+                        data-editable="true"
+                    >
+                        SELECTED WORKS
+                    </span>
+
+                    <h2
+                        class="section-title"
+                        data-editable="true"
+                    >
+                        BUILT TO <span class="orange">STAND OUT.</span>
+                    </h2>
+
+                    <p
+                        class="section-description"
+                        data-editable="true"
+                    >
+                        Explore completed builds, custom finishes and
+                        model-making projects. Every kit receives careful
+                        attention from assembly to final presentation.
+                    </p>
+
+                </div>
+
+
+                <div class="filter-tabs">
+
+                    <button
+                        class="filter-btn active"
+                        data-filter="all"
+                        type="button"
+                    >
+                        ALL
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="gundam"
+                        type="button"
+                    >
+                        GUNDAM
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="humanoids"
+                        type="button"
+                    >
+                        HUMANOIDS
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="vehicles"
+                        type="button"
+                    >
+                        VEHICLES
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="portfolioGrid"
+                    class="portfolio-grid"
+                >
+                    <!-- JavaScript creates portfolio cards -->
+                </div>
+
+
+                <!-- ADD PROJECT -->
+
+                <div class="add-project">
+
+                    <h3>
+                        + ADD NEW PORTFOLIO PROJECT
+                    </h3>
+
+                    <div class="add-project-grid">
+
+                        <input
+                            id="newProjectImage"
+                            type="file"
+                            accept="image/*"
+                        >
+
+                        <input
+                            id="newProjectTitle"
+                            type="text"
+                            placeholder="Project title"
+                        >
+
+                        <select id="newProjectCategory">
+
+                            <option value="gundam">
+                                Gundam
+                            </option>
+
+                            <option value="humanoids">
+                                Humanoids
+                            </option>
+
+                            <option value="vehicles">
+                                Vehicles
+                            </option>
+
+                        </select>
+
+                        <button
+                            id="addProjectButton"
+                            type="button"
+                        >
+                            ADD PROJECT
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SERVICES
+             ===================================================== -->
+
+        <section
+            id="services"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-header reveal">
+
+                    <span
+                        class="section-label"
+                        data-editable="true"
+                    >
+                        SERVICES
+                    </span>
+
+                    <h2
+                        class="section-title"
+                        data-editable="true"
+                    >
+                        CHOOSE YOUR <span class="orange">BUILD LEVEL.</span>
+                    </h2>
+
+                    <p
+                        class="section-description"
+                        data-editable="true"
+                    >
+                        Whether you want a clean straight build or a fully
+                        customised display piece, every project is handled
+                        with patience, precision and attention to detail.
+                    </p>
+
+                </div>
+
+
+                <div class="services-grid">
+
+                    <!-- SERVICE 1 -->
+
+                    <article class="service-card reveal">
+
+                        <div
+                            class="service-number"
+                            data-editable="true"
+                        >
+                            01 / ENTRY
+                        </div>
+
+                        <h3
+                            class="service-title"
+                            data-editable="true"
+                        >
+                            Straight Build
+                        </h3>
+
+                        <div
+                            class="service-price"
+                            data-editable="true"
+                        >
+                            Starting from RM 100
+                        </div>
+
+                        <p
+                            class="service-description"
+                            data-editable="true"
+                        >
+                            A clean, assembled build for clients who want
+                            their kit professionally put together while
+                            keeping the original appearance.
+                        </p>
+
+                        <ul class="service-list">
+
+                            <li data-editable="true">
+                                Professional assembly
+                            </li>
+
+                            <li data-editable="true">
+                                Basic nub cleanup
+                            </li>
+
+                            <li data-editable="true">
+                                Original kit appearance
+                            </li>
+
+                            <li data-editable="true">
+                                HG / RG / MG / PG / NG
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+
+                    <!-- SERVICE 2 -->
+
+                    <article class="service-card reveal">
+
+                        <div
+                            class="service-number"
+                            data-editable="true"
+                        >
+                            02 / PREMIUM
+                        </div>
+
+                        <h3
+                            class="service-title"
+                            data-editable="true"
+                        >
+                            Clean Build
+                        </h3>
+
+                        <div
+                            class="service-price"
+                            data-editable="true"
+                        >
+                            Starting from RM 200
+                        </div>
+
+                        <p
+                            class="service-description"
+                            data-editable="true"
+                        >
+                            A refined display build with significantly
+                            cleaner finishing and a professional protective
+                            top coat.
+                        </p>
+
+                        <ul class="service-list">
+
+                            <li data-editable="true">
+                                Meticulous nub sanding
+                            </li>
+
+                            <li data-editable="true">
+                                Seam line removal
+                            </li>
+
+                            <li data-editable="true">
+                                Custom decals
+                            </li>
+
+                            <li data-editable="true">
+                                Protective top coat
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+
+                    <!-- SERVICE 3 -->
+
+                    <article class="service-card reveal">
+
+                        <div
+                            class="service-number"
+                            data-editable="true"
+                        >
+                            03 / MASTER
+                        </div>
+
+                        <h3
+                            class="service-title"
+                            data-editable="true"
+                        >
+                            Custom Build
+                        </h3>
+
+                        <div
+                            class="service-price"
+                            data-editable="true"
+                        >
+                            Starting from RM 500
+                        </div>
+
+                        <p
+                            class="service-description"
+                            data-editable="true"
+                        >
+                            A complete custom project built around your
+                            concept, colour scheme and display goals.
+                        </p>
+
+                        <ul class="service-list">
+
+                            <li data-editable="true">
+                                Full clean build
+                            </li>
+
+                            <li data-editable="true">
+                                Custom paint schemes
+                            </li>
+
+                            <li data-editable="true">
+                                LED lighting
+                            </li>
+
+                            <li data-editable="true">
+                                Kitbashing & modifications
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+
+                    <!-- SERVICE 4 -->
+
+                    <article class="service-card reveal">
+
+                        <div
+                            class="service-number"
+                            data-editable="true"
+                        >
+                            04 / LEARN
+                        </div>
+
+                        <h3
+                            class="service-title"
+                            data-editable="true"
+                        >
+                            Model Kit Workshop
+                        </h3>
+
+                        <div
+                            class="service-price"
+                            data-editable="true"
+                        >
+                            WhatsApp for details
+                        </div>
+
+                        <p
+                            class="service-description"
+                            data-editable="true"
+                        >
+                            Learn the hobby hands-on. Build your own kit
+                            while learning practical techniques from
+                            assembly to finishing.
+                        </p>
+
+                        <ul class="service-list">
+
+                            <li data-editable="true">
+                                Kit assembly
+                            </li>
+
+                            <li data-editable="true">
+                                Nub sanding
+                            </li>
+
+                            <li data-editable="true">
+                                Basic painting
+                            </li>
+
+                            <li data-editable="true">
+                                Finishing techniques
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+                </div>
+
+
+                <div class="workshop-callout reveal">
+
+                    <h3
+                        data-editable="true"
+                    >
+                        WANT TO LEARN MODEL KIT BUILDING?
+                    </h3>
+
+                    <p
+                        data-editable="true"
+                    >
+                        Workshop schedules and availability vary depending
+                        on the session. WhatsApp directly for current
+                        schedules, available slots and workshop details.
+                    </p>
+
+                    <br>
+
+                    <a
+                        class="btn btn-outline"
+                        href="https://wa.me/601125041130?text=Hello!%20I%27m%20interested%20in%20the%20Model%20Kit%20Workshop."
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        WHATSAPP ABOUT WORKSHOP
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ABOUT
+             ===================================================== -->
+
+        <section
+            id="about"
+            class="section"
+        >
+
+            <div class="container about-grid">
+
+                <div class="about-box reveal">
+
+                    <div class="about-symbol">
+                        CMW
+                    </div>
+
+                </div>
+
+
+                <div class="about-text reveal">
+
+                    <span
+                        class="section-label"
+                        data-editable="true"
+                    >
+                        ABOUT THE BUILDER
+                    </span>
+
+                    <h2
+                        data-editable="true"
+                    >
+                        MORE THAN JUST
+                        <span class="orange">
+                            SNAP & BUILD.
+                        </span>
+                    </h2>
+
+                    <p
+                        id="bioText"
+                        data-editable="true"
+                    >
+                        Cyna Model Works is a dedicated model kit building
+                        service focused on transforming plastic kits into
+                        clean, detailed and personalised display pieces.
+                    </p>
+
+                    <p
+                        data-editable="true"
+                    >
+                        From Gunpla and humanoid mecha to vehicles and
+                        third-party kits, every project is approached with
+                        the mindset of a modeller: take your time, respect
+                        the details and make every part count.
+                    </p>
+
+                    <p
+                        data-editable="true"
+                    >
+                        I also provide hands-on model kit workshops for
+                        people who want to learn the hobby themselves.
+                        Instead of simply giving you a finished model,
+                        the workshop teaches you how to build one.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTACT
+             ===================================================== -->
+
+        <section
+            id="contact"
+            class="section contact"
+        >
+
+            <div class="container">
+
+                <div class="section-header reveal">
+
+                    <span
+                        class="section-label"
+                        data-editable="true"
+                    >
+                        START YOUR PROJECT
+                    </span>
+
+                    <h2
+                        class="section-title"
+                        data-editable="true"
+                    >
+                        LET'S BUILD
+                        <span class="orange">
+                            SOMETHING EPIC.
+                        </span>
+                    </h2>
+
+                    <p
+                        class="section-description"
+                        data-editable="true"
+                    >
+                        Tell me about your kit, your desired finish and
+                        what you have in mind. I'll help you determine
+                        the most suitable build option.
+                    </p>
+
+                </div>
+
+
+                <div class="contact-grid">
+
+                    <div class="contact-info reveal">
+
+                        <h3 data-editable="true">
+                            Get In Touch
+                        </h3>
+
+                        <p data-editable="true">
+                            The fastest way to discuss a project or workshop
+                            is through WhatsApp.
+                        </p>
+
+
+                        <div class="contact-links">
+
+                            <a
+                                class="contact-link"
+                                href="https://wa.me/601125041130"
+                                target="_blank"
+                                rel="noopener"
+                            >
+
+                                <small>
+                                    WhatsApp / Phone
+                                </small>
+
+                                <strong data-editable="true">
+                                    01125041130
+                                </strong>
+
+                            </a>
+
+
+                            <a
+                                class="contact-link"
+                                href="mailto:Fakesilent020821@gmail.com"
+                            >
+
+                                <small>
+                                    Email
+                                </small>
+
+                                <strong data-editable="true">
+                                    Fakesilent020821@gmail.com
+                                </strong>
+
+                            </a>
+
+
+                            <a
+                                class="contact-link"
+                                href="https://www.instagram.com/ariztaz_/"
+                                target="_blank"
+                                rel="noopener"
+                            >
+
+                                <small>
+                                    Instagram
+                                </small>
+
+                                <strong data-editable="true">
+                                    @Ariztaz_
+                                </strong>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTACT FORM -->
+
+                    <form
+                        id="quoteForm"
+                        class="contact-form reveal"
+                    >
+
+                        <div class="form-group">
+
+                            <label for="clientName">
+                                Your Name
+                            </label>
+
+                            <input
+                                id="clientName"
+                                type="text"
+                                required
+                                placeholder="e.g. Ariz"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="kitType">
+                                Kit Type / Grade
+                            </label>
+
+                            <input
+                                id="kitType"
+                                type="text"
+                                required
+                                placeholder="e.g. MG Gundam / RG Sazabi"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="serviceTier">
+                                Service / Workshop
+                            </label>
+
+                            <select
+                                id="serviceTier"
+                                required
+                            >
+
+                                <option value="">
+                                    Select a service
+                                </option>
+
+                                <option value="Straight Build">
+                                    Straight Build
+                                </option>
+
+                                <option value="Clean Build">
+                                    Clean Build
+                                </option>
+
+                                <option value="Custom Build">
+                                    Custom Build
+                                </option>
+
+                                <option value="Model Kit Workshop">
+                                    Model Kit Workshop
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="specialRequests">
+                                Special Requests
+                            </label>
+
+                            <textarea
+                                id="specialRequests"
+                                placeholder="Tell me about colours, decals, weathering, LEDs, modifications or anything else..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            id="submitQuote"
+                            class="submit-button"
+                            type="submit"
+                        >
+                            SEND REQUEST VIA WHATSAPP
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+
+                    <div
+                        class="footer-brand"
+                        data-editable="true"
+                    >
+                        CYNA <span>MODEL WORKS</span>
+                    </div>
+
+                    <div
+                        class="footer-text"
+                        data-editable="true"
+                    >
+                        Custom model kits. Precision builds. Mecha passion.
+                    </div>
+
+                </div>
+
+
+                <div class="footer-social">
+
+                    <a
+                        href="https://wa.me/601125041130"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        WhatsApp
+                    </a>
+
+                    <a
+                        href="https://www.instagram.com/ariztaz_/"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Instagram
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="copyright"
+                data-editable="true"
+            >
+                © 2026 Cyna Model Works. All rights reserved.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         PASSWORD MODAL
+         ========================================================= -->
+
+    <div
+        id="passwordModal"
+        class="modal-overlay"
+    >
+
+        <div class="password-modal">
+
+            <h2>
+                ADMIN ACCESS
+            </h2>
+
+            <p>
+                Enter the administrator password to access the
+                Cyna Model Works editor.
+            </p>
+
+            <input
+                id="adminPassword"
+                type="password"
+                placeholder="Admin password"
+                autocomplete="off"
+            >
+
+            <div class="password-actions">
+
+                <button
+                    id="loginButton"
+                    class="login-button"
+                    type="button"
+                >
+                    ENTER
+                </button>
+
+                <button
+                    id="cancelLogin"
+                    class="cancel-button"
+                    type="button"
+                >
+                    CANCEL
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
+    <script>
+
+        /*
+        ============================================================
+        CYNA MODEL WORKS
+        MAIN JAVASCRIPT
+        ============================================================
+        */
+
+
+        /* ========================================================
+           CONFIGURATION
+           ======================================================== */
+
+        const ADMIN_PASSWORD = "Ariztaz2026";
+
+        const STORAGE_KEY = "cynaModelWorksWebsite";
+
+        const DEFAULT_DATA = {
+
+            backgroundColor: "#121212",
+
+            accentColor: "#ff6600",
+
+            logo:
+                "https://placehold.co/100x100/111111/ff6600?text=CMW",
+
+            bio:
+                "Cyna Model Works is a dedicated model kit building service focused on transforming plastic kits into clean, detailed and personalised display pieces.",
+
+            projects: [
+
+                {
+                    id: 1,
+                    title: "Custom Gundam Build",
+                    category: "gundam",
+                    image:
+                        "https://placehold.co/800x600/151515/ff6600?text=GUNDAM+01",
+                    description:
+                        "Precision assembly and finishing."
+                },
+
+                {
+                    id: 2,
+                    title: "RG Mecha Project",
+                    category: "gundam",
+                    image:
+                        "https://placehold.co/800x600/151515/ff6600?text=GUNDAM+02",
+                    description:
+                        "Detailed Gunpla display build."
+                },
+
+                {
+                    id: 3,
+                    title: "Humanoid Custom",
+                    category: "humanoids",
+                    image:
+                        "https://placehold.co/800x600/151515/ff6600?text=HUMANOID",
+                    description:
+                        "Custom humanoid model finishing."
+                },
+
+                {
+                    id: 4,
+                    title: "Vehicle Build",
+                    category: "vehicles",
+                    image:
+                        "https://placehold.co/800x600/151515/ff6600?text=VEHICLE",
+                    description:
+                        "Detailed scale vehicle project."
+                },
+
+                {
+                    id: 5,
+                    title: "Custom Mecha",
+                    category: "humanoids",
+                    image:
+                        "https://placehold.co/800x600/151515/ff6600?text=MECHA",
+                    description:
+                        "Customised humanoid mecha."
+                },
+
+                {
+                    id: 6,
+                    title: "Display Project",
+                    category: "gundam",
+                    image:
+                        "https://placehold.co/800x600/151515/ff6600?text=PROJECT",
+                    description:
+                        "Display-ready Gunpla build."
+                }
+
+            ]
+
+        };
+
+
+        /* ========================================================
+           APPLICATION STATE
+           ======================================================== */
+
+        let publishedData = loadData();
+
+        let draftData = cloneData(publishedData);
+
+        let editorMode = false;
+
+        let currentFilter = "all";
+
+
+        /* ========================================================
+           DOM REFERENCES
+           ======================================================== */
+
+        const body =
+            document.body;
+
+        const portfolioGrid =
+            document.getElementById("portfolioGrid");
+
+        const publishBar =
+            document.getElementById("publishBar");
+
+        const passwordModal =
+            document.getElementById("passwordModal");
+
+        const adminPasswordInput =
+            document.getElementById("adminPassword");
+
+        const backgroundColor =
+            document.getElementById("backgroundColor");
+
+        const accentColor =
+            document.getElementById("accentColor");
+
+        const logoUpload =
+            document.getElementById("logoUpload");
+
+        const brandLogo =
+            document.getElementById("brandLogo");
+
+        const bioText =
+            document.getElementById("bioText");
+
+        const quoteForm =
+            document.getElementById("quoteForm");
+
+
+        /* ========================================================
+           UTILITY FUNCTIONS
+           ======================================================== */
+
+        function cloneData(data) {
+
+            return JSON.parse(
+                JSON.stringify(data)
+            );
+
+        }
+
+
+        function loadData() {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(
+                        STORAGE_KEY
+                    );
+
+                if (!saved) {
+
+                    return cloneData(
+                        DEFAULT_DATA
+                    );
+
+                }
+
+                const parsed =
+                    JSON.parse(saved);
+
+                return {
+
+                    ...cloneData(DEFAULT_DATA),
+
+                    ...parsed,
+
+                    projects:
+                        Array.isArray(parsed.projects)
+                            ? parsed.projects
+                            : cloneData(DEFAULT_DATA.projects)
+
+                };
+
+            } catch (error) {
+
+                console.error(
+                    "Could not load saved website data:",
+                    error
+                );
+
+                return cloneData(
+                    DEFAULT_DATA
+                );
+
+            }
+
+        }
+
+
+        function saveData(data) {
+
+            try {
+
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(data)
+                );
+
+                return true;
+
+            } catch (error) {
+
+                console.error(
+                    "Could not save website data:",
+                    error
+                );
+
+                alert(
+                    "Unable to save changes. Your browser may have blocked localStorage or the stored images may be too large."
+                );
+
+                return false;
+
+            }
+
+        }
+
+
+        function readFileAsDataURL(file) {
+
+            return new Promise(
+                (resolve, reject) => {
+
+                    const reader =
+                        new FileReader();
+
+                    reader.onload =
+                        () => resolve(
+                            reader.result
+                        );
+
+                    reader.onerror =
+                        () => reject(
+                            new Error(
+                                "Could not read image."
+                            )
+                        );
+
+                    reader.readAsDataURL(file);
+
+                }
+            );
+
+        }
+
+
+        /* ========================================================
+           APPLY WEBSITE DATA
+           ======================================================== */
+
+        function applyTheme() {
+
+            document.documentElement.style.setProperty(
+                "--bg",
+                draftData.backgroundColor
+            );
+
+            document.documentElement.style.setProperty(
+                "--orange",
+                draftData.accentColor
+            );
+
+            document.documentElement.style.setProperty(
+                "--orange-light",
+                lightenColor(
+                    draftData.accentColor
+                )
+            );
+
+            backgroundColor.value =
+                draftData.backgroundColor;
+
+            accentColor.value =
+                draftData.accentColor;
+
+        }
+
+
+        function lightenColor(hex) {
+
+            hex = hex.replace("#", "");
+
+            if (hex.length !== 6) {
+
+                return "#ff8533";
+
+            }
+
+            const r =
+                parseInt(
+                    hex.substring(0, 2),
+                    16
+                );
+
+            const g =
+                parseInt(
+                    hex.substring(2, 4),
+                    16
+                );
+
+            const b =
+                parseInt(
+                    hex.substring(4, 6),
+                    16
+                );
+
+            const newR =
+                Math.min(
+                    255,
+                    r + 35
+                );
+
+            const newG =
+                Math.min(
+                    255,
+                    g + 35
+                );
+
+            const newB =
+                Math.min(
+                    255,
+                    b + 35
+                );
+
+            return (
+                "#" +
+                [newR, newG, newB]
+                    .map(
+                        value =>
+                            value
+                                .toString(16)
+                                .padStart(2, "0")
+                    )
+                    .join("")
+            );
+
+        }
+
+
+        function applySavedContent() {
+
+            brandLogo.src =
+                draftData.logo;
+
+            bioText.textContent =
+                draftData.bio;
+
+            applyTheme();
+
+            renderPortfolio();
+
+        }
+
+
+        /* ========================================================
+           DRAFT MANAGEMENT
+           ======================================================== */
+
+        function markDraft() {
+
+            draftData.bio =
+                bioText.innerText.trim();
+
+            publishBar.classList.add(
+                "active"
+            );
+
+        }
+
+
+        function clearDraft() {
+
+            publishBar.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        function publishChanges() {
+
+            draftData.bio =
+                bioText.innerText.trim();
+
+            const confirmed =
+                confirm(
+                    "Publish all current changes?"
+                );
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+            const saved =
+                saveData(
+                    draftData
+                );
+
+            if (!saved) {
+
+                return;
+
+            }
+
+            publishedData =
+                cloneData(
+                    draftData
+                );
+
+            clearDraft();
+
+            alert(
+                "Success! Your changes have been pushed live!"
+            );
+
+        }
+
+
+        /* ========================================================
+           PORTFOLIO
+           ======================================================== */
+
+        function renderPortfolio() {
+
+            portfolioGrid.innerHTML = "";
+
+            const filtered =
+                draftData.projects.filter(
+                    project => {
+
+                        if (
+                            currentFilter === "all"
+                        ) {
+
+                            return true;
+
+                        }
+
+                        return (
+                            project.category ===
+                            currentFilter
+                        );
+
+                    }
+                );
+
+
+            filtered.forEach(
+                project => {
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+                    card.className =
+                        "portfolio-card reveal";
+
+                    card.dataset.category =
+                        project.category;
+
+
+                    const image =
+                        document.createElement(
+                            "img"
+                        );
+
+                    image.className =
+                        "portfolio-image";
+
+                    image.src =
+                        project.image;
+
+                    image.alt =
+                        project.title;
+
+
+                    const swapButton =
+                        document.createElement(
+                            "label"
+                        );
+
+                    swapButton.className =
+                        "swap-picture";
+
+                    swapButton.textContent =
+                        "SWAP PICTURE";
+
+
+                    const swapInput =
+                        document.createElement(
+                            "input"
+                        );
+
+                    swapInput.type =
+                        "file";
+
+                    swapInput.accept =
+                        "image/*";
+
+
+                    swapInput.addEventListener(
+                        "change",
+                        async function () {
+
+                            const file =
+                                this.files[0];
+
+                            if (!file) {
+
+                                return;
+
+                            }
+
+                            try {
+
+                                const imageData =
+                                    await readFileAsDataURL(
+                                        file
+                                    );
+
+                                const target =
+                                    draftData.projects.find(
+                                        item =>
+                                            item.id ===
+                                            project.id
+                                    );
+
+                                if (target) {
+
+                                    target.image =
+                                        imageData;
+
+                                    renderPortfolio();
+
+                                    markDraft();
+
+                                }
+
+                            } catch (error) {
+
+                                alert(
+                                    "Unable to load that image."
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    swapButton.appendChild(
+                        swapInput
+                    );
+
+
+                    const info =
+                        document.createElement(
+                            "div"
+                        );
+
+                    info.className =
+                        "portfolio-info";
+
+
+                    const category =
+                        document.createElement(
+                            "div"
+                        );
+
+                    category.className =
+                        "portfolio-category";
+
+                    category.textContent =
+                        project.category;
+
+
+                    const title =
+                        document.createElement(
+                            "h3"
+                        );
+
+                    title.className =
+                        "portfolio-title";
+
+                    title.textContent =
+                        project.title;
+
+
+                    const description =
+                        document.createElement(
+                            "p"
+                        );
+
+                    description.className =
+                        "portfolio-description";
+
+                    description.textContent =
+                        project.description;
+
+
+                    if (editorMode) {
+
+                        title.contentEditable =
+                            "true";
+
+                        description.contentEditable =
+                            "true";
+
+                        title.addEventListener(
+                            "input",
+                            function () {
+
+                                updateProjectText(
+                                    project.id,
+                                    title.innerText,
+                                    description.innerText
+                                );
+
+                            }
+                        );
+
+                        description.addEventListener(
+                            "input",
+                            function () {
+
+                                updateProjectText(
+                                    project.id,
+                                    title.innerText,
+                                    description.innerText
+                                );
+
+                            }
+                        );
+
+                    }
+
+
+                    info.appendChild(
+                        category
+                    );
+
+                    info.appendChild(
+                        title
+                    );
+
+                    info.appendChild(
+                        description
+                    );
+
+
+                    card.appendChild(
+                        image
+                    );
+
+                    card.appendChild(
+                        swapButton
+                    );
+
+                    card.appendChild(
+                        info
+                    );
+
+
+                    portfolioGrid.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+
+            observeRevealElements();
+
+        }
+
+
+        function updateProjectText(
+            id,
+            title,
+            description
+        ) {
+
+            const project =
+                draftData.projects.find(
+                    item =>
+                        item.id === id
+                );
+
+            if (!project) {
+
+                return;
+
+            }
+
+            project.title =
+                title;
+
+            project.description =
+                description;
+
+            markDraft();
+
+        }
+
+
+        /* ========================================================
+           ADD NEW PROJECT
+           ======================================================== */
+
+        document
+            .getElementById("addProjectButton")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const imageInput =
+                        document.getElementById(
+                            "newProjectImage"
+                        );
+
+                    const titleInput =
+                        document.getElementById(
+                            "newProjectTitle"
+                        );
+
+                    const categoryInput =
+                        document.getElementById(
+                            "newProjectCategory"
+                        );
+
+
+                    const file =
+                        imageInput.files[0];
+
+                    const title =
+                        titleInput.value.trim();
+
+                    const category =
+                        categoryInput.value;
+
+
+                    if (!file) {
+
+                        alert(
+                            "Please choose a project image."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!title) {
+
+                        alert(
+                            "Please enter a project title."
+                        );
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        const image =
+                            await readFileAsDataURL(
+                                file
+                            );
+
+
+                        const newProject = {
+
+                            id:
+                                Date.now(),
+
+                            title:
+                                title,
+
+                            category:
+                                category,
+
+                            image:
+                                image,
+
+                            description:
+                                "New portfolio project."
+
+                        };
+
+
+                        draftData.projects.push(
+                            newProject
+                        );
+
+
+                        imageInput.value =
+                            "";
+
+                        titleInput.value =
+                            "";
+
+
+                        renderPortfolio();
+
+                        markDraft();
+
+
+                    } catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+                        alert(
+                            "Could not add the project."
+                        );
+
+                    }
+
+                }
+            );
+
+
+        /* ========================================================
+           FILTERING
+           ======================================================== */
+
+        document
+            .querySelectorAll(".filter-btn")
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            document
+                                .querySelectorAll(
+                                    ".filter-btn"
+                                )
+                                .forEach(
+                                    btn =>
+                                        btn.classList.remove(
+                                            "active"
+                                        )
+                                );
+
+                            this.classList.add(
+                                "active"
+                            );
+
+                            currentFilter =
+                                this.dataset.filter;
+
+                            renderPortfolio();
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* ========================================================
+           EDITOR ACCESS
+           ======================================================== */
+
+        document
+            .getElementById("editorSwitch")
+            .addEventListener(
+                "click",
+                function () {
+
+                    if (editorMode) {
+
+                        exitEditor();
+
+                        return;
+
+                    }
+
+                    passwordModal.classList.add(
+                        "active"
+                    );
+
+                    adminPasswordInput.value =
+                        "";
+
+                    setTimeout(
+                        () =>
+                            adminPasswordInput.focus(),
+                        100
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById("cancelLogin")
+            .addEventListener(
+                "click",
+                function () {
+
+                    passwordModal.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById("loginButton")
+            .addEventListener(
+                "click",
+                login
+            );
+
+
+        adminPasswordInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    login();
+
+                }
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    passwordModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        function login() {
+
+            const enteredPassword =
+                adminPasswordInput.value;
+
+
+            if (
+                enteredPassword ===
+                ADMIN_PASSWORD
+            ) {
+
+                editorMode =
+                    true;
+
+                body.classList.add(
+                    "editor-mode"
+                );
+
+                passwordModal.classList.remove(
+                    "active"
+                );
+
+                enableEditor();
+
+                renderPortfolio();
+
+            } else {
+
+                alert(
+                    "Access Denied"
+                );
+
+                adminPasswordInput.value =
+                    "";
+
+            }
+
+        }
+
+
+        function enableEditor() {
+
+            document
+                .querySelectorAll(
+                    "[data-editable='true']"
+                )
+                .forEach(
+                    element => {
+
+                        element.contentEditable =
+                            "true";
+
+                        element.addEventListener(
+                            "input",
+                            markDraft
+                        );
+
+                    }
+                );
+
+            brandLogo.style.cursor =
+                "pointer";
+
+        }
+
+
+        function exitEditor() {
+
+            editorMode =
+                false;
+
+            body.classList.remove(
+                "editor-mode"
+            );
+
+            document
+                .querySelectorAll(
+                    "[contenteditable='true']"
+                )
+                .forEach(
+                    element => {
+
+                        element.contentEditable =
+                            "false";
+
+                    }
+                );
+
+            renderPortfolio();
+
+        }
+
+
+        document
+            .getElementById("exitEditor")
+            .addEventListener(
+                "click",
+                exitEditor
+            );
+
+
+        /* ========================================================
+           LOGO UPLOAD
+           ======================================================== */
+
+        logoUpload.addEventListener(
+            "change",
+            async function () {
+
+                const file =
+                    this.files[0];
+
+                if (!file) {
+
+                    return;
+
+                }
+
+                try {
+
+                    const image =
+                        await readFileAsDataURL(
+                            file
+                        );
+
+                    draftData.logo =
+                        image;
+
+                    brandLogo.src =
+                        image;
+
+                    markDraft();
+
+                } catch (error) {
+
+                    alert(
+                        "Unable to load the logo."
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ========================================================
+           COLOR CONTROLS
+           ======================================================== */
+
+        backgroundColor.addEventListener(
+            "input",
+            function () {
+
+                draftData.backgroundColor =
+                    this.value;
+
+                applyTheme();
+
+                markDraft();
+
+            }
+        );
+
+
+        accentColor.addEventListener(
+            "input",
+            function () {
+
+                draftData.accentColor =
+                    this.value;
+
+                applyTheme();
+
+                markDraft();
+
+            }
+        );
+
+
+        /* ========================================================
+           PUBLISH BUTTON
+           ======================================================== */
+
+        document
+            .getElementById("publishButton")
+            .addEventListener(
+                "click",
+                publishChanges
+            );
+
+
+        /* ========================================================
+           CONTACT FORM
+           ======================================================== */
+
+        quoteForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                if (editorMode) {
+
+                    alert(
+                        "Public quote submission is disabled while Editor Mode is active."
+                    );
+
+                    return;
+
+                }
+
+
+                const name =
+                    document
+                        .getElementById(
+                            "clientName"
+                        )
+                        .value
+                        .trim();
+
+
+                const kit =
+                    document
+                        .getElementById(
+                            "kitType"
+                        )
+                        .value
+                        .trim();
+
+
+                const service =
+                    document
+                        .getElementById(
+                            "serviceTier"
+                        )
+                        .value
+                        .trim();
+
+
+                const requests =
+                    document
+                        .getElementById(
+                            "specialRequests"
+                        )
+                        .value
+                        .trim();
+
+
+                const message =
+                    "Hello! My name is " +
+                    name +
+                    ". I would like to get a quote for a " +
+                    service +
+                    " on my " +
+                    kit +
+                    ". Special requests: " +
+                    requests +
+                    ".";
+
+
+                const encodedMessage =
+                    encodeURIComponent(
+                        message
+                    );
+
+
+                const whatsappURL =
+                    "https://wa.me/601125041130?text=" +
+                    encodedMessage;
+
+
+                window.location.href =
+                    whatsappURL;
+
+            }
+        );
+
+
+        /* ========================================================
+           INTERSECTION OBSERVER
+           ======================================================== */
+
+        let revealObserver;
+
+
+        function observeRevealElements() {
+
+            if (
+                revealObserver
+            ) {
+
+                revealObserver.disconnect();
+
+            }
+
+
+            const elements =
+                document.querySelectorAll(
+                    ".reveal"
+                );
+
+
+            revealObserver =
+                new IntersectionObserver(
+                    entries => {
+
+                        entries.forEach(
+                            entry => {
+
+                                if (
+                                    entry.isIntersecting
+                                ) {
+
+                                    entry.target.classList.add(
+                                        "visible"
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    },
+                    {
+                        threshold: 0.12
+                    }
+                );
+
+
+            elements.forEach(
+                element => {
+
+                    revealObserver.observe(
+                        element
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ========================================================
+           KEYBOARD SHORTCUT
+           ======================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    passwordModal.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    passwordModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ========================================================
+           INITIALISE
+           ======================================================== */
+
+        function initialiseWebsite() {
+
+            /*
+             * localStorage is loaded first.
+             * This means uploaded images, logo,
+             * colours and bio survive page refreshes.
+             */
+
+            publishedData =
+                loadData();
+
+            draftData =
+                cloneData(
+                    publishedData
+                );
+
+            applySavedContent();
+
+            observeRevealElements();
+
+        }
+
+
+        initialiseWebsite();
+
+
+    </script>
+
+</body>
+</html>
