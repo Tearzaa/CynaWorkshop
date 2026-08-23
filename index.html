@@ -77,7 +77,7 @@ a { color: inherit; text-decoration: none; }
     border: 1px dashed var(--orange);
     padding: 20px;
     border-radius: 8px;
-    margin-bottom: 30px;
+    margin-top: 30px;
     display: none;
 }
 
@@ -220,8 +220,32 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 .section-title { font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 8px; }
 .section-description { color: var(--muted); max-width: 700px; margin-top: 12px; }
 
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
 /* =========================================================
-   PORTFOLIO RESPONSIVE GRID
+   SERVICES & TIER STYLING
+   ========================================================= */
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+
+.service-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+.service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px var(--shadow); border-color: var(--orange); }
+.service-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.service-price { color: var(--orange); font-weight: 800; font-size: 1.25rem; margin-bottom: 20px; }
+.service-features { list-style: none; color: var(--muted); font-size: 0.95rem; }
+.service-features li { margin-bottom: 8px; position: relative; padding-left: 18px; }
+.service-features li::before { content: "▪"; position: absolute; left: 0; color: var(--orange); }
+
+/* =========================================================
+   PORTFOLIO RESPONSIVE MULTI-MEDIA SLIDER GRID
    ========================================================= */
 .portfolio-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
 
@@ -257,7 +281,38 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 .portfolio-slider-container { position: relative; background: #111; width: 100%; overflow: hidden; }
 .portfolio-slides-wrapper { display: flex; width: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 .portfolio-slide { flex: 0 0 100%; width: 100%; position: relative; }
-.portfolio-slide img { width: 100%; height: 260px; display: block; object-fit: cover; }
+.portfolio-slide img, .portfolio-slide video { width: 100%; height: auto; display: block; object-fit: contain; }
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(18, 18, 18, 0.7);
+    border: 1px solid rgba(255, 102, 0, 0.4);
+    color: var(--orange);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.2s, background 0.2s;
+    user-select: none;
+    cursor: pointer;
+}
+
+.portfolio-item:hover .slider-arrow { opacity: 1; }
+.slider-arrow:hover { background: var(--orange); color: #121212; }
+.arrow-left { left: 10px; }
+.arrow-right { right: 10px; }
+
+.slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
+.slider-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transition: 0.2s; cursor: pointer; }
+.slider-dot.active { background: var(--orange); width: 16px; border-radius: 4px; }
 
 .portfolio-details { padding: 20px; }
 .portfolio-title { font-weight: 800; font-size: 1.1rem; }
@@ -275,15 +330,17 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
     font-size: 0.75rem;
     font-weight: 800;
     z-index: 10;
+    transition: 0.2s;
 }
-.item-delete-btn:hover { background: #ff3b30; color: #fff; }
+
+.item-delete-btn:hover { background: #ff3b30; color: #ffffff; }
 </style>
 </head>
 <body class="has-publish-bar">
 
 <div id="publish-bar">
-    <span>CYNA WORKSHOP - STAGING MODE (LOCAL STORAGE ENGINE ACTIVE)</span>
-    <button id="reset-storage-btn">Reset All Data</button>
+    <span>CYNA WORKSHOP - EDITING MODE</span>
+    <button id="save-btn">Save Changes</button>
 </div>
 
 <nav class="navbar">
@@ -293,7 +350,7 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         </div>
         <div class="nav-links">
             <a href="#portfolio">Portfolio</a>
-            <button class="editor-toggle" id="toggle-editor-btn">+ Add Item</button>
+            <button class="editor-toggle" id="toggle-editor">+ Add Work</button>
         </div>
     </div>
 </nav>
@@ -317,153 +374,186 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
                 <h2 class="section-title">PORTFOLIO GALLERY</h2>
             </div>
 
-            <!-- Upload Panel -->
             <div class="admin-control-panel" id="admin-panel">
-                <form id="add-item-form">
+                <form id="upload-form">
                     <label>Project Title:</label>
-                    <input type="text" id="item-title" placeholder="e.g. RX-78-2 Ver.Ka Custom" required>
+                    <input type="text" id="work-title" placeholder="e.g. PG Unleashed RX-78-2 Custom" required>
                     
                     <label>Category:</label>
-                    <select id="item-category">
+                    <select id="work-category">
                         <option value="Gunpla">Gunpla</option>
                         <option value="Scale Work">Scale Work</option>
                         <option value="Custom Paint">Custom Paint</option>
                     </select>
 
-                    <label>Upload Image Files:</label>
-                    <input type="file" id="item-images" accept="image/*" multiple required>
+                    <label>Upload Media (Images/Videos):</label>
+                    <input type="file" id="work-files" accept="image/*,video/*" multiple required>
 
-                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Save &amp; Publish Item</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Add To Gallery</button>
                 </form>
             </div>
 
             <div class="portfolio-grid" id="portfolio-container">
-                <!-- Dynamic Items Render Here -->
-            </div>
+                </div>
         </div>
     </section>
 </main>
 
 <script>
 // =========================================================
-// LOCAL STORAGE PERSISTENCE ENGINE
+// LOCALSTORAGE & SLIDER ENGINE
 // =========================================================
+const STORAGE_KEY = 'cyna_portfolio_items';
 
-const STORAGE_KEY = 'cyna_portfolio_data';
-
-// Default initial payload
-const defaultItems = [
+// Initial default items if storage is empty
+const defaultData = [
     {
         id: "1",
         title: "PG Unleashed RX-78-2",
         category: "Gunpla",
-        images: ["https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=800&q=80"]
+        media: [
+            { type: "image", src: "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=800&q=80" }
+        ]
     },
     {
         id: "2",
-        title: "Sazabi Ver.Ka Custom Weathering",
+        title: "Sazabi Ver.Ka Weathering",
         category: "Custom Paint",
-        images: ["https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"]
+        media: [
+            { type: "image", src: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80" }
+        ]
     }
 ];
 
-function loadPortfolioData() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultItems));
-        return defaultItems;
-    }
-    return JSON.parse(raw);
+function getStoredItems() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : defaultData;
 }
 
-function savePortfolioData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    renderPortfolio();
+function saveItemsToStorage(items) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
 }
 
 function renderPortfolio() {
     const container = document.getElementById('portfolio-container');
-    const items = loadPortfolioData();
-
+    const items = getStoredItems();
     container.innerHTML = '';
 
-    items.forEach(item => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'portfolio-item';
-        
-        const imageSlides = item.images.map(img => `
-            <div class="portfolio-slide">
-                <img src="${img}" alt="${item.title}">
-            </div>
-        `).join('');
+    items.forEach((item) => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'portfolio-item';
+        itemCard.dataset.id = item.id;
 
-        itemEl.innerHTML = `
+        let slidesHTML = '';
+        let dotsHTML = '';
+        const showControls = item.media.length > 1;
+
+        item.media.forEach((m, idx) => {
+            const activeClass = idx === 0 ? 'active' : '';
+            if (m.type.startsWith('video')) {
+                slidesHTML += `<div class="portfolio-slide"><video src="${m.src}" controls></video></div>`;
+            } else {
+                slidesHTML += `<div class="portfolio-slide"><img src="${m.src}" alt="${item.title}"></div>`;
+            }
+            if (showControls) {
+                dotsHTML += `<div class="slider-dot ${activeClass}" data-slide="${idx}"></div>`;
+            }
+        });
+
+        itemCard.innerHTML = `
             <button class="item-delete-btn" onclick="deleteItem('${item.id}')">Delete</button>
             <div class="portfolio-slider-container">
-                <div class="portfolio-slides-wrapper">
-                    ${imageSlides}
+                <div class="portfolio-slides-wrapper" style="transform: translateX(0%);">
+                    ${slidesHTML}
                 </div>
+                ${showControls ? `
+                    <div class="slider-arrow arrow-left" onclick="moveSlide('${item.id}', -1)">&#10094;</div>
+                    <div class="slider-arrow arrow-right" onclick="moveSlide('${item.id}', 1)">&#10095;</div>
+                    <div class="slider-dots">${dotsHTML}</div>
+                ` : ''}
             </div>
             <div class="portfolio-details">
                 <div class="portfolio-title">${item.title}</div>
                 <div class="portfolio-category">${item.category}</div>
             </div>
         `;
-        container.appendChild(itemEl);
+
+        container.appendChild(itemCard);
+    });
+}
+
+function moveSlide(itemId, direction) {
+    const card = document.querySelector(`.portfolio-item[data-id="${itemId}"]`);
+    const wrapper = card.querySelector('.portfolio-slides-wrapper');
+    const slides = card.querySelectorAll('.portfolio-slide');
+    const dots = card.querySelectorAll('.slider-dot');
+    
+    let currentIndex = parseInt(card.dataset.currentIndex || "0");
+    currentIndex = (currentIndex + direction + slides.length) % slides.length;
+    card.dataset.currentIndex = currentIndex;
+
+    wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentIndex);
     });
 }
 
 function deleteItem(id) {
-    let items = loadPortfolioData();
+    let items = getStoredItems();
     items = items.filter(item => item.id !== id);
-    savePortfolioData(items);
+    saveItemsToStorage(items);
+    renderPortfolio();
 }
 
-// Control Panel Handlers
-document.getElementById('toggle-editor-btn').addEventListener('click', () => {
+// Toggle Add Form Panel
+document.getElementById('toggle-editor').addEventListener('click', () => {
     document.getElementById('admin-panel').classList.toggle('active-editor-block');
 });
 
-document.getElementById('reset-storage-btn').addEventListener('click', () => {
-    localStorage.removeItem(STORAGE_KEY);
-    renderPortfolio();
+// Save Button Event
+document.getElementById('save-btn').addEventListener('click', () => {
+    alert('Portfolio state successfully saved to localStorage!');
 });
 
-// Image Upload Handler (Converts File objects to Base64 data strings)
-document.getElementById('add-item-form').addEventListener('submit', async (e) => {
+// Process File Uploads and Save
+document.getElementById('upload-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const title = document.getElementById('item-title').value;
-    const category = document.getElementById('item-category').value;
-    const files = Array.from(document.getElementById('item-images').files);
+    const title = document.getElementById('work-title').value;
+    const category = document.getElementById('work-category').value;
+    const fileList = Array.from(document.getElementById('work-files').files);
 
-    if (files.length === 0) return;
-
-    const base64Images = await Promise.all(files.map(file => {
+    const mediaList = await Promise.all(fileList.map(file => {
         return new Promise((resolve) => {
             const reader = new FileReader();
-            reader.onload = (evt) => resolve(evt.target.result);
+            reader.onload = (evt) => {
+                resolve({
+                    type: file.type.startsWith('video') ? 'video' : 'image',
+                    src: evt.target.result
+                });
+            };
             reader.readAsDataURL(file);
         });
     }));
 
     const newItem = {
         id: Date.now().toString(),
-        title: title,
-        category: category,
-        images: base64Images
+        title,
+        category,
+        media: mediaList
     };
 
-    const currentData = loadPortfolioData();
-    currentData.unshift(newItem);
-    savePortfolioData(currentData);
+    const currentItems = getStoredItems();
+    currentItems.unshift(newItem);
+    saveItemsToStorage(currentItems);
+    renderPortfolio();
 
-    // Reset Form
-    document.getElementById('add-item-form').reset();
+    document.getElementById('upload-form').reset();
     document.getElementById('admin-panel').classList.remove('active-editor-block');
 });
 
-// Initial Render
+// Initialize on Load
 document.addEventListener('DOMContentLoaded', renderPortfolio);
 </script>
 </body>
