@@ -9,25 +9,22 @@
 
 <style>
 /* =========================================================
-   GLOBAL VARIABLES
-========================================================= */
+   CYNA MODEL WORKS
+   SINGLE FILE WEBSITE
+   ========================================================= */
 
 :root {
     --bg: #121212;
-    --bg-secondary: #181818;
+    --bg-secondary: #191919;
     --bg-card: #1d1d1d;
     --orange: #ff6600;
     --orange-light: #ff8533;
     --text: #ffffff;
-    --muted: #b8b8b8;
-    --border: rgba(255,102,0,.35);
-    --shadow: 0 0 25px rgba(255,102,0,.15);
-    --max-width: 1250px;
+    --muted: #b9b9b9;
+    --border: rgba(255,102,0,.45);
+    --shadow: 0 0 30px rgba(255,102,0,.12);
+    --nav-height: 74px;
 }
-
-/* =========================================================
-   RESET
-========================================================= */
 
 * {
     box-sizing: border-box;
@@ -44,72 +41,119 @@ body {
     color: var(--text);
     font-family:
         Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
+        Arial,
+        Helvetica,
         sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-img,
-video {
-    max-width: 100%;
-}
-
-button,
-input,
-textarea,
-select {
-    font: inherit;
-}
-
 /* =========================================================
-   SCROLLBAR
-========================================================= */
+   GENERAL
+   ========================================================= */
 
-::-webkit-scrollbar {
-    width: 8px;
+.container {
+    width: min(1180px, 92%);
+    margin: auto;
 }
 
-::-webkit-scrollbar-track {
-    background: #0c0c0c;
+section {
+    padding: 100px 0;
+    position: relative;
 }
 
-::-webkit-scrollbar-thumb {
+.section-title {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.section-title .eyebrow {
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: .78rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.section-title h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+}
+
+.section-title p {
+    color: var(--muted);
+    max-width: 700px;
+    margin: 18px auto 0;
+}
+
+.btn {
+    border: 1px solid var(--orange);
+    background: transparent;
+    color: var(--text);
+    padding: 13px 22px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.btn:hover {
     background: var(--orange);
-    border-radius: 10px;
+    color: #fff;
+    box-shadow:
+        0 0 10px rgba(255,102,0,.5),
+        0 0 30px rgba(255,102,0,.2);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: var(--orange);
+    color: #fff;
+}
+
+.btn-secondary {
+    border-color: #444;
+}
+
+.btn-danger {
+    border-color: #d33;
+    color: #ff6b6b;
+}
+
+.btn-danger:hover {
+    background: #b51d1d;
+    border-color: #b51d1d;
 }
 
 /* =========================================================
-   NAVBAR
-========================================================= */
+   NAVIGATION
+   ========================================================= */
 
 .navbar {
+    height: var(--nav-height);
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 72px;
-    z-index: 9000;
+    right: 0;
+    z-index: 1000;
 
-    display: flex;
-    align-items: center;
-
-    background: rgba(12,12,12,.94);
-    backdrop-filter: blur(14px);
+    background: rgba(10,10,10,.94);
+    backdrop-filter: blur(12px);
 
     border-bottom: 1px solid var(--border);
 }
 
 .nav-inner {
-    width: min(var(--max-width), calc(100% - 32px));
-    margin: auto;
-
+    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
 }
 
@@ -117,21 +161,23 @@ select {
     display: flex;
     align-items: center;
     gap: 12px;
+    min-width: 0;
 }
 
-.logo-image {
+.logo-img {
     width: 45px;
     height: 45px;
     object-fit: contain;
     border: 1px solid var(--orange);
-    border-radius: 6px;
-    display: none;
+    border-radius: 5px;
+    background: #080808;
 }
 
 .logo-text {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 900;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    white-space: nowrap;
 }
 
 .logo-text span {
@@ -141,732 +187,470 @@ select {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 20px;
 }
 
-.nav-links a,
-.nav-button {
-    color: var(--text);
-    text-decoration: none;
-
-    border: 1px solid transparent;
-    background: transparent;
-
-    padding: 8px 12px;
-    border-radius: 5px;
-
-    cursor: pointer;
-    transition: .25s ease;
-}
-
-.nav-links a:hover,
-.nav-button:hover {
-    color: var(--orange);
-    border-color: var(--orange);
-    box-shadow: 0 0 12px rgba(255,102,0,.25);
-}
-
-/* =========================================================
-   EDITOR UI
-========================================================= */
-
-.editor-only {
-    display: none !important;
-}
-
-body.editor-mode .editor-only {
-    display: block !important;
-}
-
-body.editor-mode .editor-inline {
-    display: inline-block !important;
-}
-
-.editor-badge {
-    position: fixed;
-    top: 82px;
-    right: 18px;
-
-    z-index: 8500;
-
-    background: var(--orange);
-    color: #000;
-
-    padding: 8px 14px;
-
-    font-size: .75rem;
-    font-weight: 900;
-    letter-spacing: 1px;
-
-    border-radius: 4px;
-
-    box-shadow: 0 0 20px rgba(255,102,0,.5);
-}
-
-.draft-bar {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    width: 100%;
-
-    z-index: 8999;
-
-    background: #ff6600;
-    color: #000;
-
-    padding: 10px;
-
-    text-align: center;
-    font-weight: 900;
-
-    display: none;
-}
-
-.draft-bar.active {
-    display: block;
-}
-
-.draft-bar button {
-    margin-left: 15px;
-
-    border: 2px solid #000;
-    background: #000;
-    color: #fff;
-
-    padding: 7px 16px;
-
-    border-radius: 4px;
-    cursor: pointer;
-
-    font-weight: 900;
-}
-
-.editor-panel {
-    background: #101010;
-
-    border: 1px solid var(--orange);
-    border-radius: 8px;
-
-    padding: 22px;
-
-    margin: 30px auto;
-
-    width: min(var(--max-width), calc(100% - 32px));
-
-    box-shadow: var(--shadow);
-}
-
-.editor-panel h3 {
-    color: var(--orange);
-    margin-bottom: 15px;
-}
-
-.editor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 15px;
-}
-
-.editor-control {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-.editor-control label {
+.nav-links a {
     color: var(--muted);
-    font-size: .85rem;
+    text-decoration: none;
+    font-size: .9rem;
+    transition: .25s;
 }
 
-.editor-control input,
-.editor-control select,
-.editor-control textarea {
-    width: 100%;
-
-    background: #202020;
-    color: #fff;
-
-    border: 1px solid #444;
-    border-radius: 5px;
-
-    padding: 10px;
+.nav-links a:hover {
+    color: var(--orange);
 }
 
-.editor-control input:focus,
-.editor-control textarea:focus,
-.editor-control select:focus {
-    outline: none;
-    border-color: var(--orange);
-}
-
-/* =========================================================
-   CONTENTEDITABLE
-========================================================= */
-
-body.editor-mode [contenteditable="true"] {
-    outline: 1px dashed rgba(255,102,0,.6);
-    outline-offset: 4px;
-
-    border-radius: 3px;
-}
-
-body.editor-mode [contenteditable="true"]:focus {
-    outline: 2px solid var(--orange);
+.editor-switch {
+    font-size: .78rem;
+    padding: 8px 12px;
 }
 
 /* =========================================================
    HERO
-========================================================= */
+   ========================================================= */
 
 .hero {
     min-height: 100vh;
-
+    padding-top: 150px;
     display: flex;
     align-items: center;
 
-    padding: 130px 20px 80px;
-
-    position: relative;
-    overflow: hidden;
-
     background:
         radial-gradient(
-            circle at 80% 30%,
+            circle at 80% 20%,
             rgba(255,102,0,.15),
-            transparent 40%
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #111 0%,
+            #121212 60%,
+            #17110c 100%
         );
 }
 
-.hero::before {
+.hero::after {
     content: "";
-
     position: absolute;
     inset: 0;
+    pointer-events: none;
+    opacity: .08;
 
-    background:
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.08) 1px,
+            transparent 1px
+        ),
         linear-gradient(
             90deg,
-            rgba(18,18,18,.98),
-            rgba(18,18,18,.75),
-            rgba(18,18,18,.98)
+            rgba(255,255,255,.08) 1px,
+            transparent 1px
         );
 
-    pointer-events: none;
+    background-size: 50px 50px;
 }
 
-.hero-grid {
-    width: min(var(--max-width),100%);
-    margin: auto;
-
+.hero-content {
     position: relative;
     z-index: 2;
+    max-width: 850px;
 }
 
-.hero-label {
+.hero-tag {
     color: var(--orange);
-    font-weight: 900;
-
+    font-weight: 800;
     letter-spacing: 4px;
+    font-size: .8rem;
     text-transform: uppercase;
-
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .hero h1 {
-    max-width: 850px;
-
-    font-size: clamp(3rem,7vw,6rem);
-    line-height: .95;
-
-    font-weight: 1000;
-
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: .9;
     text-transform: uppercase;
+    letter-spacing: -3px;
 }
 
 .hero h1 span {
     color: var(--orange);
+    text-shadow: 0 0 30px rgba(255,102,0,.25);
 }
 
-.hero p {
-    max-width: 720px;
-
+.hero-description {
+    margin: 30px 0;
     color: var(--muted);
-
-    font-size: 1.15rem;
-
-    margin-top: 25px;
+    max-width: 700px;
+    font-size: 1.08rem;
 }
 
 .hero-actions {
     display: flex;
-    flex-wrap: wrap;
     gap: 12px;
-
-    margin-top: 35px;
+    flex-wrap: wrap;
 }
 
 /* =========================================================
-   BUTTONS
-========================================================= */
+   ABOUT
+   ========================================================= */
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 13px 22px;
-
-    border-radius: 5px;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    font-weight: 900;
-
-    transition: .25s ease;
+.about-box {
+    background: var(--bg-secondary);
+    border: 1px solid #292929;
+    border-left: 4px solid var(--orange);
+    padding: 35px;
+    border-radius: 7px;
+    box-shadow: var(--shadow);
 }
 
-.btn-primary {
-    background: var(--orange);
-    color: #000;
-
-    border: 1px solid var(--orange);
-}
-
-.btn-primary:hover {
-    background: var(--orange-light);
-
-    box-shadow:
-        0 0 15px rgba(255,102,0,.6),
-        0 0 35px rgba(255,102,0,.25);
-
-    transform: translateY(-2px);
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--orange);
-
-    border: 1px solid var(--orange);
-}
-
-.btn-outline:hover {
-    background: var(--orange);
-    color: #000;
-
-    box-shadow: 0 0 20px rgba(255,102,0,.5);
-}
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-section {
-    padding: 100px 20px;
-}
-
-.container {
-    width: min(var(--max-width),100%);
-    margin: auto;
-}
-
-.section-title {
-    margin-bottom: 45px;
-}
-
-.section-title .eyebrow {
-    color: var(--orange);
-
-    text-transform: uppercase;
-    letter-spacing: 3px;
-
-    font-weight: 900;
-
-    font-size: .8rem;
-}
-
-.section-title h2 {
-    font-size: clamp(2rem,5vw,3.5rem);
-    margin-top: 8px;
-}
-
-.section-title p {
+.about-box p {
     color: var(--muted);
-    max-width: 700px;
-    margin-top: 12px;
 }
 
 /* =========================================================
    PORTFOLIO FILTER
-========================================================= */
+   ========================================================= */
 
-.filters {
+.filter-tabs {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-
     gap: 8px;
-
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .filter-btn {
     background: transparent;
-
-    color: var(--muted);
-
-    border: 1px solid #444;
-
-    padding: 9px 17px;
-
+    border: 1px solid #333;
+    color: #aaa;
+    padding: 9px 18px;
     cursor: pointer;
-
     border-radius: 4px;
-
-    transition: .25s ease;
+    transition: .25s;
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-    background: var(--orange);
-    color: #000;
-
     border-color: var(--orange);
+    color: white;
+    background: rgba(255,102,0,.1);
 }
 
 /* =========================================================
-   FOLIO GRID
-========================================================= */
+   PORTFOLIO GRID
+   ========================================================= */
 
 .portfolio-grid {
     display: grid;
-
     grid-template-columns:
-        repeat(auto-fill,minmax(280px,1fr));
-
+        repeat(auto-fill, minmax(270px, 1fr));
     gap: 22px;
-
-    align-items: start;
 }
 
-/* =========================================================
-   FOLIO CARD
-========================================================= */
-
-.folio-card {
+.project-card {
     background: var(--bg-card);
-
-    border: 1px solid #292929;
-
-    border-radius: 7px;
-
+    border: 1px solid #2c2c2c;
+    border-radius: 8px;
     overflow: hidden;
-
-    transition: .35s ease;
-
     position: relative;
+    cursor: pointer;
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
 }
 
-.folio-card:hover {
-    transform: translateY(-6px) scale(1.015);
-
+.project-card:hover {
+    transform: scale(1.025);
     border-color: var(--orange);
-
     box-shadow:
-        0 15px 35px rgba(0,0,0,.45),
+        0 10px 40px rgba(0,0,0,.5),
         0 0 20px rgba(255,102,0,.12);
 }
 
-.folio-media {
+.project-thumbnail {
+    height: 280px;
+    background: #090909;
+    position: relative;
+    overflow: hidden;
+}
+
+.thumbnail-track {
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 3px;
+    transition: transform .3s ease;
+}
+
+.thumbnail-item {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #050505;
+}
+
+.thumbnail-item img,
+.thumbnail-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform .5s ease;
+}
+
+.project-card:hover .thumbnail-item img,
+.project-card:hover .thumbnail-item video {
+    transform: scale(1.07);
+}
+
+/*
+   THREE-IMAGE THUMBNAIL STRIP
+*/
+
+.mini-strip {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
 
-    background: #0b0b0b;
+    z-index: 4;
 }
 
-.media-item {
+.mini-thumb {
+    height: 55px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 3px;
+    overflow: hidden;
+    background: #080808;
+    transition: .3s;
+}
+
+.mini-thumb img,
+.mini-thumb video {
     width: 100%;
-
-    display: block;
-
-    background: #0a0a0a;
-
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
 }
 
-.media-item.image {
-    height: auto;
+.mini-thumb:hover {
+    transform: scale(1.12);
+    border-color: var(--orange);
+    z-index: 5;
 }
 
-.media-item.video {
-    height: auto;
+.media-count {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
 
-    max-height: 600px;
+    background: rgba(0,0,0,.75);
+    border: 1px solid var(--orange);
+    color: white;
 
-    object-fit: contain;
+    padding: 5px 9px;
+    border-radius: 4px;
+    font-size: .72rem;
 }
 
-.folio-info {
+.project-info {
     padding: 20px;
 }
 
-.folio-category {
+.project-category {
     color: var(--orange);
-
-    font-size: .72rem;
-    font-weight: 900;
-
-    letter-spacing: 2px;
-
     text-transform: uppercase;
+    font-size: .7rem;
+    letter-spacing: 2px;
+    font-weight: 800;
 }
 
-.folio-title {
-    font-size: 1.35rem;
-
-    margin-top: 4px;
+.project-title {
+    margin-top: 5px;
+    font-size: 1.2rem;
 }
 
-.folio-description {
-    color: var(--muted);
-
-    margin-top: 8px;
-
-    font-size: .9rem;
+.project-description {
+    color: #999;
+    font-size: .85rem;
+    margin-top: 7px;
 }
 
 /* =========================================================
-   EDITOR MEDIA CONTROLS
-========================================================= */
+   ADMIN CARD CONTROLS
+   ========================================================= */
 
-.media-editor {
+.admin-controls {
     display: none;
+    padding: 15px;
+    border-top: 1px solid #333;
+    background: #151515;
 }
 
-body.editor-mode .media-editor {
+body.editor-mode .admin-controls {
+    display: block;
+}
+
+.admin-media-buttons {
     display: flex;
-}
-
-.media-editor {
-    gap: 6px;
-
-    padding: 8px;
-
-    background: #101010;
-
     flex-wrap: wrap;
+    gap: 7px;
 }
 
-.media-editor label,
-.media-editor button {
-    background: var(--orange);
-    color: #000;
+.file-btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+}
 
-    border: none;
-
-    padding: 6px 9px;
-
-    font-size: .72rem;
-
-    font-weight: 900;
-
-    border-radius: 3px;
-
+.file-btn input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
     cursor: pointer;
 }
 
-.media-editor input[type="file"] {
-    display: none;
-}
-
-.media-editor .danger {
-    background: #b40000;
-    color: #fff;
+.file-btn span {
+    pointer-events: none;
 }
 
 /* =========================================================
    SERVICES
-========================================================= */
+   ========================================================= */
 
 .services-grid {
     display: grid;
-
     grid-template-columns:
-        repeat(auto-fit,minmax(250px,1fr));
-
+        repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
 .service-card {
-    background:
-        linear-gradient(
-            145deg,
-            #1b1b1b,
-            #111
-        );
-
-    border: 1px solid #333;
-
-    border-radius: 7px;
-
-    padding: 28px;
-
-    transition: .3s ease;
-
-    position: relative;
+    background: var(--bg-card);
+    border: 1px solid #303030;
+    padding: 30px;
+    border-radius: 8px;
+    transition: .3s;
 }
 
 .service-card:hover {
     border-color: var(--orange);
-
-    transform: translateY(-5px);
-
-    box-shadow: var(--shadow);
+    transform: translateY(-6px);
 }
 
-.service-card.featured {
-    border-color: var(--orange);
-}
-
-.service-card .number {
+.service-number {
     color: var(--orange);
-
-    font-size: .75rem;
-
-    letter-spacing: 3px;
-
+    font-size: .8rem;
     font-weight: 900;
+    letter-spacing: 3px;
 }
 
 .service-card h3 {
-    font-size: 1.5rem;
-
-    margin-top: 12px;
+    margin: 12px 0;
+    font-size: 1.35rem;
 }
 
 .price {
+    font-size: 1.5rem;
+    font-weight: 900;
     color: var(--orange);
-
-    font-size: 1.8rem;
-
-    font-weight: 1000;
-
-    margin: 12px 0;
+    margin-bottom: 15px;
 }
 
 .service-card p {
     color: var(--muted);
+    font-size: .9rem;
 }
 
 .service-card ul {
-    list-style: none;
-
     margin-top: 18px;
+    list-style: none;
 }
 
 .service-card li {
-    padding: 7px 0;
-
-    border-bottom: 1px solid #292929;
-
-    color: #ddd;
+    color: #bbb;
+    font-size: .85rem;
+    margin: 7px 0;
 }
 
 .service-card li::before {
-    content: "▸ ";
-
+    content: "▸";
     color: var(--orange);
+    margin-right: 8px;
 }
 
 /* =========================================================
    WORKSHOP
-========================================================= */
+   ========================================================= */
 
 .workshop {
-    margin-top: 25px;
-
+    border: 1px solid var(--orange);
     background:
         linear-gradient(
-            120deg,
-            rgba(255,102,0,.14),
-            rgba(255,102,0,.02)
+            135deg,
+            rgba(255,102,0,.12),
+            transparent
         );
-
-    border: 1px solid var(--orange);
-
-    padding: 35px;
-
+    padding: 40px;
     border-radius: 8px;
-
-    display: grid;
-
-    grid-template-columns: 1.5fr 1fr;
-
-    gap: 30px;
-
-    align-items: center;
+    margin-top: 30px;
 }
 
 .workshop h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
 .workshop p {
     color: var(--muted);
-    margin-top: 10px;
+    max-width: 800px;
 }
 
 /* =========================================================
    CONTACT
-========================================================= */
+   ========================================================= */
 
 .contact-grid {
     display: grid;
-
-    grid-template-columns: 1fr 1.4fr;
-
-    gap: 40px;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 35px;
 }
 
 .contact-info {
-    background: #171717;
-
-    border: 1px solid #2c2c2c;
-
+    background: var(--bg-secondary);
+    border: 1px solid #292929;
     padding: 30px;
-
     border-radius: 7px;
 }
 
 .contact-item {
-    margin: 18px 0;
+    margin: 20px 0;
 }
 
-.contact-item strong {
+.contact-item small {
     color: var(--orange);
-
     display: block;
-
-    margin-bottom: 3px;
+    text-transform: uppercase;
+    font-size: .7rem;
+    letter-spacing: 2px;
 }
 
 .contact-item a {
-    color: #fff;
+    color: white;
     text-decoration: none;
 }
 
-.contact-item a:hover {
-    color: var(--orange);
-}
-
 .contact-form {
-    background: #171717;
-
-    border: 1px solid #2c2c2c;
-
+    background: var(--bg-secondary);
+    border: 1px solid #292929;
     padding: 30px;
-
     border-radius: 7px;
 }
 
@@ -876,194 +660,401 @@ body.editor-mode .media-editor {
 
 .form-group label {
     display: block;
-
-    margin-bottom: 6px;
-
-    color: #ddd;
-
-    font-size: .9rem;
+    margin-bottom: 7px;
+    font-size: .8rem;
+    color: #aaa;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+input,
+select,
+textarea {
     width: 100%;
-
-    background: #101010;
-
-    border: 1px solid #3a3a3a;
-
-    color: #fff;
-
-    padding: 12px;
-
+    background: #0d0d0d;
+    border: 1px solid #333;
+    color: white;
+    padding: 13px;
     border-radius: 4px;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
     outline: none;
-
-    border-color: var(--orange);
-
-    box-shadow: 0 0 10px rgba(255,102,0,.15);
+    font-family: inherit;
 }
 
-.form-group textarea {
-    min-height: 140px;
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 10px rgba(255,102,0,.1);
+}
 
+textarea {
+    min-height: 130px;
     resize: vertical;
 }
 
 /* =========================================================
-   ADD PROJECT
-========================================================= */
+   FOOTER
+   ========================================================= */
 
-.add-project-panel {
-    margin-top: 25px;
-
-    background: #101010;
-
-    border: 1px dashed var(--orange);
-
-    border-radius: 7px;
-
-    padding: 25px;
+footer {
+    border-top: 1px solid #292929;
+    padding: 35px 0;
+    text-align: center;
+    color: #777;
+    font-size: .8rem;
 }
 
-.add-project-panel h3 {
+footer span {
     color: var(--orange);
+}
 
+/* =========================================================
+   EDITOR PANEL
+   ========================================================= */
+
+.editor-panel {
+    display: none;
+    background: #0d0d0d;
+    border: 1px solid var(--orange);
+    margin: 100px auto 0;
+    padding: 25px;
+    width: min(1180px, 92%);
+    border-radius: 8px;
+}
+
+body.editor-mode .editor-panel {
+    display: block;
+}
+
+.editor-panel h2 {
+    color: var(--orange);
     margin-bottom: 15px;
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer {
-    background: #0b0b0b;
-
-    border-top: 1px solid #2a2a2a;
-
-    padding: 45px 20px;
+.editor-tools {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
 }
 
-.footer-inner {
-    width: min(var(--max-width),100%);
-
-    margin: auto;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    flex-wrap: wrap;
+.editor-tool {
+    background: #181818;
+    border: 1px solid #303030;
+    padding: 18px;
+    border-radius: 5px;
 }
 
-.footer-brand {
-    font-weight: 1000;
-
-    letter-spacing: 2px;
-}
-
-.footer-brand span {
-    color: var(--orange);
-}
-
-.footer-copy {
-    color: #777;
-
-    font-size: .85rem;
-}
-
-/* =========================================================
-   PASSWORD MODAL
-========================================================= */
-
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 12000;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0,0,0,.82);
-
-    padding: 20px;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-box {
-    width: min(430px,100%);
-
-    background: #171717;
-
-    border: 1px solid var(--orange);
-
-    border-radius: 8px;
-
-    padding: 30px;
-
-    box-shadow:
-        0 0 50px rgba(255,102,0,.25);
-}
-
-.modal-box h3 {
-    color: var(--orange);
-
+.editor-tool label {
+    display: block;
+    font-size: .8rem;
+    color: #aaa;
     margin-bottom: 8px;
 }
 
-.modal-box p {
-    color: var(--muted);
+/* =========================================================
+   EDITABLE
+   ========================================================= */
 
-    font-size: .9rem;
-
-    margin-bottom: 20px;
+body.editor-mode [contenteditable="true"] {
+    outline: 1px dashed rgba(255,102,0,.6);
+    outline-offset: 4px;
 }
 
-.modal-box input {
-    width: 100%;
-
-    padding: 12px;
-
-    background: #0e0e0e;
-
-    color: #fff;
-
-    border: 1px solid #444;
-
-    border-radius: 4px;
-
-    margin-bottom: 15px;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 8px;
+body.editor-mode [contenteditable="true"]:focus {
+    outline: 1px solid var(--orange);
 }
 
 /* =========================================================
-   REVEAL ANIMATION
-========================================================= */
+   PUBLISH BAR
+   ========================================================= */
+
+.publish-bar {
+    display: none;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    z-index: 999;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff6600,
+            #ff8533
+        );
+
+    color: white;
+    padding: 12px 20px;
+
+    box-shadow: 0 5px 25px rgba(0,0,0,.4);
+}
+
+.publish-bar.visible {
+    display: block;
+}
+
+.publish-inner {
+    width: min(1180px, 92%);
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.publish-btn {
+    background: #111;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* =========================================================
+   LOGO UPLOAD
+   ========================================================= */
+
+.logo-upload {
+    display: none;
+}
+
+body.editor-mode .logo-upload {
+    display: inline-flex;
+}
+
+/* =========================================================
+   ADD PROJECT
+   ========================================================= */
+
+.add-project {
+    display: none;
+    margin-top: 35px;
+    padding: 25px;
+    background: #161616;
+    border: 1px dashed var(--orange);
+    border-radius: 7px;
+}
+
+body.editor-mode .add-project {
+    display: block;
+}
+
+.add-project-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    align-items: end;
+}
+
+/* =========================================================
+   MEDIA VIEWER
+   ========================================================= */
+
+.viewer {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.96);
+    z-index: 5000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.viewer.open {
+    display: flex;
+}
+
+.viewer-content {
+    width: min(92vw, 1100px);
+    height: min(88vh, 800px);
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.viewer-media {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+
+    border: 1px solid #333;
+    box-shadow:
+        0 0 60px rgba(0,0,0,.8);
+}
+
+.viewer-video {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.viewer-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 45px;
+    height: 45px;
+
+    border: 1px solid var(--orange);
+    background: #111;
+    color: white;
+
+    border-radius: 50%;
+    cursor: pointer;
+
+    font-size: 1.4rem;
+    z-index: 5;
+}
+
+.viewer-arrow {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 50px;
+    height: 50px;
+
+    border: 1px solid var(--orange);
+    background: rgba(10,10,10,.9);
+    color: white;
+
+    border-radius: 50%;
+    cursor: pointer;
+
+    font-size: 1.4rem;
+
+    transition: .25s;
+}
+
+.viewer-arrow:hover {
+    background: var(--orange);
+    box-shadow: 0 0 25px rgba(255,102,0,.4);
+}
+
+.viewer-prev {
+    left: 0;
+}
+
+.viewer-next {
+    right: 0;
+}
+
+.viewer-counter {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: rgba(0,0,0,.8);
+    border: 1px solid #333;
+    padding: 6px 12px;
+    font-size: .75rem;
+}
+
+/* =========================================================
+   ADMIN MEDIA PREVIEW
+   ========================================================= */
+
+.media-list {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
+}
+
+.admin-media-item {
+    height: 110px;
+    background: #080808;
+    border: 1px solid #333;
+    overflow: hidden;
+    position: relative;
+}
+
+.admin-media-item img,
+.admin-media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-media-item button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+
+    width: 25px;
+    height: 25px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #b71919;
+    color: white;
+    cursor: pointer;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width: 800px) {
+
+    .nav-links a:not(.editor-switch) {
+        display: none;
+    }
+
+    .logo-text {
+        font-size: .9rem;
+    }
+
+    .hero {
+        padding-top: 130px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 75px 0;
+    }
+
+    .viewer-arrow {
+        width: 42px;
+        height: 42px;
+    }
+
+    .viewer-prev {
+        left: 5px;
+    }
+
+    .viewer-next {
+        right: 5px;
+    }
+}
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
 
 .reveal {
     opacity: 0;
-
     transform: translateY(35px);
-
     transition:
         opacity .8s ease,
         transform .8s ease;
@@ -1071,269 +1062,127 @@ footer {
 
 .reveal.visible {
     opacity: 1;
-
     transform: translateY(0);
 }
 
 /* =========================================================
-   EMPTY PORTFOLIO
-========================================================= */
+   ADMIN STATUS
+   ========================================================= */
 
-.empty-state {
-    padding: 50px;
-
-    text-align: center;
-
-    border: 1px dashed #444;
-
-    color: #777;
-
-    grid-column: 1 / -1;
+.admin-status {
+    color: var(--orange);
+    font-size: .75rem;
+    margin-top: 8px;
 }
 
 /* =========================================================
-   RESPONSIVE
-========================================================= */
+   EMPTY PORTFOLIO
+   ========================================================= */
 
-@media(max-width:800px) {
-
-    .nav-links a:not(.important) {
-        display: none;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-    }
-
-    .contact-grid,
-    .workshop {
-        grid-template-columns: 1fr;
-    }
-
-    .portfolio-grid {
-        grid-template-columns:
-            repeat(auto-fill,minmax(220px,1fr));
-    }
-
-}
-
-@media(max-width:500px) {
-
-    .navbar {
-        height: 64px;
-    }
-
-    .nav-inner {
-        width: calc(100% - 20px);
-    }
-
-    .logo-text {
-        font-size: .9rem;
-    }
-
-    .nav-button {
-        padding: 6px 8px;
-        font-size: .75rem;
-    }
-
-    section {
-        padding: 75px 15px;
-    }
-
-    .hero {
-        padding-top: 110px;
-    }
-
-    .portfolio-grid {
-        grid-template-columns: 1fr;
-    }
-
+.empty-projects {
+    text-align: center;
+    padding: 70px 20px;
+    border: 1px dashed #333;
+    color: #777;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     NAVIGATION
-======================================================== -->
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
 <header class="navbar">
-
-    <div class="nav-inner">
+    <div class="container nav-inner">
 
         <div class="logo-area">
 
             <img
                 id="siteLogo"
-                class="logo-image"
+                class="logo-img"
+                src=""
                 alt="Cyna Model Works Logo"
             >
 
             <div
                 class="logo-text"
+                data-editable
                 contenteditable="false"
-                data-editable="true"
-                data-key="logoText"
             >
                 CYNA <span>MODEL WORKS</span>
             </div>
 
-            <div class="editor-only editor-inline">
-
-                <label
-                    class="btn btn-outline"
-                    style="padding:5px 9px;font-size:.7rem;"
+            <label class="btn logo-upload">
+                Change Logo
+                <input
+                    type="file"
+                    id="logoInput"
+                    accept="image/*"
                 >
-                    Upload Logo
-
-                    <input
-                        type="file"
-                        id="logoUpload"
-                        accept="image/*"
-                        hidden
-                    >
-                </label>
-
-            </div>
+            </label>
 
         </div>
 
         <nav class="nav-links">
 
-            <a href="#portfolio" class="important">
-                Portfolio
-            </a>
-
-            <a href="#services" class="important">
-                Services
-            </a>
-
-            <a href="#contact" class="important">
-                Contact
-            </a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
 
             <button
-                id="editorButton"
-                class="nav-button"
-                type="button"
+                class="btn editor-switch"
+                id="editorToggle"
             >
                 Editor Side
-            </button>
-
-            <button
-                id="logoutButton"
-                class="nav-button editor-only"
-                type="button"
-            >
-                Exit Editor
             </button>
 
         </nav>
 
     </div>
-
 </header>
 
-<!-- =======================================================
-     DRAFT BAR
-======================================================== -->
+<!-- =========================================================
+     PUBLISH BAR
+     ========================================================= -->
 
 <div
-    id="draftBar"
-    class="draft-bar"
+    class="publish-bar"
+    id="publishBar"
 >
-    ⚠ UNSAVED DRAFT CHANGES
+    <div class="publish-inner">
 
-    <button
-        id="publishButton"
-        type="button"
-    >
-        PUBLISH CHANGES
-    </button>
+        <strong>
+            ⚠ Unsaved changes detected
+        </strong>
 
-    <button
-        id="discardButton"
-        type="button"
-        style="background:#222;"
-    >
-        DISCARD
-    </button>
-</div>
-
-<div class="editor-badge editor-only">
-    MASTER EDITOR
-</div>
-
-<!-- =======================================================
-     HERO
-======================================================== -->
-
-<section class="hero reveal">
-
-    <div class="hero-grid">
-
-        <div
-            class="hero-label"
-            contenteditable="true"
-            data-editable="true"
-            data-key="heroLabel"
+        <button
+            class="publish-btn"
+            id="publishBtn"
         >
-            PREMIUM MODEL CRAFT
-        </div>
-
-        <h1
-            contenteditable="true"
-            data-editable="true"
-            data-key="heroTitle"
-        >
-            BUILT WITH<br>
-            <span>PRECISION.</span>
-        </h1>
-
-        <p
-            contenteditable="true"
-            data-editable="true"
-            data-key="heroDescription"
-        >
-            Custom-built Gunpla and scale models engineered for
-            collectors, enthusiasts and builders who want more than
-            an out-of-box experience.
-        </p>
-
-        <div class="hero-actions">
-
-            <a
-                href="#portfolio"
-                class="btn btn-primary"
-            >
-                VIEW PORTFOLIO
-            </a>
-
-            <a
-                href="#contact"
-                class="btn btn-outline"
-            >
-                REQUEST A QUOTE
-            </a>
-
-        </div>
+            PUBLISH CHANGES
+        </button>
 
     </div>
+</div>
 
-</section>
+<!-- =========================================================
+     EDITOR PANEL
+     ========================================================= -->
 
-<!-- =======================================================
-     EDITOR STYLE PANEL
-======================================================== -->
+<div class="editor-panel">
 
-<div class="editor-panel editor-only">
+    <h2>MASTER EDITOR</h2>
 
-    <h3>STYLE CONTROLS</h3>
+    <p style="color:#999;margin-bottom:20px;">
+        Editor Mode is active. Click text to edit it directly.
+        Upload media to create multi-image and video portfolios.
+    </p>
 
-    <div class="editor-grid">
+    <div class="editor-tools">
 
-        <div class="editor-control">
+        <div class="editor-tool">
 
             <label>
                 Change Background Color
@@ -1341,39 +1190,37 @@ footer {
 
             <input
                 type="color"
-                id="backgroundColorPicker"
+                id="backgroundPicker"
                 value="#121212"
             >
 
         </div>
 
-        <div class="editor-control">
+        <div class="editor-tool">
 
             <label>
-                Change Accent Color
+                Add Portfolio Media
             </label>
 
-            <input
-                type="color"
-                id="accentColorPicker"
-                value="#ff6600"
-            >
+            <p style="font-size:.75rem;color:#777;">
+                Multiple images and videos can be uploaded into
+                a single project.
+            </p>
 
         </div>
 
-        <div class="editor-control">
+        <div class="editor-tool">
 
             <label>
-                Website Background
+                Storage
             </label>
 
-            <button
-                id="resetStyle"
-                class="btn btn-outline"
-                type="button"
+            <p
+                id="storageStatus"
+                class="admin-status"
             >
-                RESET STYLE
-            </button>
+                IndexedDB media storage ready.
+            </p>
 
         </div>
 
@@ -1381,124 +1228,167 @@ footer {
 
 </div>
 
-<!-- =======================================================
-     ABOUT
-======================================================== -->
+<!-- =========================================================
+     HERO
+     ========================================================= -->
 
-<section id="about" class="reveal">
+<section class="hero reveal">
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="hero-content">
 
-            <div class="eyebrow">
-                ABOUT THE BUILDER
+            <div
+                class="hero-tag"
+                data-editable
+            >
+                PREMIUM MODEL KIT SERVICES
             </div>
 
-            <h2
-                contenteditable="true"
-                data-editable="true"
-                data-key="aboutTitle"
+            <h1
+                data-editable
             >
-                MORE THAN JUST SNAP & BUILD.
-            </h2>
+                BUILD.<br>
+                PAINT.<br>
+                <span>PERFECT.</span>
+            </h1>
+
+            <p
+                class="hero-description"
+                data-editable
+            >
+                Professional custom assembly, painting, weathering
+                and finishing for Gunpla, humanoid kits, vehicles
+                and third-party model kits. From a clean straight
+                build to a fully customised display piece, every
+                kit is handled with precision and attention to detail.
+            </p>
+
+            <div class="hero-actions">
+
+                <a
+                    href="#portfolio"
+                    class="btn btn-primary"
+                >
+                    View Portfolio
+                </a>
+
+                <a
+                    href="#contact"
+                    class="btn"
+                >
+                    Request A Quote
+                </a>
+
+            </div>
 
         </div>
-
-        <p
-            contenteditable="true"
-            data-editable="true"
-            data-key="aboutText"
-            style="
-                max-width:850px;
-                color:var(--muted);
-                font-size:1.1rem;
-            "
-        >
-            Cyna Model Works provides custom assembly, painting,
-            weathering and finishing services for scale model
-            enthusiasts. From clean Gunpla builds to heavily
-            customized machines, every project is treated as a
-            miniature engineering and art piece.
-
-            I also conduct hands-on model kit workshops for people
-            who want to learn the hobby themselves — from basic
-            assembly and nub removal to sanding, painting,
-            detailing and finishing.
-        </p>
 
     </div>
 
 </section>
 
-<!-- =======================================================
-     PORTFOLIO
-======================================================== -->
+<!-- =========================================================
+     ABOUT
+     ========================================================= -->
 
-<section
-    id="portfolio"
-    class="reveal"
->
+<section class="reveal">
 
     <div class="container">
 
         <div class="section-title">
 
             <div class="eyebrow">
-                SELECTED WORKS
+                About
             </div>
 
-            <h2
-                contenteditable="true"
-                data-editable="true"
-                data-key="portfolioTitle"
-            >
-                THE FOLIO
+            <h2 data-editable>
+                Built For Builders.
             </h2>
 
+        </div>
+
+        <div class="about-box">
+
             <p
-                contenteditable="true"
-                data-editable="true"
-                data-key="portfolioDescription"
+                id="bioText"
+                data-editable
             >
-                A collection of completed builds, custom projects
-                and mechanical creations.
+                Cyna Model Works is a dedicated scale modelling
+                service focused on transforming plastic model kits
+                into clean, detailed and display-ready pieces.
+                Every project is approached with the mindset of a
+                modeller — not simply an assembly service.
+
+                <br><br>
+
+                Services cover Gunpla, humanoid model kits,
+                third-party and bootleg kits, as well as vehicles.
+                Workshops are also available for hobbyists who want
+                to learn the proper techniques for building,
+                sanding, painting, detailing and finishing their own
+                models.
             </p>
 
         </div>
 
-        <div class="filters">
+    </div>
+
+</section>
+
+<!-- =========================================================
+     PORTFOLIO
+     ========================================================= -->
+
+<section id="portfolio" class="reveal">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <div class="eyebrow">
+                Selected Work
+            </div>
+
+            <h2 data-editable>
+                Portfolio
+            </h2>
+
+            <p data-editable>
+                Explore completed builds, custom projects and
+                experimental work.
+            </p>
+
+        </div>
+
+        <div class="filter-tabs">
 
             <button
                 class="filter-btn active"
                 data-filter="all"
-                type="button"
             >
-                ALL
+                All
             </button>
 
             <button
                 class="filter-btn"
                 data-filter="gundam"
-                type="button"
             >
-                GUNDAM
+                Gundam
             </button>
 
             <button
                 class="filter-btn"
                 data-filter="humanoids"
-                type="button"
             >
-                HUMANOIDS
+                Humanoids
             </button>
 
             <button
                 class="filter-btn"
                 data-filter="vehicles"
-                type="button"
             >
-                VEHICLES
+                Vehicles
             </button>
 
         </div>
@@ -1506,38 +1396,49 @@ footer {
         <div
             id="portfolioGrid"
             class="portfolio-grid"
-        >
-        </div>
+        ></div>
 
         <!-- =================================================
              ADD PROJECT
-        ================================================== -->
+             ================================================= -->
 
-        <div class="add-project-panel editor-only">
+        <div class="add-project">
 
-            <h3>
-                + ADD NEW FOLIO
+            <h3
+                data-editable
+            >
+                + Add New Project
             </h3>
 
-            <div class="editor-grid">
+            <p
+                style="color:#777;margin:7px 0 20px;"
+            >
+                Upload multiple images and videos.
+                The first three uploaded files will automatically
+                appear as the project thumbnails.
+            </p>
 
-                <div class="editor-control">
+            <div class="add-project-grid">
 
-                    <label>
+                <div>
+                    <label
+                        style="font-size:.75rem;color:#aaa;"
+                    >
                         Project Title
                     </label>
 
                     <input
-                        type="text"
                         id="newProjectTitle"
-                        placeholder="Example: MG Sinanju Custom"
+                        type="text"
+                        placeholder="e.g. MG Sinanju Custom"
                     >
-
                 </div>
 
-                <div class="editor-control">
+                <div>
 
-                    <label>
+                    <label
+                        style="font-size:.75rem;color:#aaa;"
+                    >
                         Category
                     </label>
 
@@ -1559,45 +1460,31 @@ footer {
 
                 </div>
 
-                <div class="editor-control">
+                <div>
 
-                    <label>
-                        Description
-                    </label>
-
-                    <textarea
-                        id="newProjectDescription"
-                        placeholder="Project description..."
-                    ></textarea>
-
-                </div>
-
-                <div class="editor-control">
-
-                    <label>
-                        Upload Multiple Images / Videos
+                    <label
+                        style="font-size:.75rem;color:#aaa;"
+                    >
+                        Images / Videos
                     </label>
 
                     <input
+                        id="newProjectFiles"
                         type="file"
-                        id="newProjectMedia"
                         accept="image/*,video/*"
                         multiple
                     >
 
                 </div>
 
+                <button
+                    class="btn btn-primary"
+                    id="addProjectBtn"
+                >
+                    Add Project
+                </button>
+
             </div>
-
-            <br>
-
-            <button
-                id="addProjectButton"
-                class="btn btn-primary"
-                type="button"
-            >
-                ADD FOLIO
-            </button>
 
         </div>
 
@@ -1605,268 +1492,163 @@ footer {
 
 </section>
 
-<!-- =======================================================
+<!-- =========================================================
      SERVICES
-======================================================== -->
+     ========================================================= -->
 
-<section
-    id="services"
-    class="reveal"
->
+<section id="services" class="reveal">
 
     <div class="container">
 
         <div class="section-title">
 
             <div class="eyebrow">
-                SERVICES
+                Services
             </div>
 
-            <h2
-                contenteditable="true"
-                data-editable="true"
-                data-key="servicesTitle"
-            >
-                CHOOSE YOUR BUILD LEVEL.
+            <h2 data-editable>
+                Choose Your Build Level
             </h2>
 
-            <p
-                contenteditable="true"
-                data-editable="true"
-                data-key="servicesDescription"
-            >
-                Every kit starts with careful assembly. From there,
-                you decide how far we take the finish.
+            <p data-editable>
+                Every kit is different. Final pricing depends on
+                kit grade, complexity, condition and requested
+                modifications.
             </p>
 
         </div>
 
         <div class="services-grid">
 
-            <!-- STRAIGHT BUILD -->
+            <div class="service-card">
 
-            <article class="service-card">
-
-                <div
-                    class="number"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service1Number"
-                >
+                <div class="service-number">
                     01 / STRAIGHT BUILD
                 </div>
 
-                <h3
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service1Title"
-                >
+                <h3 data-editable>
                     Straight Build
                 </h3>
 
                 <div
                     class="price"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service1Price"
+                    data-editable
                 >
-                    FROM RM 100
+                    Starting RM 100
                 </div>
 
-                <p
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service1Description"
-                >
-                    A clean, carefully assembled out-of-box build
-                    for collectors who want the kit completed
-                    without extensive customization.
+                <p data-editable>
+                    Perfect for collectors who want a clean,
+                    correctly assembled model straight from the box.
                 </p>
 
                 <ul>
-
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service1Feature1"
-                    >
+                    <li data-editable>
                         Professional assembly
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service1Feature2"
-                    >
+                    <li data-editable>
                         Basic nub cleanup
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service1Feature3"
-                    >
-                        Standard kit finish
+                    <li data-editable>
+                        Proper panel alignment
                     </li>
 
+                    <li data-editable>
+                        Display-ready finish
+                    </li>
                 </ul>
 
-            </article>
+            </div>
 
-            <!-- CLEAN BUILD -->
+            <div class="service-card">
 
-            <article class="service-card featured">
-
-                <div
-                    class="number"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service2Number"
-                >
+                <div class="service-number">
                     02 / CLEAN BUILD
                 </div>
 
-                <h3
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service2Title"
-                >
+                <h3 data-editable>
                     Clean Build
                 </h3>
 
                 <div
                     class="price"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service2Price"
+                    data-editable
                 >
-                    FROM RM 200
+                    Starting RM 200
                 </div>
 
-                <p
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service2Description"
-                >
-                    For collectors who expect a sharper,
-                    cleaner and more refined result.
+                <p data-editable>
+                    A refined build focused on surface quality,
+                    detailing and a professional protective finish.
                 </p>
 
                 <ul>
-
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service2Feature1"
-                    >
+                    <li data-editable>
                         Meticulous nub sanding
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service2Feature2"
-                    >
+                    <li data-editable>
                         Seam line removal
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service2Feature3"
-                    >
+                    <li data-editable>
                         Custom decals
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service2Feature4"
-                    >
+                    <li data-editable>
                         Protective top coat
                     </li>
-
                 </ul>
 
-            </article>
+            </div>
 
-            <!-- CUSTOM BUILD -->
+            <div class="service-card">
 
-            <article class="service-card">
-
-                <div
-                    class="number"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service3Number"
-                >
+                <div class="service-number">
                     03 / CUSTOM BUILD
                 </div>
 
-                <h3
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service3Title"
-                >
+                <h3 data-editable>
                     Custom Build
                 </h3>
 
                 <div
                     class="price"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service3Price"
+                    data-editable
                 >
-                    FROM RM 500
+                    Starting RM 500
                 </div>
 
-                <p
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="service3Description"
-                >
-                    The complete treatment for clients who want
-                    their machine transformed into something
-                    uniquely theirs.
+                <p data-editable>
+                    A complete customisation service for clients who
+                    want their kit to become a unique display piece.
                 </p>
 
                 <ul>
-
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service3Feature1"
-                    >
+                    <li data-editable>
                         Full clean build
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service3Feature2"
-                    >
-                        Custom paint schemes
+                    <li data-editable>
+                        Custom paint scheme
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service3Feature3"
-                    >
-                        Kitbashing & modifications
+                    <li data-editable>
+                        Advanced modifications
                     </li>
 
-                    <li
-                        contenteditable="true"
-                        data-editable="true"
-                        data-key="service3Feature4"
-                    >
-                        LED / custom lighting
+                    <li data-editable>
+                        LED lighting
                     </li>
 
+                    <li data-editable>
+                        Kitbashing
+                    </li>
                 </ul>
 
-            </article>
+            </div>
 
         </div>
 
@@ -1874,53 +1656,42 @@ footer {
 
         <div class="workshop">
 
-            <div>
-
-                <div
-                    class="number"
-                    style="color:var(--orange);font-weight:900;"
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="workshopNumber"
-                >
-                    04 / MODEL KIT WORKSHOP
-                </div>
-
-                <h3
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="workshopTitle"
-                >
-                    BUILD IT YOURSELF.
-                </h3>
-
-                <p
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="workshopDescription"
-                >
-                    Learn the hobby from the ground up. Workshop
-                    sessions cover model kit assembly, nub removal,
-                    sanding, detailing, painting and finishing.
-
-                    Whether you're completely new to Gunpla or
-                    looking to improve your skills, the sessions
-                    are designed around practical hands-on learning.
-                </p>
-
+            <div
+                class="service-number"
+                data-editable
+            >
+                04 / MODEL KIT WORKSHOP
             </div>
 
-            <div>
+            <h3 data-editable>
+                Learn To Build Your Own Kit
+            </h3>
 
-                <a
-                    class="btn btn-primary"
-                    href="https://wa.me/601125041130?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20the%20Model%20Kit%20Workshop."
-                    target="_blank"
-                >
-                    WHATSAPP FOR WORKSHOP DETAILS
-                </a>
+            <p data-editable>
+                Want to learn the hobby instead of simply
+                commissioning a build? Join a hands-on model kit
+                workshop where you can learn assembly, sanding,
+                nub cleanup, painting, detailing and finishing
+                techniques step by step.
+            </p>
 
-            </div>
+            <br>
+
+            <p data-editable>
+                Workshops can be arranged for beginners, hobbyists,
+                small groups and people looking to improve their
+                modelling skills.
+            </p>
+
+            <br>
+
+            <a
+                href="https://wa.me/601125041130"
+                target="_blank"
+                class="btn btn-primary"
+            >
+                WhatsApp For Workshop Details
+            </a>
 
         </div>
 
@@ -1928,38 +1699,27 @@ footer {
 
 </section>
 
-<!-- =======================================================
+<!-- =========================================================
      CONTACT
-======================================================== -->
+     ========================================================= -->
 
-<section
-    id="contact"
-    class="reveal"
->
+<section id="contact" class="reveal">
 
     <div class="container">
 
         <div class="section-title">
 
             <div class="eyebrow">
-                START A PROJECT
+                Start A Project
             </div>
 
-            <h2
-                contenteditable="true"
-                data-editable="true"
-                data-key="contactTitle"
-            >
-                LET'S BUILD SOMETHING.
+            <h2 data-editable>
+                Let's Build Something.
             </h2>
 
-            <p
-                contenteditable="true"
-                data-editable="true"
-                data-key="contactDescription"
-            >
-                Tell me about your kit, your preferred service and
-                what you want the final machine to look like.
+            <p data-editable>
+                Tell me about your kit and what you want done.
+                I'll review the project and provide a quotation.
             </p>
 
         </div>
@@ -1968,33 +1728,34 @@ footer {
 
             <div class="contact-info">
 
-                <h3
-                    contenteditable="true"
-                    data-editable="true"
-                    data-key="contactInfoTitle"
-                >
-                    CONTACT
+                <h3 data-editable>
+                    Contact
                 </h3>
 
                 <div class="contact-item">
 
-                    <strong>
-                        WHATSAPP / PHONE
-                    </strong>
+                    <small>
+                        WhatsApp / Phone
+                    </small>
 
-                    <a href="https://wa.me/601125041130">
-                        011-2504 1130
+                    <a
+                        href="https://wa.me/601125041130"
+                        target="_blank"
+                    >
+                        011 2504 1130
                     </a>
 
                 </div>
 
                 <div class="contact-item">
 
-                    <strong>
-                        EMAIL
-                    </strong>
+                    <small>
+                        Email
+                    </small>
 
-                    <a href="mailto:Fakesilent020821@gmail.com">
+                    <a
+                        href="mailto:Fakesilent020821@gmail.com"
+                    >
                         Fakesilent020821@gmail.com
                     </a>
 
@@ -2002,9 +1763,9 @@ footer {
 
                 <div class="contact-item">
 
-                    <strong>
-                        INSTAGRAM
-                    </strong>
+                    <small>
+                        Instagram
+                    </small>
 
                     <a
                         href="https://instagram.com/Ariztaz_"
@@ -2014,6 +1775,16 @@ footer {
                     </a>
 
                 </div>
+
+                <br>
+
+                <p
+                    style="color:#777;font-size:.8rem;"
+                    data-editable
+                >
+                    Supported grades include HG, RG, MG, PG and
+                    Non-Grade kits.
+                </p>
 
             </div>
 
@@ -2031,7 +1802,8 @@ footer {
                     <input
                         id="clientName"
                         required
-                        placeholder="Enter your name"
+                        type="text"
+                        placeholder="Your name"
                     >
 
                 </div>
@@ -2045,7 +1817,8 @@ footer {
                     <input
                         id="kitType"
                         required
-                        placeholder="Example: MG Sinanju"
+                        type="text"
+                        placeholder="e.g. MG Gundam"
                     >
 
                 </div>
@@ -2056,7 +1829,14 @@ footer {
                         Service / Workshop
                     </label>
 
-                    <select id="serviceTier">
+                    <select
+                        id="serviceTier"
+                        required
+                    >
+
+                        <option value="">
+                            Select service
+                        </option>
 
                         <option>
                             Straight Build
@@ -2086,16 +1866,17 @@ footer {
 
                     <textarea
                         id="specialRequests"
-                        placeholder="Tell me about your desired finish..."
+                        placeholder="Tell me what you want done..."
                     ></textarea>
 
                 </div>
 
                 <button
-                    class="btn btn-primary"
                     type="submit"
+                    class="btn btn-primary"
+                    style="width:100%;"
                 >
-                    SEND QUOTE REQUEST VIA WHATSAPP
+                    Send Quote Request via WhatsApp
                 </button>
 
             </form>
@@ -2106,360 +1887,129 @@ footer {
 
 </section>
 
-<!-- =======================================================
+<!-- =========================================================
      FOOTER
-======================================================== -->
+     ========================================================= -->
 
 <footer>
 
-    <div class="footer-inner">
+    <div class="container">
 
-        <div
-            class="footer-brand"
-            contenteditable="true"
-            data-editable="true"
-            data-key="footerBrand"
-        >
-            CYNA <span>MODEL WORKS</span>
-        </div>
+        <p data-editable>
+            © 2026 Cyna Model Works.
+            Built with precision, patience and a little plastic.
+        </p>
 
-        <div
-            class="footer-copy"
-            contenteditable="true"
-            data-editable="true"
-            data-key="footerCopy"
-        >
-            Custom model building • Gunpla • Scale modelling • Workshops
-        </div>
+        <p style="margin-top:5px;">
+            <span>
+                BUILD • PAINT • PERFECT
+            </span>
+        </p>
 
     </div>
 
 </footer>
 
-<!-- =======================================================
-     PASSWORD MODAL
-======================================================== -->
+<!-- =========================================================
+     MEDIA VIEWER
+     ========================================================= -->
 
 <div
-    id="passwordModal"
-    class="modal"
+    id="viewer"
+    class="viewer"
 >
 
-    <div class="modal-box">
+    <div class="viewer-content">
 
-        <h3>
-            MASTER EDITOR ACCESS
-        </h3>
-
-        <p>
-            Enter the administrator password to access the
-            website editor.
-        </p>
-
-        <input
-            type="password"
-            id="adminPassword"
-            placeholder="Admin Password"
+        <button
+            class="viewer-close"
+            id="viewerClose"
         >
+            ×
+        </button>
 
-        <div class="modal-actions">
+        <button
+            class="viewer-arrow viewer-prev"
+            id="viewerPrev"
+        >
+            ‹
+        </button>
 
-            <button
-                id="loginAdmin"
-                class="btn btn-primary"
-                type="button"
-            >
-                ACCESS EDITOR
-            </button>
+        <div id="viewerMediaContainer"></div>
 
-            <button
-                id="cancelLogin"
-                class="btn btn-outline"
-                type="button"
-            >
-                CANCEL
-            </button>
+        <button
+            class="viewer-arrow viewer-next"
+            id="viewerNext"
+        >
+            ›
+        </button>
 
+        <div
+            class="viewer-counter"
+            id="viewerCounter"
+        >
+            1 / 1
         </div>
 
     </div>
 
 </div>
 
-<!-- =======================================================
+<!-- =========================================================
      JAVASCRIPT
-======================================================== -->
+     ========================================================= -->
 
 <script>
 
-/*
-=============================================================
-CYNA MODEL WORKS
-SINGLE FILE PORTFOLIO SYSTEM
-
-IMPORTANT:
--------------------------------------------------------------
-Text/settings:
-    localStorage
-
-Images/videos:
-    IndexedDB
-
-This avoids the typical 5MB-ish localStorage limitation.
-=============================================================
-*/
-
-"use strict";
-
 /* =========================================================
    CONFIGURATION
-========================================================= */
+   ========================================================= */
 
 const ADMIN_PASSWORD = "Ariztaz2026";
 
-const SETTINGS_KEY = "cynaModelWorksSettings_v3";
-
-const DB_NAME = "CynaModelWorksMediaDB";
-
+const DB_NAME = "CynaModelWorksDB";
 const DB_VERSION = 1;
+const MEDIA_STORE = "media";
 
-const STORE_NAME = "media";
-
-/* =========================================================
-   DEFAULT SETTINGS
-========================================================= */
-
-const DEFAULT_SETTINGS = {
-
-    background: "#121212",
-
-    accent: "#ff6600",
-
-    logo: "",
-
-    logoText: "CYNA MODEL WORKS",
-
-    heroLabel: "PREMIUM MODEL CRAFT",
-
-    heroTitle: "BUILT WITH<br><span>PRECISION.</span>",
-
-    heroDescription:
-        "Custom-built Gunpla and scale models engineered for collectors, enthusiasts and builders who want more than an out-of-box experience.",
-
-    aboutTitle:
-        "MORE THAN JUST SNAP & BUILD.",
-
-    aboutText:
-        "Cyna Model Works provides custom assembly, painting, weathering and finishing services for scale model enthusiasts. From clean Gunpla builds to heavily customized machines, every project is treated as a miniature engineering and art piece. I also conduct hands-on model kit workshops for people who want to learn the hobby themselves — from basic assembly and nub removal to sanding, painting, detailing and finishing.",
-
-    portfolioTitle:
-        "THE FOLIO",
-
-    portfolioDescription:
-        "A collection of completed builds, custom projects and mechanical creations.",
-
-    servicesTitle:
-        "CHOOSE YOUR BUILD LEVEL.",
-
-    servicesDescription:
-        "Every kit starts with careful assembly. From there, you decide how far we take the finish.",
-
-    service1Number:
-        "01 / STRAIGHT BUILD",
-
-    service1Title:
-        "Straight Build",
-
-    service1Price:
-        "FROM RM 100",
-
-    service1Description:
-        "A clean, carefully assembled out-of-box build for collectors who want the kit completed without extensive customization.",
-
-    service1Feature1:
-        "Professional assembly",
-
-    service1Feature2:
-        "Basic nub cleanup",
-
-    service1Feature3:
-        "Standard kit finish",
-
-    service2Number:
-        "02 / CLEAN BUILD",
-
-    service2Title:
-        "Clean Build",
-
-    service2Price:
-        "FROM RM 200",
-
-    service2Description:
-        "For collectors who expect a sharper, cleaner and more refined result.",
-
-    service2Feature1:
-        "Meticulous nub sanding",
-
-    service2Feature2:
-        "Seam line removal",
-
-    service2Feature3:
-        "Custom decals",
-
-    service2Feature4:
-        "Protective top coat",
-
-    service3Number:
-        "03 / CUSTOM BUILD",
-
-    service3Title:
-        "Custom Build",
-
-    service3Price:
-        "FROM RM 500",
-
-    service3Description:
-        "The complete treatment for clients who want their machine transformed into something uniquely theirs.",
-
-    service3Feature1:
-        "Full clean build",
-
-    service3Feature2:
-        "Custom paint schemes",
-
-    service3Feature3:
-        "Kitbashing & modifications",
-
-    service3Feature4:
-        "LED / custom lighting",
-
-    workshopNumber:
-        "04 / MODEL KIT WORKSHOP",
-
-    workshopTitle:
-        "BUILD IT YOURSELF.",
-
-    workshopDescription:
-        "Learn the hobby from the ground up. Workshop sessions cover model kit assembly, nub removal, sanding, detailing, painting and finishing. Whether you're completely new to Gunpla or looking to improve your skills, the sessions are designed around practical hands-on learning.",
-
-    contactTitle:
-        "LET'S BUILD SOMETHING.",
-
-    contactDescription:
-        "Tell me about your kit, your preferred service and what you want the final machine to look like.",
-
-    contactInfoTitle:
-        "CONTACT",
-
-    footerBrand:
-        "CYNA MODEL WORKS",
-
-    footerCopy:
-        "Custom model building • Gunpla • Scale modelling • Workshops"
-
-};
-
-/* =========================================================
-   DEFAULT PORTFOLIO
-========================================================= */
-
-const DEFAULT_PROJECTS = [
-
-    {
-        id: "project-1",
-
-        title: "Gunpla Custom Build",
-
-        category: "gundam",
-
-        description:
-            "Precision assembly and finishing for a display-ready Gundam.",
-
-        media: []
-    },
-
-    {
-        id: "project-2",
-
-        title: "Mechanical Humanoid",
-
-        category: "humanoids",
-
-        description:
-            "Detailed humanoid mechanical build with clean panel definition.",
-
-        media: []
-    },
-
-    {
-        id: "project-3",
-
-        title: "Scale Vehicle",
-
-        category: "vehicles",
-
-        description:
-            "Detailed vehicle assembly and finishing.",
-
-        media: []
-    }
-
-];
-
-/* =========================================================
-   APPLICATION STATE
-========================================================= */
-
-let settings = {};
+let editorMode = false;
+let hasDrafts = false;
 
 let projects = [];
 
-let draftSettings = {};
+let viewerProjectId = null;
+let viewerIndex = 0;
 
-let draftProjects = [];
+let db = null;
 
-let hasDrafts = false;
-
-let currentFilter = "all";
-
-let editorMode = false;
 
 /* =========================================================
-   INDEXEDDB
-========================================================= */
+   INDEXED DB
+   ========================================================= */
 
-let dbPromise = null;
+/*
+   IMPORTANT:
+
+   Images and videos are NOT stored in localStorage.
+
+   They are stored inside IndexedDB so large media files do
+   not exceed the localStorage 5MB-ish limit.
+*/
 
 function openDatabase() {
 
-    if (dbPromise) {
-        return dbPromise;
-    }
-
-    dbPromise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
         const request =
             indexedDB.open(DB_NAME, DB_VERSION);
 
-        request.onerror = () => {
+        request.onupgradeneeded = function(event) {
 
-            console.error(
-                "IndexedDB error:",
-                request.error
-            );
+            const database = event.target.result;
 
-            reject(request.error);
+            if (!database.objectStoreNames.contains(MEDIA_STORE)) {
 
-        };
-
-        request.onupgradeneeded = event => {
-
-            const db = event.target.result;
-
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-
-                db.createObjectStore(
-                    STORE_NAME,
+                database.createObjectStore(
+                    MEDIA_STORE,
                     {
                         keyPath: "id"
                     }
@@ -2469,260 +2019,234 @@ function openDatabase() {
 
         };
 
-        request.onsuccess = () => {
+        request.onsuccess = function(event) {
+
+            db = event.target.result;
+
+            resolve(db);
+
+        };
+
+        request.onerror = function() {
+
+            reject(request.error);
+
+        };
+
+    });
+
+}
+
+
+/* =========================================================
+   SAVE MEDIA TO INDEXED DB
+   ========================================================= */
+
+function saveMedia(file) {
+
+    return new Promise((resolve, reject) => {
+
+        const id =
+            "media_" +
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .substring(2);
+
+        const transaction =
+            db.transaction(
+                MEDIA_STORE,
+                "readwrite"
+            );
+
+        const store =
+            transaction.objectStore(
+                MEDIA_STORE
+            );
+
+        const request =
+            store.put({
+                id: id,
+                blob: file,
+                type: file.type,
+                name: file.name
+            });
+
+        request.onsuccess = function() {
+
+            resolve(id);
+
+        };
+
+        request.onerror = function() {
+
+            reject(request.error);
+
+        };
+
+    });
+
+}
+
+
+/* =========================================================
+   GET MEDIA
+   ========================================================= */
+
+function getMedia(id) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction =
+            db.transaction(
+                MEDIA_STORE,
+                "readonly"
+            );
+
+        const store =
+            transaction.objectStore(
+                MEDIA_STORE
+            );
+
+        const request =
+            store.get(id);
+
+        request.onsuccess = function() {
 
             resolve(request.result);
 
         };
 
-    });
+        request.onerror = function() {
 
-    return dbPromise;
-}
+            reject(request.error);
 
-/* =========================================================
-   SAVE MEDIA TO INDEXEDDB
-========================================================= */
-
-async function saveMedia(mediaObject) {
-
-    const db = await openDatabase();
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                STORE_NAME,
-                "readwrite"
-            );
-
-        const store =
-            transaction.objectStore(STORE_NAME);
-
-        const request =
-            store.put(mediaObject);
-
-        request.onsuccess =
-            () => resolve(true);
-
-        request.onerror =
-            () => reject(request.error);
+        };
 
     });
+
 }
 
-/* =========================================================
-   GET MEDIA FROM INDEXEDDB
-========================================================= */
-
-async function getMedia(id) {
-
-    const db = await openDatabase();
-
-    return new Promise((resolve, reject) => {
-
-        const transaction =
-            db.transaction(
-                STORE_NAME,
-                "readonly"
-            );
-
-        const store =
-            transaction.objectStore(STORE_NAME);
-
-        const request =
-            store.get(id);
-
-        request.onsuccess =
-            () => resolve(request.result);
-
-        request.onerror =
-            () => reject(request.error);
-
-    });
-}
 
 /* =========================================================
    DELETE MEDIA
-========================================================= */
+   ========================================================= */
 
-async function deleteMedia(id) {
-
-    const db = await openDatabase();
+function deleteMedia(id) {
 
     return new Promise((resolve, reject) => {
 
         const transaction =
             db.transaction(
-                STORE_NAME,
+                MEDIA_STORE,
                 "readwrite"
             );
 
         const store =
-            transaction.objectStore(STORE_NAME);
+            transaction.objectStore(
+                MEDIA_STORE
+            );
 
         const request =
             store.delete(id);
 
-        request.onsuccess =
-            () => resolve(true);
+        request.onsuccess = () => resolve();
 
-        request.onerror =
-            () => reject(request.error);
-
-    });
-}
-
-/* =========================================================
-   CONVERT FILE TO ARRAY BUFFER
-========================================================= */
-
-function fileToArrayBuffer(file) {
-
-    return new Promise((resolve, reject) => {
-
-        const reader =
-            new FileReader();
-
-        reader.onload =
-            () => resolve(reader.result);
-
-        reader.onerror =
-            () => reject(reader.error);
-
-        reader.readAsArrayBuffer(file);
+        request.onerror = () =>
+            reject(request.error);
 
     });
 
 }
 
+
 /* =========================================================
-   CREATE MEDIA OBJECT
-========================================================= */
+   DEFAULT PROJECTS
+   ========================================================= */
 
-async function createMediaFromFile(file) {
+function defaultProjects() {
 
-    const id =
-        "media-" +
-        Date.now() +
-        "-" +
-        Math.random()
-            .toString(36)
-            .substring(2,10);
+    return [
 
-    const buffer =
-        await fileToArrayBuffer(file);
+        {
+            id: "project_1",
+            title: "Sinanju Custom",
+            category: "gundam",
+            media: [],
+            description:
+                "Custom Gunpla project focused on surface cleanup and detailing."
+        },
 
-    const type =
-        file.type.startsWith("video/")
-            ? "video"
-            : "image";
+        {
+            id: "project_2",
+            title: "RG Sazabi",
+            category: "gundam",
+            media: [],
+            description:
+                "High-detail build prepared for display."
+        },
 
-    const media = {
+        {
+            id: "project_3",
+            title: "Humanoid Custom",
+            category: "humanoids",
+            media: [],
+            description:
+                "Custom humanoid scale model project."
+        }
 
-        id,
-
-        type,
-
-        name: file.name,
-
-        mime: file.type,
-
-        size: file.size,
-
-        data: buffer
-
-    };
-
-    await saveMedia(media);
-
-    return {
-
-        id,
-
-        type,
-
-        name: file.name
-
-    };
+    ];
 
 }
 
-/* =========================================================
-   CREATE OBJECT URL
-========================================================= */
-
-async function mediaToURL(mediaId) {
-
-    const media =
-        await getMedia(mediaId);
-
-    if (!media) {
-        return null;
-    }
-
-    const blob =
-        new Blob(
-            [media.data],
-            {
-                type: media.mime
-            }
-        );
-
-    return URL.createObjectURL(blob);
-}
 
 /* =========================================================
-   SETTINGS STORAGE
-========================================================= */
+   LOAD SETTINGS
+   ========================================================= */
 
 function loadSettings() {
 
-    try {
-
-        const stored =
-            localStorage.getItem(
-                SETTINGS_KEY
-            );
-
-        if (!stored) {
-
-            return {
-                ...DEFAULT_SETTINGS
-            };
-
-        }
-
-        return {
-            ...DEFAULT_SETTINGS,
-            ...JSON.parse(stored)
-        };
-
-    } catch(error) {
-
-        console.warn(
-            "Unable to load settings:",
-            error
+    const saved =
+        localStorage.getItem(
+            "cynaSettings"
         );
 
+    if (!saved) {
+
         return {
-            ...DEFAULT_SETTINGS
+            background: "#121212",
+            logo: ""
+        };
+
+    }
+
+    try {
+
+        return JSON.parse(saved);
+
+    } catch {
+
+        return {
+            background: "#121212",
+            logo: ""
         };
 
     }
 
 }
 
+
 /* =========================================================
    SAVE SETTINGS
-========================================================= */
+   ========================================================= */
 
-function saveSettingsToStorage() {
+function saveSettings(settings) {
 
     try {
 
         localStorage.setItem(
-            SETTINGS_KEY,
+            "cynaSettings",
             JSON.stringify(settings)
         );
 
@@ -2730,13 +2254,11 @@ function saveSettingsToStorage() {
 
     } catch(error) {
 
-        console.error(
-            "Settings could not be saved:",
-            error
-        );
+        console.error(error);
 
         alert(
-            "Unable to save settings. Your browser may have localStorage disabled."
+            "Unable to save settings. " +
+            "The browser may have blocked localStorage."
         );
 
         return false;
@@ -2745,65 +2267,52 @@ function saveSettingsToStorage() {
 
 }
 
-/* =========================================================
-   PROJECT METADATA STORAGE
-========================================================= */
 
-const PROJECT_KEY =
-    "cynaModelWorksProjects_v3";
+/* =========================================================
+   LOAD PROJECT METADATA
+   ========================================================= */
 
 function loadProjects() {
 
-    try {
-
-        const stored =
-            localStorage.getItem(
-                PROJECT_KEY
-            );
-
-        if (!stored) {
-
-            return DEFAULT_PROJECTS.map(
-                project => ({
-                    ...project,
-                    media: [...project.media]
-                })
-            );
-
-        }
-
-        return JSON.parse(stored);
-
-    } catch(error) {
-
-        console.warn(
-            "Unable to load projects:",
-            error
+    const saved =
+        localStorage.getItem(
+            "cynaProjects"
         );
 
-        return [...DEFAULT_PROJECTS];
+    if (!saved) {
+
+        projects =
+            defaultProjects();
+
+        return;
+
+    }
+
+    try {
+
+        projects =
+            JSON.parse(saved);
+
+    } catch {
+
+        projects =
+            defaultProjects();
 
     }
 
 }
 
+
 /* =========================================================
    SAVE PROJECT METADATA
-========================================================= */
+   ========================================================= */
 
-function saveProjectsToStorage() {
+function saveProjects() {
 
     try {
 
-        /*
-        Only metadata is stored here.
-
-        Actual image/video binary data is stored
-        inside IndexedDB.
-        */
-
         localStorage.setItem(
-            PROJECT_KEY,
+            "cynaProjects",
             JSON.stringify(projects)
         );
 
@@ -2814,7 +2323,7 @@ function saveProjectsToStorage() {
         console.error(error);
 
         alert(
-            "Unable to save project information. Please check browser storage permissions."
+            "Unable to save project information."
         );
 
         return false;
@@ -2823,11 +2332,99 @@ function saveProjectsToStorage() {
 
 }
 
-/* =========================================================
-   HYDRATE SETTINGS INTO PAGE
-========================================================= */
 
-function applySettingsToPage() {
+/* =========================================================
+   TEXT CONTENT STORAGE
+   ========================================================= */
+
+function saveTextContent() {
+
+    const editable =
+        document.querySelectorAll(
+            "[data-editable]"
+        );
+
+    const texts = {};
+
+    editable.forEach((element, index) => {
+
+        texts[index] =
+            element.innerHTML;
+
+    });
+
+    try {
+
+        localStorage.setItem(
+            "cynaTextContent",
+            JSON.stringify(texts)
+        );
+
+    } catch(error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD TEXT CONTENT
+   ========================================================= */
+
+function loadTextContent() {
+
+    const saved =
+        localStorage.getItem(
+            "cynaTextContent"
+        );
+
+    if (!saved) return;
+
+    try {
+
+        const texts =
+            JSON.parse(saved);
+
+        const editable =
+            document.querySelectorAll(
+                "[data-editable]"
+            );
+
+        editable.forEach((element, index) => {
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    texts,
+                    index
+                )
+            ) {
+
+                element.innerHTML =
+                    texts[index];
+
+            }
+
+        });
+
+    } catch(error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   SETTINGS HYDRATION
+   ========================================================= */
+
+function hydrateSettings() {
+
+    const settings =
+        loadSettings();
 
     document.documentElement
         .style
@@ -2836,31 +2433,16 @@ function applySettingsToPage() {
             settings.background
         );
 
-    document.documentElement
-        .style
-        .setProperty(
-            "--orange",
-            settings.accent
-        );
-
     const picker =
         document.getElementById(
-            "backgroundColorPicker"
+            "backgroundPicker"
         );
 
     if (picker) {
+
         picker.value =
             settings.background;
-    }
 
-    const accentPicker =
-        document.getElementById(
-            "accentColorPicker"
-        );
-
-    if (accentPicker) {
-        accentPicker.value =
-            settings.accent;
     }
 
     const logo =
@@ -2873,217 +2455,340 @@ function applySettingsToPage() {
         logo.src =
             settings.logo;
 
-        logo.style.display =
-            "block";
-
     } else {
 
-        logo.style.display =
-            "none";
+        logo.src =
+            createDefaultLogo();
 
     }
 
 }
 
-/* =========================================================
-   HYDRATE TEXT
-========================================================= */
 
-function applyTextSettings() {
+/* =========================================================
+   DEFAULT SVG LOGO
+   ========================================================= */
+
+function createDefaultLogo() {
+
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="200"
+             height="200"
+             viewBox="0 0 200 200">
+
+            <rect
+                width="200"
+                height="200"
+                fill="#0d0d0d"
+            />
+
+            <path
+                d="M35 155 L65 45 L100 95 L135 45 L165 155 L130 130 L100 170 L70 130 Z"
+                fill="none"
+                stroke="#ff6600"
+                stroke-width="8"
+            />
+
+            <circle
+                cx="100"
+                cy="105"
+                r="12"
+                fill="#ff6600"
+            />
+
+        </svg>
+    `;
+
+    return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(svg);
+
+}
+
+
+/* =========================================================
+   DRAFT SYSTEM
+   ========================================================= */
+
+function markDraft() {
+
+    hasDrafts = true;
 
     document
-        .querySelectorAll(
-            "[data-editable]"
-        )
-        .forEach(element => {
-
-            const key =
-                element.dataset.key;
-
-            if (
-                key &&
-                Object.prototype.hasOwnProperty.call(
-                    settings,
-                    key
-                )
-            ) {
-
-                element.innerHTML =
-                    settings[key];
-
-            }
-
-        });
+        .getElementById("publishBar")
+        .classList
+        .add("visible");
 
 }
 
-/* =========================================================
-   ENTER EDITOR MODE
-========================================================= */
-
-function enterEditorMode() {
-
-    editorMode = true;
-
-    document.body.classList.add(
-        "editor-mode"
-    );
-
-    document
-        .querySelectorAll(
-            "[data-editable]"
-        )
-        .forEach(element => {
-
-            element.contentEditable =
-                "true";
-
-            element.addEventListener(
-                "input",
-                markDraftFromText,
-                {
-                    passive: true
-                }
-            );
-
-        });
-
-    renderPortfolio();
-
-}
 
 /* =========================================================
-   EXIT EDITOR
-========================================================= */
+   PUBLISH CHANGES
+   ========================================================= */
 
-function exitEditorMode() {
+async function publishChanges() {
 
-    editorMode = false;
+    /*
+       First save all text.
+    */
 
-    document.body.classList.remove(
-        "editor-mode"
-    );
+    saveTextContent();
 
-    document
-        .querySelectorAll(
-            "[data-editable]"
-        )
-        .forEach(element => {
+    /*
+       Save metadata.
+    */
 
-            element.contentEditable =
-                "false";
+    if (!saveProjects()) {
 
-        });
-
-    renderPortfolio();
-
-}
-
-/* =========================================================
-   TEXT DRAFT
-========================================================= */
-
-function markDraftFromText(event) {
-
-    const element =
-        event.currentTarget;
-
-    const key =
-        element.dataset.key;
-
-    if (!key) return;
-
-    draftSettings[key] =
-        element.innerHTML;
-
-    setDraftState(true);
-
-}
-
-/* =========================================================
-   DRAFT STATE
-========================================================= */
-
-function setDraftState(value) {
-
-    hasDrafts =
-        value;
-
-    const bar =
-        document.getElementById(
-            "draftBar"
-        );
-
-    if (value) {
-
-        bar.classList.add(
-            "active"
-        );
-
-    } else {
-
-        bar.classList.remove(
-            "active"
-        );
-
-    }
-
-}
-
-/* =========================================================
-   FILE UPLOAD
-========================================================= */
-
-async function handleMediaFiles(
-    fileList,
-    callback
-) {
-
-    const files =
-        Array.from(fileList || []);
-
-    if (!files.length) {
         return;
+
     }
 
-    try {
+    /*
+       Save settings.
+    */
 
-        const mediaItems = [];
+    const settings =
+        loadSettings();
 
-        for (const file of files) {
+    settings.background =
+        getComputedStyle(
+            document.documentElement
+        )
+        .getPropertyValue("--bg")
+        .trim();
 
-            const item =
-                await createMediaFromFile(
-                    file
-                );
+    const logo =
+        document.getElementById(
+            "siteLogo"
+        );
 
-            mediaItems.push(item);
+    if (
+        logo.src &&
+        logo.src.startsWith("data:")
+    ) {
+
+        /*
+           Only save the logo if it is reasonably small.
+        */
+
+        if (logo.src.length < 1000000) {
+
+            settings.logo =
+                logo.src;
 
         }
 
-        await callback(
-            mediaItems
+    }
+
+    if (!saveSettings(settings)) {
+
+        return;
+
+    }
+
+    hasDrafts = false;
+
+    document
+        .getElementById("publishBar")
+        .classList
+        .remove("visible");
+
+    alert(
+        "Success! Your changes have been pushed live!"
+    );
+
+}
+
+
+/* =========================================================
+   EDITOR PASSWORD
+   ========================================================= */
+
+function requestEditorAccess() {
+
+    if (editorMode) {
+
+        editorMode = false;
+
+        document.body
+            .classList
+            .remove("editor-mode");
+
+        document
+            .getElementById("editorToggle")
+            .textContent =
+            "Editor Side";
+
+        updateEditableState();
+
+        return;
+
+    }
+
+    const password =
+        prompt(
+            "Enter Admin Password:"
         );
 
-        setDraftState(true);
+    if (
+        password ===
+        ADMIN_PASSWORD
+    ) {
 
-    } catch(error) {
+        editorMode = true;
 
-        console.error(error);
+        document.body
+            .classList
+            .add("editor-mode");
+
+        document
+            .getElementById("editorToggle")
+            .textContent =
+            "Exit Editor";
+
+        updateEditableState();
+
+    } else {
 
         alert(
-            "Unable to process the uploaded media. Please try another file."
+            "Access Denied"
         );
 
     }
 
 }
 
+
+/* =========================================================
+   ENABLE / DISABLE EDITABLE CONTENT
+   ========================================================= */
+
+function updateEditableState() {
+
+    document
+        .querySelectorAll(
+            "[data-editable]"
+        )
+        .forEach(element => {
+
+            element.contentEditable =
+                editorMode
+                    ? "true"
+                    : "false";
+
+        });
+
+}
+
+
+/* =========================================================
+   LOGO UPLOAD
+   ========================================================= */
+
+document
+    .getElementById("logoInput")
+    .addEventListener(
+        "change",
+        function(event) {
+
+            const file =
+                event.target.files[0];
+
+            if (!file) return;
+
+            if (
+                !file.type.startsWith(
+                    "image/"
+                )
+            ) {
+
+                alert(
+                    "Please select an image."
+                );
+
+                return;
+
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function(e) {
+
+                    document
+                        .getElementById(
+                            "siteLogo"
+                        )
+                        .src =
+                        e.target.result;
+
+                    markDraft();
+
+                };
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+/* =========================================================
+   BACKGROUND COLOR
+   ========================================================= */
+
+document
+    .getElementById(
+        "backgroundPicker"
+    )
+    .addEventListener(
+        "input",
+        function(event) {
+
+            document.documentElement
+                .style
+                .setProperty(
+                    "--bg",
+                    event.target.value
+                );
+
+            markDraft();
+
+        }
+    );
+
+
+/* =========================================================
+   CONTENT EDITING
+   ========================================================= */
+
+document.addEventListener(
+    "input",
+    function(event) {
+
+        if (
+            editorMode &&
+            event.target.matches(
+                "[data-editable]"
+            )
+        ) {
+
+            markDraft();
+
+        }
+
+    }
+);
+
+
 /* =========================================================
    RENDER PORTFOLIO
-========================================================= */
+   ========================================================= */
 
-async function renderPortfolio() {
+async function renderPortfolio(
+    filter = "all"
+) {
 
     const grid =
         document.getElementById(
@@ -3092,28 +2797,20 @@ async function renderPortfolio() {
 
     grid.innerHTML = "";
 
-    const visibleProjects =
+    const filtered =
         projects.filter(project => {
 
-            if (
-                currentFilter === "all"
-            ) {
-
-                return true;
-
-            }
-
             return (
-                project.category ===
-                currentFilter
+                filter === "all" ||
+                project.category === filter
             );
 
         });
 
-    if (!visibleProjects.length) {
+    if (!filtered.length) {
 
         grid.innerHTML = `
-            <div class="empty-state">
+            <div class="empty-projects">
                 No projects in this category yet.
             </div>
         `;
@@ -3123,7 +2820,8 @@ async function renderPortfolio() {
     }
 
     for (
-        const project of visibleProjects
+        const project
+        of filtered
     ) {
 
         const card =
@@ -3137,9 +2835,10 @@ async function renderPortfolio() {
 
 }
 
+
 /* =========================================================
    CREATE PROJECT CARD
-========================================================= */
+   ========================================================= */
 
 async function createProjectCard(
     project
@@ -3151,256 +2850,200 @@ async function createProjectCard(
         );
 
     card.className =
-        "folio-card";
+        "project-card";
 
     card.dataset.category =
         project.category;
 
-    /* ----------------------------------
-       MEDIA
-    ---------------------------------- */
+    /*
+       Main thumbnail.
+    */
 
-    const mediaContainer =
+    const thumbnail =
         document.createElement(
             "div"
         );
 
-    mediaContainer.className =
-        "folio-media";
+    thumbnail.className =
+        "project-thumbnail";
 
     /*
-    Every media item gets its natural ratio.
-
-    We deliberately DO NOT use a fixed
-    aspect ratio or object-fit: cover.
+       Track.
     */
 
-    for (
-        const media of project.media
-    ) {
-
-        const mediaUrl =
-            await mediaToURL(
-                media.id
-            );
-
-        if (!mediaUrl) {
-            continue;
-        }
-
-        let element;
-
-        if (
-            media.type === "video"
-        ) {
-
-            element =
-                document.createElement(
-                    "video"
-                );
-
-            element.controls =
-                true;
-
-            element.preload =
-                "metadata";
-
-            element.playsInline =
-                true;
-
-            element.className =
-                "media-item video";
-
-        } else {
-
-            element =
-                document.createElement(
-                    "img"
-                );
-
-            element.loading =
-                "lazy";
-
-            element.alt =
-                project.title;
-
-            element.className =
-                "media-item image";
-
-        }
-
-        element.src =
-            mediaUrl;
-
-        mediaContainer.appendChild(
-            element
+    const track =
+        document.createElement(
+            "div"
         );
 
+    track.className =
+        "thumbnail-track";
+
+    /*
+       If there is media.
+    */
+
+    if (
+        project.media &&
+        project.media.length
+    ) {
+
         /*
-        EDITOR MEDIA CONTROL
+           Main displayed media.
         */
 
-        if (editorMode) {
+        const firstMedia =
+            project.media[0];
 
-            const control =
+        const mainItem =
+            await createMediaElement(
+                firstMedia
+            );
+
+        const mainWrap =
+            document.createElement(
+                "div"
+            );
+
+        mainWrap.className =
+            "thumbnail-item";
+
+        mainWrap.appendChild(
+            mainItem
+        );
+
+        track.appendChild(
+            mainWrap
+        );
+
+    } else {
+
+        track.innerHTML = `
+            <div
+                class="thumbnail-item"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    color:#555;
+                "
+            >
+                NO MEDIA
+            </div>
+        `;
+
+    }
+
+    thumbnail.appendChild(track);
+
+    /*
+       Media count.
+    */
+
+    if (
+        project.media &&
+        project.media.length
+    ) {
+
+        const count =
+            document.createElement(
+                "div"
+            );
+
+        count.className =
+            "media-count";
+
+        count.textContent =
+            `${project.media.length} MEDIA`;
+
+        thumbnail.appendChild(
+            count
+        );
+
+    }
+
+    /*
+       First 3 uploaded media as thumbnails.
+    */
+
+    if (
+        project.media &&
+        project.media.length
+    ) {
+
+        const strip =
+            document.createElement(
+                "div"
+            );
+
+        strip.className =
+            "mini-strip";
+
+        const firstThree =
+            project.media
+                .slice(0, 3);
+
+        for (
+            let i = 0;
+            i < firstThree.length;
+            i++
+        ) {
+
+            const mini =
+                await createMediaElement(
+                    firstThree[i]
+                );
+
+            const wrapper =
                 document.createElement(
                     "div"
                 );
 
-            control.className =
-                "media-editor";
+            wrapper.className =
+                "mini-thumb";
 
-            const replaceLabel =
-                document.createElement(
-                    "label"
-                );
-
-            replaceLabel.textContent =
-                "SWAP";
-
-            const replaceInput =
-                document.createElement(
-                    "input"
-                );
-
-            replaceInput.type =
-                "file";
-
-            replaceInput.accept =
-                "image/*,video/*";
-
-            replaceInput.addEventListener(
-                "change",
-                async event => {
-
-                    const file =
-                        event.target.files[0];
-
-                    if (!file) {
-                        return;
-                    }
-
-                    try {
-
-                        const newMedia =
-                            await createMediaFromFile(
-                                file
-                            );
-
-                        const index =
-                            project.media.findIndex(
-                                item =>
-                                    item.id ===
-                                    media.id
-                            );
-
-                        if (index !== -1) {
-
-                            await deleteMedia(
-                                media.id
-                            );
-
-                            project.media[index] =
-                                newMedia;
-
-                        }
-
-                        draftProjects =
-                            structuredClone(
-                                projects
-                            );
-
-                        setDraftState(true);
-
-                        renderPortfolio();
-
-                    } catch(error) {
-
-                        console.error(error);
-
-                        alert(
-                            "Unable to replace media."
-                        );
-
-                    }
-
-                }
+            wrapper.appendChild(
+                mini
             );
 
-            replaceLabel.appendChild(
-                replaceInput
-            );
+            /*
+               Clicking thumbnail opens viewer
+               at that media index.
+            */
 
-            control.appendChild(
-                replaceLabel
-            );
-
-            const deleteButton =
-                document.createElement(
-                    "button"
-                );
-
-            deleteButton.type =
-                "button";
-
-            deleteButton.className =
-                "danger";
-
-            deleteButton.textContent =
-                "DELETE";
-
-            deleteButton.addEventListener(
+            wrapper.addEventListener(
                 "click",
-                async () => {
+                function(event) {
 
-                    if (
-                        !confirm(
-                            "Delete this media item?"
-                        )
-                    ) {
+                    event.stopPropagation();
 
-                        return;
-
-                    }
-
-                    await deleteMedia(
-                        media.id
+                    openViewer(
+                        project.id,
+                        i
                     );
 
-                    project.media =
-                        project.media.filter(
-                            item =>
-                                item.id !==
-                                media.id
-                        );
-
-                    draftProjects =
-                        structuredClone(
-                            projects
-                        );
-
-                    setDraftState(true);
-
-                    renderPortfolio();
-
                 }
             );
 
-            control.appendChild(
-                deleteButton
-            );
-
-            mediaContainer.appendChild(
-                control
+            strip.appendChild(
+                wrapper
             );
 
         }
 
+        thumbnail.appendChild(
+            strip
+        );
+
     }
 
-    /* ----------------------------------
-       FOLIO INFO
-    ---------------------------------- */
+    card.appendChild(
+        thumbnail
+    );
+
+    /*
+       Project information.
+    */
 
     const info =
         document.createElement(
@@ -3408,252 +3051,187 @@ async function createProjectCard(
         );
 
     info.className =
-        "folio-info";
+        "project-info";
 
-    const category =
+    info.innerHTML = `
+        <div class="project-category">
+            ${escapeHTML(
+                project.category
+            )}
+        </div>
+
+        <div class="project-title">
+            ${escapeHTML(
+                project.title
+            )}
+        </div>
+
+        <div class="project-description">
+            ${escapeHTML(
+                project.description || ""
+            )}
+        </div>
+    `;
+
+    card.appendChild(
+        info
+    );
+
+    /*
+       Click anywhere to open viewer.
+    */
+
+    card.addEventListener(
+        "click",
+        function() {
+
+            if (
+                project.media &&
+                project.media.length
+            ) {
+
+                openViewer(
+                    project.id,
+                    0
+                );
+
+            }
+
+        }
+    );
+
+    /*
+       ADMIN CONTROLS
+    */
+
+    const admin =
         document.createElement(
             "div"
         );
 
-    category.className =
-        "folio-category";
+    admin.className =
+        "admin-controls";
 
-    category.textContent =
-        project.category;
+    admin.innerHTML = `
 
-    const title =
-        document.createElement(
-            "h3"
+        <div
+            class="admin-media-buttons"
+        >
+
+            <label class="btn file-btn">
+
+                <span>
+                    + Add Media
+                </span>
+
+                <input
+                    type="file"
+                    accept="image/*,video/*"
+                    multiple
+                >
+
+            </label>
+
+            <button
+                class="btn btn-danger delete-project"
+            >
+                Delete Project
+            </button>
+
+        </div>
+
+        <div class="media-list"></div>
+
+    `;
+
+    /*
+       Add media.
+    */
+
+    const addInput =
+        admin.querySelector(
+            'input[type="file"]'
         );
 
-    title.className =
-        "folio-title";
+    addInput.addEventListener(
+        "change",
+        async function(event) {
 
-    title.textContent =
-        project.title;
+            const files =
+                Array.from(
+                    event.target.files
+                );
 
-    const description =
-        document.createElement(
-            "p"
-        );
+            if (!files.length) return;
 
-    description.className =
-        "folio-description";
+            for (
+                const file
+                of files
+            ) {
 
-    description.textContent =
-        project.description;
+                if (
+                    !file.type.startsWith(
+                        "image/"
+                    ) &&
+                    !file.type.startsWith(
+                        "video/"
+                    )
+                ) {
 
-    info.appendChild(
-        category
-    );
+                    continue;
 
-    info.appendChild(
-        title
-    );
+                }
 
-    info.appendChild(
-        description
-    );
+                const mediaId =
+                    await saveMedia(
+                        file
+                    );
 
-    /* ----------------------------------
-       EDITOR PROJECT CONTROLS
-    ---------------------------------- */
-
-    if (editorMode) {
-
-        const editorControls =
-            document.createElement(
-                "div"
-            );
-
-        editorControls.className =
-            "media-editor";
-
-        /* ADD MEDIA */
-
-        const addLabel =
-            document.createElement(
-                "label"
-            );
-
-        addLabel.textContent =
-            "ADD MEDIA";
-
-        const addInput =
-            document.createElement(
-                "input"
-            );
-
-        addInput.type =
-            "file";
-
-        addInput.accept =
-            "image/*,video/*";
-
-        addInput.multiple =
-            true;
-
-        addInput.addEventListener(
-            "change",
-            async event => {
-
-                await handleMediaFiles(
-                    event.target.files,
-                    async newMedia => {
-
-                        project.media.push(
-                            ...newMedia
-                        );
-
-                        draftProjects =
-                            structuredClone(
-                                projects
-                            );
-
-                        await renderPortfolio();
-
+                project.media.push(
+                    {
+                        id: mediaId,
+                        type: file.type,
+                        name: file.name
                     }
                 );
 
             }
-        );
 
-        addLabel.appendChild(
-            addInput
-        );
+            markDraft();
 
-        editorControls.appendChild(
-            addLabel
-        );
-
-        /* EDIT TITLE */
-
-        const editTitle =
-            document.createElement(
-                "button"
+            await renderPortfolio(
+                getActiveFilter()
             );
 
-        editTitle.type =
-            "button";
+        }
+    );
 
-        editTitle.textContent =
-            "EDIT TITLE";
+    /*
+       Delete project.
+    */
 
-        editTitle.addEventListener(
+    admin
+        .querySelector(
+            ".delete-project"
+        )
+        .addEventListener(
             "click",
-            () => {
+            async function(event) {
 
-                const newTitle =
-                    prompt(
-                        "Project title:",
-                        project.title
+                event.stopPropagation();
+
+                const confirmDelete =
+                    confirm(
+                        "Delete this project?"
                     );
 
-                if (
-                    newTitle === null
-                ) {
+                if (!confirmDelete) {
                     return;
-                }
-
-                project.title =
-                    newTitle;
-
-                draftProjects =
-                    structuredClone(
-                        projects
-                    );
-
-                setDraftState(true);
-
-                renderPortfolio();
-
-            }
-        );
-
-        editorControls.appendChild(
-            editTitle
-        );
-
-        /* EDIT DESCRIPTION */
-
-        const editDescription =
-            document.createElement(
-                "button"
-            );
-
-        editDescription.type =
-            "button";
-
-        editDescription.textContent =
-            "EDIT DESCRIPTION";
-
-        editDescription.addEventListener(
-            "click",
-            () => {
-
-                const newDescription =
-                    prompt(
-                        "Project description:",
-                        project.description
-                    );
-
-                if (
-                    newDescription === null
-                ) {
-                    return;
-                }
-
-                project.description =
-                    newDescription;
-
-                draftProjects =
-                    structuredClone(
-                        projects
-                    );
-
-                setDraftState(true);
-
-                renderPortfolio();
-
-            }
-        );
-
-        editorControls.appendChild(
-            editDescription
-        );
-
-        /* DELETE PROJECT */
-
-        const deleteProject =
-            document.createElement(
-                "button"
-            );
-
-        deleteProject.type =
-            "button";
-
-        deleteProject.className =
-            "danger";
-
-        deleteProject.textContent =
-            "DELETE FOLIO";
-
-        deleteProject.addEventListener(
-            "click",
-            async () => {
-
-                if (
-                    !confirm(
-                        "Delete this entire folio?"
-                    )
-                ) {
-
-                    return;
-
                 }
 
                 for (
-                    const media of project.media
+                    const media
+                    of project.media
                 ) {
 
                     await deleteMedia(
@@ -3664,566 +3242,708 @@ async function createProjectCard(
 
                 projects =
                     projects.filter(
-                        item =>
-                            item.id !==
+                        p =>
+                            p.id !==
                             project.id
                     );
 
-                draftProjects =
-                    structuredClone(
-                        projects
-                    );
+                markDraft();
 
-                setDraftState(true);
-
-                renderPortfolio();
+                await renderPortfolio(
+                    getActiveFilter()
+                );
 
             }
         );
 
-        editorControls.appendChild(
-            deleteProject
+    card.appendChild(
+        admin
+    );
+
+    /*
+       Display existing media in editor.
+    */
+
+    const mediaList =
+        admin.querySelector(
+            ".media-list"
         );
 
-        info.appendChild(
-            editorControls
+    for (
+        const media
+        of project.media
+    ) {
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+        item.className =
+            "admin-media-item";
+
+        const element =
+            await createMediaElement(
+                media
+            );
+
+        item.appendChild(
+            element
+        );
+
+        const remove =
+            document.createElement(
+                "button"
+            );
+
+        remove.textContent =
+            "×";
+
+        remove.title =
+            "Remove media";
+
+        remove.addEventListener(
+            "click",
+            async function(event) {
+
+                event.stopPropagation();
+
+                await deleteMedia(
+                    media.id
+                );
+
+                project.media =
+                    project.media.filter(
+                        m =>
+                            m.id !==
+                            media.id
+                    );
+
+                markDraft();
+
+                await renderPortfolio(
+                    getActiveFilter()
+                );
+
+            }
+        );
+
+        item.appendChild(
+            remove
+        );
+
+        mediaList.appendChild(
+            item
         );
 
     }
-
-    card.appendChild(
-        mediaContainer
-    );
-
-    card.appendChild(
-        info
-    );
 
     return card;
 
 }
 
+
 /* =========================================================
-   ADD NEW PROJECT
-========================================================= */
+   CREATE MEDIA ELEMENT
+   ========================================================= */
 
-async function addNewProject() {
+async function createMediaElement(
+    media
+) {
 
-    const title =
-        document
-            .getElementById(
-                "newProjectTitle"
-            )
-            .value
-            .trim();
-
-    const category =
-        document
-            .getElementById(
-                "newProjectCategory"
-            )
-            .value;
-
-    const description =
-        document
-            .getElementById(
-                "newProjectDescription"
-            )
-            .value
-            .trim();
-
-    const files =
-        document
-            .getElementById(
-                "newProjectMedia"
-            )
-            .files;
-
-    if (!title) {
-
-        alert(
-            "Please enter a project title."
+    const record =
+        await getMedia(
+            media.id
         );
 
-        return;
+    if (!record) {
 
-    }
-
-    if (!files.length) {
-
-        alert(
-            "Please upload at least one image or video."
-        );
-
-        return;
-
-    }
-
-    try {
-
-        const mediaItems = [];
-
-        for (
-            const file of Array.from(files)
-        ) {
-
-            const media =
-                await createMediaFromFile(
-                    file
-                );
-
-            mediaItems.push(
-                media
+        const placeholder =
+            document.createElement(
+                "div"
             );
 
-        }
+        placeholder.style.color =
+            "#555";
 
-        const project = {
+        placeholder.textContent =
+            "Missing media";
 
-            id:
-                "project-" +
-                Date.now() +
-                "-" +
-                Math.random()
-                    .toString(36)
-                    .substring(2,8),
+        return placeholder;
 
-            title,
+    }
 
-            category,
-
-            description,
-
-            media:
-                mediaItems
-
-        };
-
-        projects.push(
-            project
+    const url =
+        URL.createObjectURL(
+            record.blob
         );
-
-        draftProjects =
-            structuredClone(
-                projects
-            );
-
-        setDraftState(true);
-
-        document
-            .getElementById(
-                "newProjectTitle"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "newProjectDescription"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "newProjectMedia"
-            )
-            .value = "";
-
-        await renderPortfolio();
-
-        alert(
-            "Folio added to your draft."
-        );
-
-    } catch(error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to add this folio."
-        );
-
-    }
-
-}
-
-/* =========================================================
-   PUBLISH CHANGES
-========================================================= */
-
-async function publishChanges() {
-
-    if (!hasDrafts) {
-        return;
-    }
-
-    const confirmed =
-        confirm(
-            "Publish all draft changes?"
-        );
-
-    if (!confirmed) {
-        return;
-    }
-
-    /*
-    Copy text edits into settings.
-    */
-
-    Object.assign(
-        settings,
-        draftSettings
-    );
-
-    /*
-    Save settings.
-    */
-
-    const settingsSaved =
-        saveSettingsToStorage();
-
-    if (!settingsSaved) {
-        return;
-    }
-
-    /*
-    Save project metadata.
-
-    Binary media has already been saved
-    into IndexedDB.
-    */
-
-    const projectsSaved =
-        saveProjectsToStorage();
-
-    if (!projectsSaved) {
-        return;
-    }
-
-    /*
-    Reset drafts.
-    */
-
-    draftSettings = {};
-
-    draftProjects = [];
-
-    setDraftState(false);
-
-    /*
-    Re-hydrate current page.
-    */
-
-    applySettingsToPage();
-
-    applyTextSettings();
-
-    await renderPortfolio();
-
-    alert(
-        "Success! Your changes have been pushed live!"
-    );
-
-}
-
-/* =========================================================
-   DISCARD CHANGES
-========================================================= */
-
-function discardChanges() {
-
-    if (!hasDrafts) {
-        return;
-    }
 
     if (
-        !confirm(
-            "Discard all unpublished changes?"
+        record.type.startsWith(
+            "video/"
         )
+    ) {
+
+        const video =
+            document.createElement(
+                "video"
+            );
+
+        video.src =
+            url;
+
+        video.muted =
+            true;
+
+        video.loop =
+            true;
+
+        video.playsInline =
+            true;
+
+        video.autoplay =
+            false;
+
+        return video;
+
+    }
+
+    const img =
+        document.createElement(
+            "img"
+        );
+
+    img.src =
+        url;
+
+    img.alt =
+        record.name || "Model project";
+
+    return img;
+
+}
+
+
+/* =========================================================
+   VIEWER
+   ========================================================= */
+
+async function openViewer(
+    projectId,
+    index
+) {
+
+    viewerProjectId =
+        projectId;
+
+    viewerIndex =
+        index;
+
+    document
+        .getElementById(
+            "viewer"
+        )
+        .classList
+        .add("open");
+
+    await renderViewerMedia();
+
+}
+
+
+/* =========================================================
+   RENDER VIEWER MEDIA
+   ========================================================= */
+
+async function renderViewerMedia() {
+
+    const project =
+        projects.find(
+            p =>
+                p.id ===
+                viewerProjectId
+        );
+
+    if (!project) return;
+
+    if (
+        !project.media ||
+        !project.media.length
     ) {
 
         return;
 
     }
 
-    settings =
-        loadSettings();
+    if (
+        viewerIndex < 0
+    ) {
 
-    projects =
-        loadProjects();
+        viewerIndex =
+            project.media.length - 1;
 
-    draftSettings = {};
-
-    draftProjects = [];
-
-    setDraftState(false);
-
-    applySettingsToPage();
-
-    applyTextSettings();
-
-    renderPortfolio();
-
-}
-
-/* =========================================================
-   LOGO UPLOAD
-========================================================= */
-
-function uploadLogo(file) {
-
-    if (!file) {
-        return;
     }
 
-    const reader =
-        new FileReader();
+    if (
+        viewerIndex >=
+        project.media.length
+    ) {
 
-    reader.onload =
-        event => {
+        viewerIndex = 0;
 
-            /*
-            Logo is normally small enough
-            for localStorage.
+    }
 
-            If a huge logo is selected,
-            the user should resize it first.
-            */
+    const media =
+        project.media[
+            viewerIndex
+        ];
 
-            settings.logo =
-                event.target.result;
+    const record =
+        await getMedia(
+            media.id
+        );
 
-            const logo =
-                document.getElementById(
-                    "siteLogo"
-                );
+    if (!record) return;
 
-            logo.src =
-                settings.logo;
+    const container =
+        document.getElementById(
+            "viewerMediaContainer"
+        );
 
-            logo.style.display =
-                "block";
+    container.innerHTML = "";
 
-            draftSettings.logo =
-                settings.logo;
+    const url =
+        URL.createObjectURL(
+            record.blob
+        );
 
-            setDraftState(true);
+    if (
+        record.type.startsWith(
+            "video/"
+        )
+    ) {
 
-        };
-
-    reader.onerror =
-        () => {
-
-            alert(
-                "Unable to read logo image."
+        const video =
+            document.createElement(
+                "video"
             );
 
-        };
+        video.className =
+            "viewer-video";
 
-    reader.readAsDataURL(file);
+        video.src =
+            url;
 
-}
+        video.controls =
+            true;
 
-/* =========================================================
-   COLOR CONTROLS
-========================================================= */
+        video.autoplay =
+            true;
 
-function setupColorControls() {
+        video.playsInline =
+            true;
 
-    const backgroundPicker =
-        document.getElementById(
-            "backgroundColorPicker"
+        container.appendChild(
+            video
         );
 
-    backgroundPicker.addEventListener(
-        "input",
-        event => {
+    } else {
 
-            const color =
-                event.target.value;
+        const image =
+            document.createElement(
+                "img"
+            );
 
-            document.documentElement
-                .style
-                .setProperty(
-                    "--bg",
-                    color
-                );
+        image.className =
+            "viewer-media";
 
-            draftSettings.background =
-                color;
+        image.src =
+            url;
 
-            setDraftState(true);
+        image.alt =
+            record.name || "";
 
-        }
-    );
-
-    const accentPicker =
-        document.getElementById(
-            "accentColorPicker"
+        container.appendChild(
+            image
         );
 
-    accentPicker.addEventListener(
-        "input",
-        event => {
-
-            const color =
-                event.target.value;
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--orange",
-                    color
-                );
-
-            draftSettings.accent =
-                color;
-
-            setDraftState(true);
-
-        }
-    );
+    }
 
     document
         .getElementById(
-            "resetStyle"
+            "viewerCounter"
         )
-        .addEventListener(
+        .textContent =
+        `${viewerIndex + 1} / ${project.media.length}`;
+
+}
+
+
+/* =========================================================
+   NEXT / PREVIOUS
+   ========================================================= */
+
+async function nextMedia() {
+
+    const project =
+        projects.find(
+            p =>
+                p.id ===
+                viewerProjectId
+        );
+
+    if (!project) return;
+
+    viewerIndex++;
+
+    if (
+        viewerIndex >=
+        project.media.length
+    ) {
+
+        viewerIndex = 0;
+
+    }
+
+    await renderViewerMedia();
+
+}
+
+
+async function previousMedia() {
+
+    const project =
+        projects.find(
+            p =>
+                p.id ===
+                viewerProjectId
+        );
+
+    if (!project) return;
+
+    viewerIndex--;
+
+    if (
+        viewerIndex < 0
+    ) {
+
+        viewerIndex =
+            project.media.length - 1;
+
+    }
+
+    await renderViewerMedia();
+
+}
+
+
+/* =========================================================
+   VIEWER EVENTS
+   ========================================================= */
+
+document
+    .getElementById(
+        "viewerNext"
+    )
+    .addEventListener(
+        "click",
+        nextMedia
+    );
+
+document
+    .getElementById(
+        "viewerPrev"
+    )
+    .addEventListener(
+        "click",
+        previousMedia
+    );
+
+document
+    .getElementById(
+        "viewerClose"
+    )
+    .addEventListener(
+        "click",
+        closeViewer
+    );
+
+
+function closeViewer() {
+
+    document
+        .getElementById(
+            "viewer"
+        )
+        .classList
+        .remove("open");
+
+    document
+        .getElementById(
+            "viewerMediaContainer"
+        )
+        .innerHTML = "";
+
+}
+
+
+/* =========================================================
+   KEYBOARD VIEWER
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const viewer =
+            document.getElementById(
+                "viewer"
+            );
+
+        if (
+            !viewer.classList.contains(
+                "open"
+            )
+        ) {
+
+            return;
+
+        }
+
+        if (
+            event.key === "ArrowRight"
+        ) {
+
+            nextMedia();
+
+        }
+
+        if (
+            event.key === "ArrowLeft"
+        ) {
+
+            previousMedia();
+
+        }
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeViewer();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+document
+    .querySelectorAll(
+        ".filter-btn"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
             "click",
-            () => {
+            async function() {
 
-                draftSettings.background =
-                    DEFAULT_SETTINGS.background;
-
-                draftSettings.accent =
-                    DEFAULT_SETTINGS.accent;
-
-                document.documentElement
-                    .style
-                    .setProperty(
-                        "--bg",
-                        DEFAULT_SETTINGS.background
+                document
+                    .querySelectorAll(
+                        ".filter-btn"
+                    )
+                    .forEach(btn =>
+                        btn.classList.remove(
+                            "active"
+                        )
                     );
 
-                document.documentElement
-                    .style
-                    .setProperty(
-                        "--orange",
-                        DEFAULT_SETTINGS.accent
-                    );
+                this.classList.add(
+                    "active"
+                );
 
-                backgroundPicker.value =
-                    DEFAULT_SETTINGS.background;
-
-                accentPicker.value =
-                    DEFAULT_SETTINGS.accent;
-
-                setDraftState(true);
+                await renderPortfolio(
+                    this.dataset.filter
+                );
 
             }
         );
 
+    });
+
+
+function getActiveFilter() {
+
+    const active =
+        document.querySelector(
+            ".filter-btn.active"
+        );
+
+    return active
+        ? active.dataset.filter
+        : "all";
+
 }
+
 
 /* =========================================================
-   PASSWORD SYSTEM
-========================================================= */
+   ADD NEW PROJECT
+   ========================================================= */
 
-function openPasswordModal() {
+document
+    .getElementById(
+        "addProjectBtn"
+    )
+    .addEventListener(
+        "click",
+        async function() {
 
-    document
-        .getElementById(
-            "passwordModal"
-        )
-        .classList.add(
-            "active"
-        );
+            const title =
+                document
+                    .getElementById(
+                        "newProjectTitle"
+                    )
+                    .value
+                    .trim();
 
-    const input =
-        document.getElementById(
-            "adminPassword"
-        );
+            const category =
+                document
+                    .getElementById(
+                        "newProjectCategory"
+                    )
+                    .value;
 
-    input.value = "";
+            const input =
+                document
+                    .getElementById(
+                        "newProjectFiles"
+                    );
 
-    setTimeout(
-        () => input.focus(),
-        100
-    );
+            const files =
+                Array.from(
+                    input.files
+                );
 
-}
-
-function closePasswordModal() {
-
-    document
-        .getElementById(
-            "passwordModal"
-        )
-        .classList.remove(
-            "active"
-        );
-
-}
-
-function authenticateAdmin() {
-
-    const entered =
-        document
-            .getElementById(
-                "adminPassword"
-            )
-            .value;
-
-    if (
-        entered ===
-        ADMIN_PASSWORD
-    ) {
-
-        closePasswordModal();
-
-        enterEditorMode();
-
-    } else {
-
-        alert(
-            "Access Denied"
-        );
-
-        document
-            .getElementById(
-                "adminPassword"
-            )
-            .value = "";
-
-    }
-
-}
-
-/* =========================================================
-   CONTACT FORM
-========================================================= */
-
-function setupContactForm() {
-
-    const form =
-        document.getElementById(
-            "contactForm"
-        );
-
-    form.addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-            if (editorMode) {
+            if (!title) {
 
                 alert(
-                    "Public contact submission is disabled while Editor Mode is active."
+                    "Please enter a project title."
                 );
 
                 return;
 
             }
+
+            if (!files.length) {
+
+                alert(
+                    "Please select at least one image or video."
+                );
+
+                return;
+
+            }
+
+            const media = [];
+
+            for (
+                const file
+                of files
+            ) {
+
+                if (
+                    !file.type.startsWith(
+                        "image/"
+                    ) &&
+                    !file.type.startsWith(
+                        "video/"
+                    )
+                ) {
+
+                    continue;
+
+                }
+
+                const mediaId =
+                    await saveMedia(
+                        file
+                    );
+
+                media.push({
+                    id: mediaId,
+                    type: file.type,
+                    name: file.name
+                });
+
+            }
+
+            const project = {
+
+                id:
+                    "project_" +
+                    Date.now() +
+                    "_" +
+                    Math.random()
+                        .toString(36)
+                        .substring(2),
+
+                title:
+                    title,
+
+                category:
+                    category,
+
+                description:
+                    "Custom model project.",
+
+                media:
+                    media
+
+            };
+
+            projects.push(
+                project
+            );
+
+            document
+                .getElementById(
+                    "newProjectTitle"
+                )
+                .value = "";
+
+            document
+                .getElementById(
+                    "newProjectFiles"
+                )
+                .value = "";
+
+            markDraft();
+
+            await renderPortfolio(
+                getActiveFilter()
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   WHATSAPP CONTACT FORM
+   ========================================================= */
+
+document
+    .getElementById(
+        "contactForm"
+    )
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
 
             const name =
                 document
@@ -4257,7 +3977,10 @@ function setupContactForm() {
                     .trim();
 
             const message =
-                `Hello! My name is ${name}. I would like to get a quote for a ${service} on my ${kit}. Special requests: ${requests}.`;
+                `Hello! My name is ${name}. ` +
+                `I would like to get a quote for a ` +
+                `${service} on my ${kit}. ` +
+                `Special requests: ${requests}.`;
 
             const encoded =
                 encodeURIComponent(
@@ -4274,349 +3997,183 @@ function setupContactForm() {
         }
     );
 
-}
 
 /* =========================================================
-   FILTERS
-========================================================= */
+   ESCAPE HTML
+   ========================================================= */
 
-function setupFilters() {
+function escapeHTML(value) {
 
-    document
-        .querySelectorAll(
-            ".filter-btn"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                async () => {
-
-                    document
-                        .querySelectorAll(
-                            ".filter-btn"
-                        )
-                        .forEach(btn => {
-
-                            btn.classList.remove(
-                                "active"
-                            );
-
-                        });
-
-                    button.classList.add(
-                        "active"
-                    );
-
-                    currentFilter =
-                        button.dataset.filter;
-
-                    await renderPortfolio();
-
-                }
-            );
-
-        });
-
-}
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-function setupRevealAnimation() {
-
-    const elements =
-        document.querySelectorAll(
-            ".reveal"
+    const div =
+        document.createElement(
+            "div"
         );
 
-    const observer =
-        new IntersectionObserver(
-            entries => {
+    div.textContent =
+        value;
 
-                entries.forEach(entry => {
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   INTERSECTION OBSERVER
+   ========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
 
                     if (
                         entry.isIntersecting
                     ) {
 
-                        entry.target.classList.add(
-                            "visible"
-                        );
-
-                        observer.unobserve(
-                            entry.target
-                        );
+                        entry.target
+                            .classList
+                            .add("visible");
 
                     }
 
-                });
+                }
+            );
 
-            },
-            {
-                threshold: .12
-            }
-        );
-
-    elements.forEach(
-        element =>
-            observer.observe(element)
+        },
+        {
+            threshold: .12
+        }
     );
 
-}
+
+document
+    .querySelectorAll(
+        ".reveal"
+    )
+    .forEach(
+        element =>
+            observer.observe(
+                element
+            )
+    );
+
 
 /* =========================================================
-   KEYBOARD SHORTCUT
-========================================================= */
+   EDITOR BUTTON
+   ========================================================= */
 
-document.addEventListener(
-    "keydown",
-    event => {
+document
+    .getElementById(
+        "editorToggle"
+    )
+    .addEventListener(
+        "click",
+        requestEditorAccess
+    );
 
-        /*
-        ESC closes password modal.
-        */
 
-        if (
-            event.key === "Escape"
-        ) {
+/* =========================================================
+   PUBLISH BUTTON
+   ========================================================= */
 
-            closePasswordModal();
+document
+    .getElementById(
+        "publishBtn"
+    )
+    .addEventListener(
+        "click",
+        publishChanges
+    );
 
-        }
-
-    }
-);
 
 /* =========================================================
    INITIALIZATION
-========================================================= */
+   ========================================================= */
 
 async function initialize() {
 
-    /*
-    Load persisted settings.
-    */
+    try {
 
-    settings =
-        loadSettings();
+        /*
+           Open IndexedDB.
+        */
 
-    /*
-    Load project metadata.
-    */
+        await openDatabase();
 
-    projects =
+        /*
+           Load project metadata.
+        */
+
         loadProjects();
 
-    /*
-    Prepare draft state.
-    */
+        /*
+           Load settings.
+        */
 
-    draftSettings = {};
+        hydrateSettings();
 
-    draftProjects = [];
+        /*
+           Load saved text.
+        */
 
-    /*
-    Apply saved website settings.
-    */
+        loadTextContent();
 
-    applySettingsToPage();
+        /*
+           Render projects.
+        */
 
-    applyTextSettings();
-
-    /*
-    Setup editor controls.
-    */
-
-    setupColorControls();
-
-    /*
-    Setup public interactions.
-    */
-
-    setupContactForm();
-
-    setupFilters();
-
-    setupRevealAnimation();
-
-    /*
-    Add project button.
-    */
-
-    document
-        .getElementById(
-            "addProjectButton"
-        )
-        .addEventListener(
-            "click",
-            addNewProject
+        await renderPortfolio(
+            "all"
         );
 
-    /*
-    Logo upload.
-    */
+        /*
+           Editor should be locked initially.
+        */
 
-    document
-        .getElementById(
-            "logoUpload"
-        )
-        .addEventListener(
-            "change",
-            event => {
+        updateEditableState();
 
-                uploadLogo(
-                    event.target.files[0]
-                );
+        /*
+           Status.
+        */
 
-            }
+        document
+            .getElementById(
+                "storageStatus"
+            )
+            .textContent =
+            "IndexedDB media storage ready.";
+
+    } catch(error) {
+
+        console.error(
+            "Initialization error:",
+            error
         );
 
-    /*
-    Editor login.
-    */
+        document
+            .getElementById(
+                "storageStatus"
+            )
+            .textContent =
+            "Storage initialization failed.";
 
-    document
-        .getElementById(
-            "editorButton"
-        )
-        .addEventListener(
-            "click",
-            openPasswordModal
+        alert(
+            "Your browser could not initialise the media database. " +
+            "Try opening this page in Chrome, Edge or Firefox."
         );
 
-    /*
-    Admin authentication.
-    */
-
-    document
-        .getElementById(
-            "loginAdmin"
-        )
-        .addEventListener(
-            "click",
-            authenticateAdmin
-        );
-
-    document
-        .getElementById(
-            "cancelLogin"
-        )
-        .addEventListener(
-            "click",
-            closePasswordModal
-        );
-
-    /*
-    ENTER key inside password.
-    */
-
-    document
-        .getElementById(
-            "adminPassword"
-        )
-        .addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    authenticateAdmin();
-
-                }
-
-            }
-        );
-
-    /*
-    Exit editor.
-    */
-
-    document
-        .getElementById(
-            "logoutButton"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                if (
-                    hasDrafts &&
-                    !confirm(
-                        "You have unpublished changes. Exit anyway?"
-                    )
-                ) {
-
-                    return;
-
-                }
-
-                if (hasDrafts) {
-
-                    discardChanges();
-
-                }
-
-                exitEditorMode();
-
-            }
-        );
-
-    /*
-    Publish.
-    */
-
-    document
-        .getElementById(
-            "publishButton"
-        )
-        .addEventListener(
-            "click",
-            publishChanges
-        );
-
-    /*
-    Discard.
-    */
-
-    document
-        .getElementById(
-            "discardButton"
-        )
-        .addEventListener(
-            "click",
-            discardChanges
-        );
-
-    /*
-    Initial portfolio.
-    */
-
-    await renderPortfolio();
+    }
 
 }
+
 
 /* =========================================================
-   START APPLICATION
-========================================================= */
+   START
+   ========================================================= */
 
-if (
-    document.readyState === "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initialize
-    );
-
-} else {
-
-    initialize();
-
-}
+initialize();
 
 </script>
 
