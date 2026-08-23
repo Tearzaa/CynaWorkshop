@@ -52,7 +52,7 @@ a { color: inherit; text-decoration: none; }
     z-index: 2000;
     padding: 10px 20px;
     font-weight: 800;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4);
@@ -77,11 +77,26 @@ a { color: inherit; text-decoration: none; }
     border: 1px dashed var(--orange);
     padding: 20px;
     border-radius: 8px;
-    margin-top: 30px;
+    margin-bottom: 30px;
     display: none;
 }
 
 .admin-control-panel.active-editor-block { display: block; }
+
+.admin-control-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-control-panel input, 
+.admin-control-panel select {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 4px;
+}
 
 /* =========================================================
    NAVIGATION
@@ -99,6 +114,7 @@ a { color: inherit; text-decoration: none; }
     transition: top 0.3s ease;
 }
 
+body.has-publish-bar { padding-top: 44px; }
 body.has-publish-bar .navbar { top: 44px; }
 
 .nav-container {
@@ -204,32 +220,8 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 .section-title { font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 8px; }
 .section-description { color: var(--muted); max-width: 700px; margin-top: 12px; }
 
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.active { opacity: 1; transform: translateY(0); }
-
 /* =========================================================
-   SERVICES & TIER STYLING
-   ========================================================= */
-.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-
-.service-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 30px;
-    border-radius: 6px;
-    transition: 0.3s ease;
-    position: relative;
-}
-
-.service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px var(--shadow); border-color: var(--orange); }
-.service-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
-.service-price { color: var(--orange); font-weight: 800; font-size: 1.25rem; margin-bottom: 20px; }
-.service-features { list-style: none; color: var(--muted); font-size: 0.95rem; }
-.service-features li { margin-bottom: 8px; position: relative; padding-left: 18px; }
-.service-features li::before { content: "▪"; position: absolute; left: 0; color: var(--orange); }
-
-/* =========================================================
-   PORTFOLIO RESPONSIVE MULTI-MEDIA SLIDER GRID
+   PORTFOLIO RESPONSIVE GRID
    ========================================================= */
 .portfolio-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
 
@@ -265,37 +257,7 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 .portfolio-slider-container { position: relative; background: #111; width: 100%; overflow: hidden; }
 .portfolio-slides-wrapper { display: flex; width: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 .portfolio-slide { flex: 0 0 100%; width: 100%; position: relative; }
-.portfolio-slide img, .portfolio-slide video { width: 100%; height: auto; display: block; object-fit: contain; }
-
-.slider-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(18, 18, 18, 0.7);
-    border: 1px solid rgba(255, 102, 0, 0.4);
-    color: var(--orange);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    z-index: 5;
-    opacity: 0;
-    transition: opacity 0.2s, background 0.2s;
-    user-select: none;
-}
-
-.portfolio-item:hover .slider-arrow { opacity: 1; }
-.slider-arrow:hover { background: var(--orange); color: #121212; }
-.arrow-left { left: 10px; }
-.arrow-right { right: 10px; }
-
-.slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
-.slider-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transition: 0.2s; }
-.slider-dot.active { background: var(--orange); width: 16px; border-radius: 4px; }
+.portfolio-slide img { width: 100%; height: 260px; display: block; object-fit: cover; }
 
 .portfolio-details { padding: 20px; }
 .portfolio-title { font-weight: 800; font-size: 1.1rem; }
@@ -308,570 +270,201 @@ section { padding: 100px 5%; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
     background: rgba(18, 18, 18, 0.85);
     border: 1px solid #ff3b30;
     color: #ff3b30;
-    padding: 6px 12px;
+    padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 800;
     z-index: 10;
-    display: none;
-    cursor: pointer;
 }
-
-body.editor-active .item-delete-btn { display: block; }
-
-/* =========================================================
-   CONTACT FORM
-   ========================================================= */
-.contact-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
-@media (max-width: 768px) { .contact-layout { grid-template-columns: 1fr; gap: 40px; } }
-
-.main-contact-form { display: flex; flex-direction: column; gap: 20px; }
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-group label { font-weight: 700; font-size: 0.9rem; color: var(--muted); }
-
-.form-group input, .form-group select, .form-group textarea {
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    padding: 12px 16px;
-    border-radius: 4px;
-    color: #fff;
-    outline: none;
-    transition: 0.2s;
-}
-
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: var(--orange);
-    box-shadow: 0 0 10px rgba(255, 102, 0, 0.15);
-}
-
-.contact-info-block {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 30px;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.info-item h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--orange); margin-bottom: 4px; }
-.info-item p, .info-item a { font-size: 1.1rem; font-weight: 700; }
-
-/* =========================================================
-   FOOTER & LOGICAL EDITING VISUAL WRAPPERS
-   ========================================================= */
-footer { padding: 40px 5%; background: #0d0d0d; border-top: 1px solid rgba(255, 255, 255, 0.02); text-align: center; font-size: 0.85rem; color: var(--muted); }
-.footer-container { width: min(1200px, 100%); margin: auto; display: flex; flex-direction: column; gap: 15px; align-items: center; }
-
-[contenteditable="true"] { outline: none; position: relative; }
-
-body.editor-active [contenteditable="true"] {
-    box-shadow: 0 0 0 2px var(--orange);
-    border-radius: 2px;
-    background: rgba(255, 102, 0, 0.05);
-    cursor: pointer;
-}
-
-.color-picker-group {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--bg-card);
-    padding: 8px 12px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    margin-top: 10px;
-}
-.color-picker-group label { font-size: 0.85rem; font-weight: 700; }
+.item-delete-btn:hover { background: #ff3b30; color: #fff; }
 </style>
 </head>
-<body>
+<body class="has-publish-bar">
 
 <div id="publish-bar">
-    <span>You have unpublished layout or content changes!</span>
-    <button onclick="publishStagingChanges()">Publish Changes</button>
+    <span>CYNA WORKSHOP - STAGING MODE (LOCAL STORAGE ENGINE ACTIVE)</span>
+    <button id="reset-storage-btn">Reset All Data</button>
 </div>
 
 <nav class="navbar">
     <div class="nav-container">
         <div class="brand">
-            <div class="brand-text" id="site-title" oninput="stageTextChange()">CYNA<span>WORKSHOP</span></div>
+            <div class="brand-text">CYNA <span>WORKSHOP</span></div>
         </div>
         <div class="nav-links">
             <a href="#portfolio">Portfolio</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
+            <button class="editor-toggle" id="toggle-editor-btn">+ Add Item</button>
         </div>
-        <button class="editor-toggle" id="mode-switcher-btn" onclick="toggleViewArchitecture()">Editor Side</button>
     </div>
 </nav>
 
-<section class="hero">
-    <div class="hero-content">
-        <div class="eyebrow" id="hero-eyebrow" oninput="stageTextChange()">Premium Scale Modeling</div>
-        <h1 id="hero-heading" oninput="stageTextChange()">Meticulous Assembly. Museum Quality.</h1>
-        <p class="hero-description" id="hero-desc" oninput="stageTextChange()">Professional commission building service for Gundam model kits, humanoid figures, third-party variants, and scale vehicles.</p>
-        <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary">Get a Quote</a>
-            <a href="#portfolio" class="btn btn-outline">View Portfolio</a>
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">Master Class Customs</div>
+            <h1>PRECISION <span>GUNPLA</span> &amp; SCALE WORKS</h1>
+            <p class="hero-description">Professional customization, airbrushing, weathering, and scratch-building studio.</p>
+            <div class="hero-actions">
+                <a href="#portfolio" class="btn btn-primary">View Gallery</a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="services">
-    <div class="section-container reveal">
-        <div class="section-header">
-            <div class="section-label">Pricing</div>
-            <h2 class="section-title">Services & Tiers</h2>
-            <p class="section-description">Choose the level of craftsmanship that fits your kit and budget.</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3 id="t1-name" oninput="stageTextChange()">Straight Build</h3>
-                <div class="service-price" id="t1-price" oninput="stageTextChange()">Price starting at RM 100</div>
-                <ul class="service-features">
-                    <li>Assembly per manual</li>
-                    <li>Panel line basics</li>
-                    <li>Nub scar removal</li>
-                </ul>
+    <section id="portfolio">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">Selected Works</div>
+                <h2 class="section-title">PORTFOLIO GALLERY</h2>
             </div>
-            <div class="service-card">
-                <h3 id="t2-name" oninput="stageTextChange()">Clean Build</h3>
-                <div class="service-price" id="t2-price" oninput="stageTextChange()">Price starting at RM 200</div>
-                <ul class="service-features">
-                    <li>Everything in Straight Build</li>
-                    <li>Full panel lining</li>
-                    <li>Topcoat finish</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3 id="t3-name" oninput="stageTextChange()">Custom Build</h3>
-                <div class="service-price" id="t3-price" oninput="stageTextChange()">Price starting at RM 500</div>
-                <ul class="service-features">
-                    <li>Everything in Clean Build</li>
-                    <li>Custom painting & weathering</li>
-                    <li>LED / diorama add-ons</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3 id="t4-name" oninput="stageTextChange()">Model Kit Workshop</h3>
-                <div class="service-price" id="t4-price" oninput="stageTextChange()">Enquire via WhatsApp</div>
-                <ul class="service-features">
-                    <li>Group / private sessions</li>
-                    <li>Tools & materials provided</li>
-                    <li>Beginner friendly</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
 
-<section id="portfolio">
-    <div class="section-container reveal">
-        <div class="section-header">
-            <div class="section-label">Completed Work</div>
-            <h2 class="section-title">Portfolio</h2>
-            <p class="section-description">A selection of recent commissions and builds.</p>
-        </div>
-
-        <div class="portfolio-filters">
-            <button class="filter-btn active" onclick="executeGalleryFilter('all', this)">All</button>
-            <button class="filter-btn" onclick="executeGalleryFilter('gundam', this)">Gundam</button>
-            <button class="filter-btn" onclick="executeGalleryFilter('humanoid', this)">Humanoid</button>
-            <button class="filter-btn" onclick="executeGalleryFilter('vehicle', this)">Vehicle</button>
-        </div>
-
-        <div class="portfolio-grid" id="gallery-target-grid"></div>
-
-        <div class="admin-control-panel" id="portfolio-admin-panel">
-            <h3 style="margin-bottom: 15px;">Add New Portfolio Item</h3>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <label>Kit Title</label>
-                <input type="text" id="new-item-title" placeholder="e.g. RG Nu Gundam">
-            </div>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <label>Category</label>
-                <select id="new-item-category">
-                    <option value="gundam">Gundam</option>
-                    <option value="humanoid">Humanoid</option>
-                    <option value="vehicle">Vehicle</option>
-                </select>
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label>Media Files (image/video, multiple allowed)</label>
-                <input type="file" id="new-item-files" accept="image/*,video/*" multiple>
-            </div>
-            <button class="btn btn-primary" onclick="stageNewGalleryCard()">Add Card</button>
-        </div>
-
-        <div class="admin-control-panel" id="style-admin-panel">
-            <h3 style="margin-bottom: 15px;">Site Style</h3>
-            <div class="color-picker-group">
-                <label>Background Color</label>
-                <input type="color" id="bg-color-picker" onchange="stageBackgroundTone(this.value)">
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="contact">
-    <div class="section-container reveal">
-        <div class="section-header">
-            <div class="section-label">Get In Touch</div>
-            <h2 class="section-title">Contact</h2>
-            <p class="section-description">Send over your kit details and we'll get back to you with a quote.</p>
-        </div>
-        <div class="contact-layout">
-            <form class="main-contact-form" id="client-submission-form" onsubmit="triggerWhatsAppRedirect(event)">
-                <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" id="form-name" required>
-                </div>
-                <div class="form-group">
-                    <label>Kit Name</label>
-                    <input type="text" id="form-kit" required>
-                </div>
-                <div class="form-group">
-                    <label>Service Tier</label>
-                    <select id="form-service">
-                        <option value="Straight Build">Straight Build</option>
-                        <option value="Clean Build">Clean Build</option>
-                        <option value="Custom Build">Custom Build</option>
-                        <option value="Model Kit Workshop">Model Kit Workshop</option>
+            <!-- Upload Panel -->
+            <div class="admin-control-panel" id="admin-panel">
+                <form id="add-item-form">
+                    <label>Project Title:</label>
+                    <input type="text" id="item-title" placeholder="e.g. RX-78-2 Ver.Ka Custom" required>
+                    
+                    <label>Category:</label>
+                    <select id="item-category">
+                        <option value="Gunpla">Gunpla</option>
+                        <option value="Scale Work">Scale Work</option>
+                        <option value="Custom Paint">Custom Paint</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label>Special Requests</label>
-                    <textarea id="form-notes" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send via WhatsApp</button>
-            </form>
-            <div class="contact-info-block">
-                <div class="info-item">
-                    <h4>WhatsApp</h4>
-                    <a href="https://wa.me/601125041130" target="_blank">+60 11-2504 1130</a>
-                </div>
-                <div class="info-item">
-                    <h4>Location</h4>
-                    <p>Kuching, Sarawak, Malaysia</p>
-                </div>
-                <div class="info-item">
-                    <h4>Hours</h4>
-                    <p>Mon – Sat, 10am – 7pm</p>
-                </div>
+
+                    <label>Upload Image Files:</label>
+                    <input type="file" id="item-images" accept="image/*" multiple required>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Save &amp; Publish Item</button>
+                </form>
+            </div>
+
+            <div class="portfolio-grid" id="portfolio-container">
+                <!-- Dynamic Items Render Here -->
             </div>
         </div>
-    </div>
-</section>
-
-<footer>
-    <div class="footer-container">
-        <div>© 2026 CYNA WORKSHOP. All Rights Reserved.</div>
-        <div>Precision Scale Engineering Portfolio Architecture.</div>
-    </div>
-</footer>
+    </section>
+</main>
 
 <script>
-// System variables & security codes
-const ADMIN_PHRASE = "Ariztaz2026";
-let isEditorModeActive = false;
-let hasUnsavedStagingDrafts = false;
+// =========================================================
+// LOCAL STORAGE PERSISTENCE ENGINE
+// =========================================================
 
-// Map to keep track of active slider indices for each portfolio item
-let sliderIndices = {};
+const STORAGE_KEY = 'cyna_portfolio_data';
 
-// Reactive layout structures object
-let activePageData = {
-    bgColor: "#121212",
-    siteTitle: "CYNA WORKSHOP",
-    heroEyebrow: "Premium Scale Modeling",
-    heroHeading: "Meticulous Assembly. Museum Quality.",
-    heroDesc: "Professional commission building service for Gundam model kits, humanoid figures, third-party variants, and scale vehicles.",
-    t1Name: "Straight Build", t1Price: "Price starting at RM 100",
-    t2Name: "Clean Build", t2Price: "Price starting at RM 200",
-    t3Name: "Custom Build", t3Price: "Price starting at RM 500",
-    t4Name: "Model Kit Workshop", t4Price: "Enquire via WhatsApp"
-};
-
-// Media files array matching media arrays directly
-let activeGalleryItems = [
+// Default initial payload
+const defaultItems = [
     {
-        id: 1,
-        title: "MG Barbatos Lupus Rex",
-        category: "gundam",
-        media: [
-            { type: "image", data: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='%231d1d1d'/><text x='50%' y='50%' fill='%23ff6600' font-size='20' text-anchor='middle'>Gundam View 1</text></svg>" },
-            { type: "image", data: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='%231d1d1d'/><text x='50%' y='50%' fill='%23ff6600' font-size='20' text-anchor='middle'>Gundam View 2</text></svg>" }
-        ]
+        id: "1",
+        title: "PG Unleashed RX-78-2",
+        category: "Gunpla",
+        images: ["https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=800&q=80"]
     },
     {
-        id: 2,
-        title: "Cyberpunk Humanoid Frame",
-        category: "humanoid",
-        media: [
-            { type: "image", data: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='500'><rect width='100%' height='100%' fill='%231d1d1d'/><text x='50%' y='50%' fill='%23ff6600' font-size='20' text-anchor='middle'>Tall Humanoid</text></svg>" }
-        ]
-    },
-    {
-        id: 3,
-        title: "Military Armored Tank v3",
-        category: "vehicle",
-        media: [
-            { type: "image", data: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%231d1d1d'/><text x='50%' y='50%' fill='%23ff6600' font-size='20' text-anchor='middle'>Square Vehicle</text></svg>" }
-        ]
+        id: "2",
+        title: "Sazabi Ver.Ka Custom Weathering",
+        category: "Custom Paint",
+        images: ["https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"]
     }
 ];
 
-// Hydration bootstrapping routines
-window.addEventListener("DOMContentLoaded", () => {
-    loadInitialPersistedState();
-    hydrateDOMTextNodes();
-    renderGalleryGrid();
-    initializeScrollAnimations();
-});
-
-function loadInitialPersistedState() {
-    document.documentElement.style.setProperty('--bg', activePageData.bgColor);
-    document.getElementById("bg-color-picker").value = activePageData.bgColor;
-}
-
-function hydrateDOMTextNodes() {
-    document.getElementById("hero-eyebrow").innerText = activePageData.heroEyebrow;
-    document.getElementById("hero-heading").innerText = activePageData.heroHeading;
-    document.getElementById("hero-desc").innerText = activePageData.heroDesc;
-    document.getElementById("t1-name").innerText = activePageData.t1Name;
-    document.getElementById("t1-price").innerText = activePageData.t1Price;
-    document.getElementById("t2-name").innerText = activePageData.t2Name;
-    document.getElementById("t2-price").innerText = activePageData.t2Price;
-    document.getElementById("t3-name").innerText = activePageData.t3Name;
-    document.getElementById("t3-price").innerText = activePageData.t3Price;
-    document.getElementById("t4-name").innerText = activePageData.t4Name;
-    document.getElementById("t4-price").innerText = activePageData.t4Price;
-}
-
-// Operational split-view mode controller
-function toggleViewArchitecture() {
-    if (!isEditorModeActive) {
-        const checkPhrase = prompt("Enter Administrative Access Password:");
-        if (checkPhrase === ADMIN_PHRASE) {
-            isEditorModeActive = true;
-            document.body.classList.add("editor-active");
-            document.getElementById("mode-switcher-btn").innerText = "Client Side";
-            document.getElementById("mode-switcher-btn").style.background = "var(--orange)";
-            document.getElementById("mode-switcher-btn").style.color = "#121212";
-            document.getElementById("portfolio-admin-panel").classList.add("active-editor-block");
-            document.getElementById("style-admin-panel").classList.add("active-editor-block");
-            document.getElementById("client-submission-form").style.display = "none";
-            toggleContentEditableState(true);
-            renderGalleryGrid();
-        } else if (checkPhrase !== null) {
-            alert("Access Denied: Invalid Administrative Credentials.");
-        }
-    } else {
-        isEditorModeActive = false;
-        document.body.classList.remove("editor-active");
-        document.getElementById("mode-switcher-btn").innerText = "Editor Side";
-        document.getElementById("mode-switcher-btn").style.background = "transparent";
-        document.getElementById("mode-switcher-btn").style.color = "var(--orange)";
-        document.getElementById("portfolio-admin-panel").classList.remove("active-editor-block");
-        document.getElementById("style-admin-panel").classList.remove("active-editor-block");
-        document.getElementById("client-submission-form").style.display = "flex";
-        toggleContentEditableState(false);
-        renderGalleryGrid();
+function loadPortfolioData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultItems));
+        return defaultItems;
     }
+    return JSON.parse(raw);
 }
 
-function toggleContentEditableState(canEdit) {
-    const nodes = ["hero-eyebrow", "hero-heading", "hero-desc", "t1-name", "t1-price", "t2-name", "t2-price", "t3-name", "t3-price", "t4-name", "t4-price"];
-    nodes.forEach(id => {
-        document.getElementById(id).contentEditable = canEdit ? "true" : "false";
-    });
+function savePortfolioData(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    renderPortfolio();
 }
 
-// Staging trackers
-function registerDraftChange() {
-    hasUnsavedStagingDrafts = true;
-    document.getElementById("publish-bar").style.display = "flex";
-    document.body.classList.add("has-publish-bar");
-}
+function renderPortfolio() {
+    const container = document.getElementById('portfolio-container');
+    const items = loadPortfolioData();
 
-function stageTextChange() {
-    registerDraftChange();
-}
+    container.innerHTML = '';
 
-function stageBackgroundTone(hex) {
-    document.documentElement.style.setProperty('--bg', hex);
-    activePageData.bgColor = hex;
-    registerDraftChange();
-}
+    items.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'portfolio-item';
+        
+        const imageSlides = item.images.map(img => `
+            <div class="portfolio-slide">
+                <img src="${img}" alt="${item.title}">
+            </div>
+        `).join('');
 
-// Responsive rendering engine with slide shifts
-function renderGalleryGrid(filterMode = "all") {
-    const targetGrid = document.getElementById("gallery-target-grid");
-    targetGrid.innerHTML = "";
-    const itemsToRender = filterMode === "all" ? activeGalleryItems : activeGalleryItems.filter(i => i.category === filterMode);
-
-    if (itemsToRender.length === 0) {
-        targetGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted); columns: 1;">No completed projects added in this category.</div>`;
-        return;
-    }
-
-    itemsToRender.forEach(item => {
-        if (sliderIndices[item.id] === undefined) {
-            sliderIndices[item.id] = 0;
-        }
-
-        const element = document.createElement("div");
-        element.className = "portfolio-item";
-
-        let slidesHTML = "";
-        let dotsHTML = "";
-        item.media.forEach((m, idx) => {
-            dotsHTML += `<div class="slider-dot ${idx === sliderIndices[item.id] ? 'active' : ''}" onclick="jumpToMediaSlide(${item.id}, ${idx})"></div>`;
-            slidesHTML += `<div class="portfolio-slide">`;
-            if (m.type === "video") {
-                slidesHTML += `<video src="${m.data}" controls loop muted playsinline></video>`;
-            } else {
-                slidesHTML += `<img src="${m.data}" alt="Project Frame Asset">`;
-            }
-            slidesHTML += `</div>`;
-        });
-
-        const hasMultiple = item.media.length > 1;
-        const arrowsHTML = hasMultiple ? `<button class="slider-arrow arrow-left" onclick="shiftMediaSlide(${item.id}, -1)">&#10094;</button><button class="slider-arrow arrow-right" onclick="shiftMediaSlide(${item.id}, 1)">&#10095;</button>` : '';
-        const dotsContainerHTML = hasMultiple ? `<div class="slider-dots">${dotsHTML}</div>` : '';
-
-        element.innerHTML = `
-            <button class="item-delete-btn" onclick="executeGalleryItemRemoval(${item.id})">REMOVE</button>
+        itemEl.innerHTML = `
+            <button class="item-delete-btn" onclick="deleteItem('${item.id}')">Delete</button>
             <div class="portfolio-slider-container">
-                ${arrowsHTML}
-                <div class="portfolio-slides-wrapper" id="slides-wrapper-${item.id}" style="transform: translateX(-${sliderIndices[item.id] * 100}%);">
-                    ${slidesHTML}
+                <div class="portfolio-slides-wrapper">
+                    ${imageSlides}
                 </div>
-                ${dotsContainerHTML}
             </div>
             <div class="portfolio-details">
                 <div class="portfolio-title">${item.title}</div>
                 <div class="portfolio-category">${item.category}</div>
             </div>
         `;
-        targetGrid.appendChild(element);
+        container.appendChild(itemEl);
     });
 }
 
-// Slider shifting controllers
-function shiftMediaSlide(itemId, direction) {
-    const item = activeGalleryItems.find(i => i.id === itemId);
-    if (!item) return;
-    let currentIdx = sliderIndices[itemId];
-    currentIdx += direction;
-    if (currentIdx >= item.media.length) currentIdx = 0;
-    if (currentIdx < 0) currentIdx = item.media.length - 1;
-    jumpToMediaSlide(itemId, currentIdx);
+function deleteItem(id) {
+    let items = loadPortfolioData();
+    items = items.filter(item => item.id !== id);
+    savePortfolioData(items);
 }
 
-function jumpToMediaSlide(itemId, targetIdx) {
-    sliderIndices[itemId] = targetIdx;
-    const wrapper = document.getElementById(`slides-wrapper-${itemId}`);
-    if (wrapper) {
-        wrapper.style.transform = `translateX(-${targetIdx * 100}%)`;
-    }
-    const container = wrapper.parentElement;
-    const dots = container.querySelectorAll(".slider-dot");
-    dots.forEach((d, idx) => {
-        if (idx === targetIdx) d.classList.add("active");
-        else d.classList.remove("active");
-    });
-}
+// Control Panel Handlers
+document.getElementById('toggle-editor-btn').addEventListener('click', () => {
+    document.getElementById('admin-panel').classList.toggle('active-editor-block');
+});
 
-function executeGalleryFilter(category, contextButton) {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    contextButton.classList.add("active");
-    renderGalleryGrid(category);
-}
+document.getElementById('reset-storage-btn').addEventListener('click', () => {
+    localStorage.removeItem(STORAGE_KEY);
+    renderPortfolio();
+});
 
-// Multi-file extraction engine
-function stageNewGalleryCard() {
-    const fileInput = document.getElementById("new-item-files");
-    const titleInput = document.getElementById("new-item-title");
-    const categorySelect = document.getElementById("new-item-category");
-
-    if (!titleInput.value) { alert("Please provide a kit title."); return; }
-    if (!fileInput.files || fileInput.files.length === 0) { alert("Please select at least one image or video asset file."); return; }
-
-    const filesArray = Array.from(fileInput.files);
-    const loadedMediaArr = [];
-    let readCount = 0;
-
-    filesArray.forEach(file => {
-        const reader = new FileReader();
-        const isVideo = file.type.includes("video") || file.name.endsWith(".mp4");
-        reader.onload = (e) => {
-            loadedMediaArr.push({ type: isVideo ? "video" : "image", data: e.target.result });
-            readCount++;
-            if (readCount === filesArray.length) {
-                const newId = activeGalleryItems.length ? Math.max(...activeGalleryItems.map(i => i.id)) + 1 : 1;
-                activeGalleryItems.push({ id: newId, title: titleInput.value, category: categorySelect.value, media: loadedMediaArr });
-                titleInput.value = "";
-                fileInput.value = "";
-                registerDraftChange();
-                renderGalleryGrid();
-            }
-        };
-        reader.readAsDataURL(file);
-    });
-}
-
-function executeGalleryItemRemoval(id) {
-    activeGalleryItems = activeGalleryItems.filter(i => i.id !== id);
-    registerDraftChange();
-    renderGalleryGrid();
-}
-
-// Commit modifications
-function publishStagingChanges() {
-    activePageData.heroEyebrow = document.getElementById("hero-eyebrow").innerText;
-    activePageData.heroHeading = document.getElementById("hero-heading").innerText;
-    activePageData.heroDesc = document.getElementById("hero-desc").innerText;
-    activePageData.t1Name = document.getElementById("t1-name").innerText;
-    activePageData.t1Price = document.getElementById("t1-price").innerText;
-    activePageData.t2Name = document.getElementById("t2-name").innerText;
-    activePageData.t2Price = document.getElementById("t2-price").innerText;
-    activePageData.t3Name = document.getElementById("t3-name").innerText;
-    activePageData.t3Price = document.getElementById("t3-price").innerText;
-    activePageData.t4Name = document.getElementById("t4-name").innerText;
-    activePageData.t4Price = document.getElementById("t4-price").innerText;
-
-    hasUnsavedStagingDrafts = false;
-    document.getElementById("publish-bar").style.display = "none";
-    document.body.classList.remove("has-publish-bar");
-    alert("Success! Custom configurations and multimedia sliders have been saved live.");
-}
-
-// External routing logic
-function triggerWhatsAppRedirect(e) {
+// Image Upload Handler (Converts File objects to Base64 data strings)
+document.getElementById('add-item-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const targetPhone = "601125041130";
-    const name = document.getElementById("form-name").value;
-    const kit = document.getElementById("form-kit").value;
-    const tier = document.getElementById("form-service").value;
-    const notes = document.getElementById("form-notes").value;
-    const textTemplate = `Hello! My name is ${name}. I would like to get a quote for a ${tier} on my ${kit}. Special requests: ${notes ? notes : 'None'}`;
-    window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(textTemplate)}`, '_blank');
-}
 
-// Visual intersection calculations
-function initializeScrollAnimations() {
-    const targets = document.querySelectorAll(".reveal");
-    const parsedObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-            }
+    const title = document.getElementById('item-title').value;
+    const category = document.getElementById('item-category').value;
+    const files = Array.from(document.getElementById('item-images').files);
+
+    if (files.length === 0) return;
+
+    const base64Images = await Promise.all(files.map(file => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (evt) => resolve(evt.target.result);
+            reader.readAsDataURL(file);
         });
-    }, { threshold: 0.1 });
-    targets.forEach(t => parsedObserver.observe(t));
-}
+    }));
+
+    const newItem = {
+        id: Date.now().toString(),
+        title: title,
+        category: category,
+        images: base64Images
+    };
+
+    const currentData = loadPortfolioData();
+    currentData.unshift(newItem);
+    savePortfolioData(currentData);
+
+    // Reset Form
+    document.getElementById('add-item-form').reset();
+    document.getElementById('admin-panel').classList.remove('active-editor-block');
+});
+
+// Initial Render
+document.addEventListener('DOMContentLoaded', renderPortfolio);
 </script>
 </body>
 </html>
