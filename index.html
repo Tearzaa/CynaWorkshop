@@ -1976,8 +1976,8 @@ body.editor-mode .add-project {
   4. If Supabase is not configured, the site still works locally with IndexedDB.
 */
 
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://kewqncwoqvcvhqwhqxjx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_BpO9CYOrv_K0SrEL9M28IQ_fJ_pkYTF";
 const STORAGE_BUCKET = "portfolio-media";
 const SITE_CONFIG_ID = 1;
 
@@ -1995,6 +1995,12 @@ let projects = [];
 let viewerProjectId = null;
 let viewerIndex = 0;
 let supabaseClient = null;
+
+create table site_config (
+    id integer primary key,
+    data jsonb not null,
+    updated_at timestamptz default now()
+);
 
 const cloudEnabled =
     window.supabase &&
