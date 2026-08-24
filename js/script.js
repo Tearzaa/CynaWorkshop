@@ -600,6 +600,7 @@ async function setLogoFromState(logoState) {
         typeof logoState === "string"
     ) {
         logo.src = logoState;
+        updateFaviconFromLogo(logoState);
         return;
     }
 
@@ -608,6 +609,7 @@ async function setLogoFromState(logoState) {
         logoState.url
     ) {
         logo.src = logoState.url;
+        updateFaviconFromLogo(logoState.url);
         return;
     }
 
@@ -625,6 +627,7 @@ async function setLogoFromState(logoState) {
                 URL.createObjectURL(
                     record.blob
                 );
+            updateFaviconFromLogo(logo.src);
         }
     }
 }
