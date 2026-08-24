@@ -2421,3 +2421,26 @@ async function initialize() {
 
 initialize();
 
+function updateFavicon(url){
+
+    let icon =
+        document.querySelector(
+            "link[rel='icon']"
+        );
+
+    if(!icon){
+
+        icon =
+        document.createElement("link");
+
+        icon.rel="icon";
+
+        document.head.appendChild(icon);
+    }
+
+    icon.href=url;
+}
+
+updateFavicon(
+    document.getElementById("siteLogo").src
+);
