@@ -1035,6 +1035,21 @@ function updateEditableState() {
         });
 }
 
+
+/* =========================================================
+   FAVICON SYNC WITH LOGO
+========================================================= */
+
+function updateFaviconFromLogo(url){
+    let icon = document.querySelector("link[rel='icon']");
+    if(!icon){
+        icon = document.createElement("link");
+        icon.rel = "icon";
+        document.head.appendChild(icon);
+    }
+    icon.href = url + "?v=" + Date.now();
+}
+
 /* =========================================================
    LOGO UPLOAD
 ========================================================= */
@@ -1073,10 +1088,14 @@ document
                         "siteLogo"
                     );
 
-                logo.src =
+                const logoURL =
                     URL.createObjectURL(
                         file
                     );
+
+                logo.src = logoURL;
+
+                updateFaviconFromLogo(logoURL);
 
                 const currentRaw =
                     safeGet(
