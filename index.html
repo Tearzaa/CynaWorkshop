@@ -1996,11 +1996,6 @@ let viewerProjectId = null;
 let viewerIndex = 0;
 let supabaseClient = null;
 
-create table site_config (
-    id integer primary key,
-    data jsonb not null,
-    updated_at timestamptz default now()
-);
 
 const cloudEnabled =
     window.supabase &&
