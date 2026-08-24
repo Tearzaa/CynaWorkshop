@@ -16,7 +16,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_BpO9CYOrv_K0SrEL9M28IQ_fJ_pkYTF";
 const STORAGE_BUCKET = "portfolio-media";
 const SITE_CONFIG_ID = 1;
 
-const ADMIN_PASSWORD = "@tasnim020821";
+const ADMIN_PASSWORD = "Ariztaz2026";
 
 const DB_NAME = "CynaModelWorksDB";
 const DB_VERSION = 2;
