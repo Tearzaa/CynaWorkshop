@@ -1035,6 +1035,68 @@ function updateEditableState() {
         });
 }
 
+
+/* =========================================================
+   FAVICON UPLOAD
+========================================================= */
+
+function updateFavicon(url){
+    let icon = document.querySelector("link[rel='icon']");
+    if(!icon){
+        icon = document.createElement("link");
+        icon.rel = "icon";
+        document.head.appendChild(icon);
+    }
+    icon.href = url + "?v=" + Date.now();
+}
+
+const faviconInput = document.getElementById("faviconInput");
+
+if(faviconInput){
+    faviconInput.addEventListener("change", async event => {
+        const file = event.target.files[0];
+        if(!file) return;
+
+        if(!file.type.startsWith("image/")){
+            alert("Please select an image.");
+            return;
+        }
+
+        try{
+            const localId = await saveDraftBlob(
+                file,
+                file.name,
+                file.type
+            );
+
+            const url = URL.createObjectURL(file);
+            updateFavicon(url);
+
+            const raw = safeGet("cynaSettings");
+            let settings = {};
+
+            if(raw){
+                try{
+                    settings = JSON.parse(raw);
+                }catch(e){}
+            }
+
+            settings.favicon = {
+                localId,
+                name:file.name,
+                type:file.type
+            };
+
+            saveLocalSettings(settings);
+            markDraft();
+
+        }catch(error){
+            console.error("Favicon upload failed", error);
+            alert(error.message);
+        }
+    });
+}
+
 /* =========================================================
    LOGO UPLOAD
 ========================================================= */
@@ -2421,26 +2483,3 @@ async function initialize() {
 
 initialize();
 
-function updateFavicon(url){
-
-    let icon =
-        document.querySelector(
-            "link[rel='icon']"
-        );
-
-    if(!icon){
-
-        icon =
-        document.createElement("link");
-
-        icon.rel="icon";
-
-        document.head.appendChild(icon);
-    }
-
-    icon.href=url;
-}
-
-updateFavicon(
-    document.getElementById("siteLogo").src
-);
